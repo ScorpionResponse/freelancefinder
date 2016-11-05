@@ -1,0 +1,12 @@
+---
+- name: Create Development Directory
+  file: path={{ dev_directory }} state=directory
+
+- name: Checkout dotfiles repository
+  git: repo=ssh://git@github.com/{{ github_account }}/dotfiles.git dest={{ dev_directory }}/dotfiles accept_hostkey=True
+
+- name: Make install script executable
+  file: path={{ dev_directory }}/dotfiles/install_dotfiles.sh mode=755
+
+- name: Execute install script
+  shell: "{{ dev_directory }}/dotfiles/install_dotfiles.sh"

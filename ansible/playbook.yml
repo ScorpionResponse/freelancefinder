@@ -1,0 +1,76 @@
+---
+- name: Install Packages from apt to App Servers
+  hosts: all
+  become: yes
+  become_user: root
+  tasks:
+    - name: apt-get install packages
+      apt: pkg={{ item }} state=installed update_cache=true
+      with_items:
+        - build-essential
+        - git
+        - libpq-dev
+        - python3
+        - python3-pip
+        - python3-setuptools
+        - python3-venv
+        - supervisor
+
+- name: Assign roles
+  hosts: all
+  roles:
+    - paul-env
+
+- name: Create User production
+  hosts: all
+  become: yes
+  become_user: root
+  tasks:
+    - name: Create production user
+      user: name=production shell=/bin/bash
+
+    - name: Force switch to production user and activate venv
+      blockinfile:
+        dest: /home/ubuntu/.bashrc
+        state: present
+        block: |
+          if [ "$USER" = "ubuntu" ]; then
+              sudo -u production /bin/bash
+          fi
+          source /srv/venv/bin/activate
+          cd /srv/freelancefinder
+
+- name: Deploy application to App Servers
+  hosts: all
+  become: yes
+  become_user: production
+  # Only run this on one machine at a time because running the migrate command
+  # in parallel causes problems, but running it serially works fine
+  serial: 1
+  tasks:
+    - name: Create /srv directory
+      become_user: root
+      file: path=/srv state=directory owner=production group=production mode=0755
+
+    - name: Copy repository to django folder
+      #copy: src=freelancefinder dest=/srv/freelancefinder
+      shell: cp -r /vagrant/freelancefinder /srv/
+
+    # Ansible >2.0 requires manage.py to be executable to run django_manage
+    # commands
+    - name: Ensure permissions of manage.py
+      file: path=/srv/freelancefinder/manage.py mode=0755
+
+    - name: Check for virtualenv
+      stat: path=/srv/venv
+      register: venv_dir
+
+    - name: create virtualenv for Django web app
+      shell: pyvenv /srv/venv
+      when: venv_dir.stat.isdir is not defined
+
+    - name: install web application dependencies
+      pip: requirements=/srv/freelancefinder/requirements.txt virtualenv=/srv/venv
+
+    - name: print SSH_AUTH_SOCK
+      debug: msg="SSH_AUTH_SOCK is {{ lookup('env','SSH_AUTH_SOCK') }}"

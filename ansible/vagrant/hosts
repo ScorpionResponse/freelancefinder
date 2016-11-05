@@ -1,0 +1,14 @@
+freelancedev ansible_connection=local
+
+[db-servers]
+freelancedev
+
+[app-servers]
+freelancedev
+
+[vagrant:children]
+db-servers
+app-servers
+
+[vagrant:vars]
+vagrant=False
