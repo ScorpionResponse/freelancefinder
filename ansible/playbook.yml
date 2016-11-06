@@ -34,11 +34,15 @@
         dest: /home/ubuntu/.bashrc
         state: present
         block: |
-          if [ "$USER" = "ubuntu" ]; then
-              sudo -u production /bin/bash
-          fi
-          source /srv/venv/bin/activate
-          cd /srv/freelancefinder
+          function switch_to_prod ()
+          {
+            if [ "$USER" = "ubuntu" ]; then
+                sudo -HE -u production /bin/bash
+            fi
+            source /srv/venv/bin/activate
+            cd /srv/freelancefinder
+          }
+          alias prod="switch_to_prod"
 
 - name: Deploy application to App Servers
   hosts: all
@@ -52,9 +56,21 @@
       become_user: root
       file: path=/srv state=directory owner=production group=production mode=0755
 
-    - name: Copy repository to django folder
-      #copy: src=freelancefinder dest=/srv/freelancefinder
-      shell: cp -r /vagrant/freelancefinder /srv/
+    - name: Checkout django repo
+      become: no
+      git: repo=git@github.com:ScorpionResponse/freelancefinder.git dest=/tmp/freelancefinder_repo accept_hostkey=True
+
+    - name: Change ownership of django application to production user
+      become_user: root
+      shell: chown -R production:production /tmp/freelancefinder_repo
+
+    # This step only works properly because this is the first time it is being
+    # done
+    - name: Copy repository to destination directory
+      shell: cp -r /tmp/freelancefinder_repo /srv/
+
+    - name: link directory 
+      file: src=/srv/freelancefinder_repo/freelancefinder dest=/srv/freelancefinder state=link
 
     # Ansible >2.0 requires manage.py to be executable to run django_manage
     # commands
