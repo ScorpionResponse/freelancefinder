@@ -1,0 +1,27 @@
+---
+postgresql_version: 9.6
+postgresql_encoding: 'UTF-8'
+postgresql_locale: 'en_US.UTF-8'
+
+postgresql_admin_user: "postgres"
+postgresql_default_auth_method: "trust"
+
+postgresql_listen_addresses: "*"
+postgresql_ssl: on
+
+postgresql_databases:
+  - name: freelancefinder
+    owner: freelancefinder
+
+postgresql_users:
+  - name: postgres
+    pass: abc123-postgres
+    encrypted: no
+  - name: freelancefinder
+    pass: abc123-freelancefinder
+    encrypted: no
+
+# Logging
+postgresql_log_destination: csvlog
+postgresql_logging_collector: on
+postgresql_log_statement: all

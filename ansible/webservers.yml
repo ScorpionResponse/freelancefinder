@@ -1,0 +1,6 @@
+---
+- name: Configure webserver roles
+  hosts: webservers
+  roles:
+    - gunicorn
+    - nginx

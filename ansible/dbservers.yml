@@ -1,0 +1,5 @@
+---
+- name: Configure DB Server Roles
+  hosts: dbservers
+  roles:
+    - postgresql

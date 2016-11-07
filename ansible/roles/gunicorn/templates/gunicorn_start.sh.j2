@@ -1,0 +1,20 @@
+#!/bin/bash
+
+SOCKFILE=/run/gunicorn/socket
+
+echo "Starting {{ gunicorn_app_name }} as `whoami`"
+
+cd {{ gunicorn_app_dir }}
+#source ../bin/activate
+#export DJANGO_SETTINGS_MODULE=$DJANGO_SETTINGS_MODULE
+#export PYTHONPATH=$DJANGODIR:$PYTHONPATH
+
+# Start your Django Unicorn
+# Programs meant to be run under supervisor should not daemonize themselves (do not use --daemon)
+exec /srv/venv/bin/gunicorn {{ gunicorn_wsgi }} \
+  --config /etc/gunicorn/{{ gunicorn_app_name }}.py \
+  --name {{ gunicorn_app_name }} \
+  --user={{ gunicorn_user }} --group={{ gunicorn_user }} \
+  --bind=unix:$SOCKFILE \
+  --log-level=info \
+  --log-file=-

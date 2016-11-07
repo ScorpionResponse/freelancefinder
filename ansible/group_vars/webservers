@@ -1,0 +1,7 @@
+---
+# Gunicorn
+gunicorn_app_dir: /srv/freelancefinder
+gunicorn_wsgi: freelancefinder.wsgi:application
+pip_version: "8.1.1-2ubuntu0.2"
+
+# nginx

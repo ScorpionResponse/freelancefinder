@@ -1,0 +1,34 @@
+---
+- name: Install gunicorn
+  pip: name=gunicorn version={{ gunicorn_version }} state=present executable=pip3
+
+- name: Create gunicorn user
+  user: name={{ gunicorn_user }}
+        system=yes
+        home=/var/lib/{{ gunicorn_user }}
+        shell=/bin/false
+        state=present
+
+- name: Create /etc/gunicorn
+  file: name=/etc/gunicorn state=directory
+
+- name: Install gunicorn config
+  template: src=gunicorn.py.j2 dest=/etc/gunicorn/{{ gunicorn_app_name }}.py
+  notify: Restart gunicorn
+
+  #- name: Install socket systemd script
+  #template: src=gunicorn.socket.j2 dest=/etc/systemd/system/gunicorn.socket
+  #notify: Restart gunicorn_socket
+
+  #- name: Install systemd script
+  #template: src=gunicorn.service.j2 dest=/etc/systemd/system/gunicorn.service
+  #notify: Restart gunicorn
+
+- name: Create socket directory
+  become: yes
+  become_user: root
+  file: path=/run/gunicorn state=directory mode=0755 owner={{ gunicorn_user }} group={{ gunicorn_user }}
+
+- name: Install startup script
+  template: src=gunicorn_start.sh.j2 dest=/srv/gunicorn_start.sh mode=0777 owner={{ gunicorn_user }} group={{ gunicorn_user }}
+  notify: Restart gunicorn
