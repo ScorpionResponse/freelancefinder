@@ -12,7 +12,7 @@
       user: name=deploy shell=/bin/bash group=sudo append=yes password="{{ DEPLOY_PASSWORD }}"
 
     - name: Add authorized keys for deploy user
-      authorized_key: user=deploy key="{{ lookup('file', '{{ SSH_KEY_FILE }}') }}"
+      authorized_key: user=deploy key="{{ SSH_PUBLIC_KEY }}"
 
     - name: Disallow password authentication
       lineinfile: dest=/etc/ssh/sshd_config regexp="^PasswordAuthentication" line="PasswordAuthentication no" state=present
