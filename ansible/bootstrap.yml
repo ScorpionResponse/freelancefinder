@@ -8,6 +8,9 @@
   vars_files:
     - vars/secrets.yml
   tasks:
+    - name: Ensure python2 present
+      raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
+
     - name: Create 'deploy' user
       user: name=deploy shell=/bin/bash group=sudo append=yes password="{{ DEPLOY_PASSWORD }}"
 
