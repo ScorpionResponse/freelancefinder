@@ -6,7 +6,7 @@
     - name: Restart ssh
       service: name=ssh state=restarted
   vars_files:
-    - secrets.yml
+    - vars/secrets.yml
   tasks:
     - name: Create 'deploy' user
       user: name=deploy shell=/bin/bash group=sudo append=yes password="{{ DEPLOY_PASSWORD }}"
