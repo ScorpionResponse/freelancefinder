@@ -55,4 +55,11 @@ SCRIPT
       ansible.verbose = "v"
     end
   end
+
+  # Set the root password
+  $root_script = <<SCRIPT2
+echo "ubuntu:vagrant" | chpasswd
+SCRIPT2
+
+  config.vm.provision :shell, privileged: true, inline: $root_script
 end
