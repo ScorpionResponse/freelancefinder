@@ -15,4 +15,4 @@ site:
 	ansible-playbook -i vagrant site.yml --vault-password-file=~/vault-password.file
 
 bootstrap:
-	ansible-playbook -i vagrant bootstrap.yml -e "ansible_ssh_user=root" -e "ansible_ssh_pass=vagrant" --vault-password-file=~/vault-password.file
+	ansible-playbook -i vagrant bootstrap.yml -e "ansible_ssh_user=ubuntu" -e "ansible_ssh_pass=vagrant" --vault-password-file=~/vault-password.file

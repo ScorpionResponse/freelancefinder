@@ -2,6 +2,8 @@
 # Bootstrap a newly created machine
 - name: Bootstrap Newly Created Server(s)
   hosts: all
+  become_user: root
+  become: yes
   handlers:
     - name: Restart ssh
       service: name=ssh state=restarted
