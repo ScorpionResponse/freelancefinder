@@ -1,5 +1,14 @@
 ---
 # Bootstrap a newly created machine
+- name: Ensure ansible will work properly
+  hosts: all
+  become_user: root
+  become: yes
+  gather_facts: False
+  tasks:
+    - name: Ensure python2 present
+      raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
+
 - name: Bootstrap Newly Created Server(s)
   hosts: all
   become_user: root
@@ -10,20 +19,32 @@
   vars_files:
     - vars/secrets.yml
   tasks:
-    - name: Ensure python2 present
-      raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
-
     - name: Create 'deploy' user
-      user: name=deploy shell=/bin/bash group=sudo append=yes password="{{ DEPLOY_PASSWORD }}"
+      user:
+        name: deploy
+        shell: /bin/bash
+        group: sudo
+        append: yes
+        password: "{{ DEPLOY_PASSWORD }}"
 
     - name: Add authorized keys for deploy user
-      authorized_key: user=deploy key="{{ SSH_PUBLIC_KEY }}"
+      authorized_key:
+        user: deploy
+        key: "{{ SSH_PUBLIC_KEY }}"
 
     - name: Disallow password authentication
-      lineinfile: dest=/etc/ssh/sshd_config regexp="^PasswordAuthentication" line="PasswordAuthentication no" state=present
+      lineinfile: 
+        dest: /etc/ssh/sshd_config
+        regexp: "^PasswordAuthentication"
+        line: "PasswordAuthentication no"
+        state: present
       notify: Restart ssh
 
     - name: Disallow root SSH access
-      lineinfile: dest=/etc/ssh/sshd_config regexp="^PermitRootLogin" line="PermitRootLogin no" state=present
+      lineinfile:
+        dest: /etc/ssh/sshd_config 
+        regexp: "^PermitRootLogin" 
+        line: "PermitRootLogin no" 
+        state: present
       notify: Restart ssh
 
