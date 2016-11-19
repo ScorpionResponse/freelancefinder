@@ -7,3 +7,6 @@ ubuntu*.log
 __pycache__
 
 vault-password.file
+
+ansible/roles/ScorpionResponse.*
+ansible/*.retry

@@ -1,2 +1,3 @@
 ---
 - src: ScorpionResponse.supervisord
+- src: ScorpionResponse.gunicorn
