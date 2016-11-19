@@ -22,5 +22,11 @@
     - name: Checkout django repo
       git: repo=git@github.com:ScorpionResponse/freelancefinder.git dest=/home/ubuntu/freelancefinder accept_hostkey=True
 
+    - name: Checkout ansible role repos
+      git: repo=git@github.com:ScorpionResponse/{{ item }}.git dest=/home/ubuntu/{{ item }} accept_hostkey=True
+      with_items:
+        - ansible-pip
+        - ansible-supervisord
+
     - name: print SSH_AUTH_SOCK
       debug: msg="SSH_AUTH_SOCK is {{ lookup('env','SSH_AUTH_SOCK') }}"
