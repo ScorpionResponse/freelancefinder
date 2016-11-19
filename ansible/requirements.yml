@@ -1,2 +1,2 @@
 ---
--src: ScorpionResponse.supervisord
+- src: ScorpionResponse.supervisord
