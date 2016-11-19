@@ -1,6 +1,6 @@
 ---
 - name: Install gunicorn
-  pip: name=gunicorn version={{ gunicorn_version }} state=present executable=pip3
+  pip: name=gunicorn version={{ gunicorn_version }} state=present
 
 - name: Create gunicorn user
   user: name={{ gunicorn_user }}

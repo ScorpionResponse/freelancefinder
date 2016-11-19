@@ -3,7 +3,7 @@ get_password:
 	cat /vagrant/vault-password.file > ~/vault-password.file
 
 vault:
-	ansible-vault edit --vault-password-file=~/vault-password.file vars/secrets.yml
+	ansible-vault edit --vault-password-file=~/vault-password.file group_vars/all/secrets.yml
 
 dbservers:
 	ansible-playbook -i vagrant dbservers.yml --vault-password-file=~/vault-password.file
