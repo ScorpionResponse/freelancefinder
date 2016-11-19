@@ -26,6 +26,7 @@
       git: repo=git@github.com:ScorpionResponse/{{ item }}.git dest=/home/ubuntu/{{ item }} accept_hostkey=True
       with_items:
         - ansible-gunicorn
+        - ansible-nginx
         - ansible-pip
         - ansible-supervisord
 

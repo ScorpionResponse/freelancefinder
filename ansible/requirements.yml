@@ -1,3 +1,4 @@
 ---
-- src: ScorpionResponse.supervisord
 - src: ScorpionResponse.gunicorn
+- src: ScorpionResponse.nginx
+- src: ScorpionResponse.supervisord
