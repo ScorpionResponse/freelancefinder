@@ -5,3 +5,5 @@ ubuntu*.log
 *.pyc
 *.pyo
 __pycache__
+
+vault-password.file
