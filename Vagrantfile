@@ -42,7 +42,7 @@ Vagrant.configure("2") do |config|
     # Copy the ansible provisioning info over to the local (not shared) drive
     $script = <<SCRIPT
 mkdir provisioning
-cp -r /vagrant/ansible provisioning/
+cp -r /vagrant/ansible_control provisioning/ansible
 SCRIPT
   
     config.vm.provision :shell, privileged: false, inline: $script
