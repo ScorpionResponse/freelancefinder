@@ -1,92 +1,38 @@
-## ANXS - PostgreSQL [![Build Status](https://travis-ci.org/ANXS/postgresql.png?branch=master)](https://travis-ci.org/ANXS/postgresql)
+Role Name
+=========
 
-Ansible role which installs and configures PostgreSQL, extensions, databases and users.
+A brief description of the role goes here.
 
+Requirements
+------------
 
-#### Installation
+Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
 
-This has been tested on Ansible 1.9.4 and higher.
+Role Variables
+--------------
 
-To install:
+A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
 
-```
-ansible-galaxy install ANXS.postgresql
-```
+Dependencies
+------------
 
-#### Dependencies
+A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
 
-- ANXS.monit ([Galaxy](https://galaxy.ansible.com/list#/roles/502)/[GH](https://github.com/ANXS/monit)) if you want monit protection (in that case, you should set `monit_protection: true`)
+Example Playbook
+----------------
 
+Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
 
-#### Variables
+    - hosts: servers
+      roles:
+         - { role: username.rolename, x: 42 }
 
-```yaml
-# Basic settings
-postgresql_version: 9.3
-postgresql_encoding: 'UTF-8'
-postgresql_locale: 'en_US.UTF-8'
+License
+-------
 
-postgresql_admin_user: "postgres"
-postgresql_default_auth_method: "trust"
+BSD
 
-postgresql_cluster_name: "main"
-postgresql_cluster_reset: false
+Author Information
+------------------
 
-# List of databases to be created (optional)
-# Note: for more flexibility with extensions use the postgresql_database_extensions setting.
-postgresql_databases:
-  - name: foobar
-    owner: baz          # optional; specify the owner of the database
-    hstore: yes         # flag to install the hstore extension on this database (yes/no)
-    uuid_ossp: yes      # flag to install the uuid-ossp extension on this database (yes/no)
-    citext: yes         # flag to install the citext extension on this database (yes/no)
-
-# List of database extensions to be created (optional)
-postgresql_database_extensions:
-  - db: foobar
-    extensions:
-      - hstore
-      - citext
-
-# List of users to be created (optional)
-postgresql_users:
-  - name: baz
-    pass: pass
-    encrypted: no       # denotes if the password is already encrypted.
-
-# List of user privileges to be applied (optional)
-postgresql_user_privileges:
-  - name: baz                   # user name
-    db: foobar                  # database
-    priv: "ALL"                 # privilege string format: example: INSERT,UPDATE/table:SELECT/anothertable:ALL
-    role_attr_flags: "CREATEDB" # role attribute flags
-```
-
-There's a lot more knobs and bolts to set, which you can find in the defaults/main.yml
-
-
-#### Testing
-This project comes with a Vagrantfile, this is a fast and easy way to test changes to the role, fire it up with `vagrant up`
-
-See [vagrant docs](https://docs.vagrantup.com/v2/) for getting setup with vagrant
-
-Once your VM is up, you can reprovision it using either `vagrant provision`, or `ansible-playbook tests/playbook.yml -i vagrant-inventory`
-
-If you want to toy with the test play, see [tests/playbook.yml](./tests/playbook.yml), and change the variables in [tests/vars.yml](./tests/vars.yml)
-
-If you are contributing, please first test your changes within the vagrant environment, (using the targeted distribution), and if possible, ensure your change is covered in the tests found in [.travis.yml](./.travis.yml)
-
-#### License
-
-Licensed under the MIT License. See the [LICENSE](./LICENSE) file for details.
-
-
-#### Thanks
-
-To the contributors:
-- [Ralph von der Heyden](https://github.com/ralph)
-
-
-#### Feedback, bug-reports, requests, ...
-
-Are [welcome](https://github.com/ANXS/postgresql/issues)!
+An optional section for the role authors to include contact information, or a website (HTML is not allowed).

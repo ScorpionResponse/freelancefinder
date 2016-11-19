@@ -1,7 +1,9 @@
 ---
 - name: Configure webserver roles
   hosts: webservers
+  become: yes
+  become_user: root
   roles:
     - gunicorn
     - nginx
-    - supervisord
+    - ScorpionResponse.supervisord
