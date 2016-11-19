@@ -4,6 +4,6 @@
   become: yes
   become_user: root
   roles:
-    - gunicorn
+    - ScorpionResponse.gunicorn
     - nginx
     - ScorpionResponse.supervisord
