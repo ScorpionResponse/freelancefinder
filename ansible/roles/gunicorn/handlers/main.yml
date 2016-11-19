@@ -1,7 +1,0 @@
----
-- name: Restart gunicorn
-  #service: name={{ gunicorn_app_name }} state=restarted enabled=yes
-  supervisorctl: name={{ gunicorn_app_name }} state=restarted
-
-  #- name: Restart gunicorn_socket
-  #service: name=gunicorn.socket state=restarted enabled=yes
