@@ -1,4 +1,5 @@
 ---
+- src: ScorpionResponse.django
 - src: ScorpionResponse.gunicorn
 - src: ScorpionResponse.nginx
 - src: ScorpionResponse.supervisord

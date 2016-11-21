@@ -6,3 +6,9 @@ gunicorn_wsgi_application: freelancefinder.wsgi:application
 # nginx
 nginx_server_name: freelancefinder.com
 nginx_application_dir: /srv/freelancefinder
+
+# django
+django_base_dir: /srv
+django_project_name: freelancefinder
+django_git_repo: "https://github.com/ScorpionResponse/freelancefinder.git"
+environmane: development
