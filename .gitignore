@@ -10,3 +10,5 @@ vault-password.file
 
 ansible/roles/ScorpionResponse.*
 ansible/*.retry
+
+freelancefinder/static
