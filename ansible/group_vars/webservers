@@ -10,5 +10,6 @@ nginx_application_dir: /srv/freelancefinder
 # django
 django_base_dir: /srv
 django_project_name: freelancefinder
+django_subdirectory: "freelancefinder/"
 django_git_repo: "https://github.com/ScorpionResponse/freelancefinder.git"
 environmane: development
