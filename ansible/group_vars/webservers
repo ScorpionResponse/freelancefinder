@@ -22,5 +22,5 @@ django_secret_key: "abc123"
 django_db_url: "sqlite:///srv/freelancefinder/freelancefinder/db.sqlite"
 
 django_settings:
-  - steve: austin
-  - fatty: mgginty
+  steve: austin
+  fatty: mgginty
