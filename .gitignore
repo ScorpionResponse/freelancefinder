@@ -13,3 +13,5 @@ ansible/*.retry
 
 freelancefinder/public
 freelancefinder/.env
+
+*.sqlite
