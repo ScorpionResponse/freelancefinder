@@ -19,3 +19,6 @@ site: requirements
 
 bootstrap: get_password requirements
 	ansible-playbook -i vagrant bootstrap.yml -e "ansible_ssh_user=ubuntu" -e "ansible_ssh_pass=vagrant" --vault-password-file=~/vault-password.file
+
+deploy:
+	ansible-playbook -i vagrant deploy.yml --vault-password-file=~/vault-password.file
