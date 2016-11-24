@@ -8,3 +8,9 @@
     - ScorpionResponse.gunicorn
     - ScorpionResponse.nginx
     - ScorpionResponse.supervisord
+  tasks:
+    - name: Restart gunicorn (lazy)
+      debug: msg="restart gunicorn"
+      changed_when: true
+      notify:
+        - restart gunicorn
