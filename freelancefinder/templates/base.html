@@ -9,6 +9,20 @@
         {% endblock %}
     </head>
     <body>
+        <div id="header">
+            <a href="/" id="header-logo" class="logo">FreelanceFinder</a>
+            <ul id="header-menu">
+                <li><a href="{% url 'all-links' %}" class="header-menu-item">All</a></li>
+                <li><a href="{% url 'all-links' %}" class="header-menu-item">All (2)</a></li>
+            </ul>
+            <span id="header-account">
+                {% if user.is_authenticated %}
+                    <a href="{% url 'logout' %}" class="account-info">Login</a>
+                {% else %}
+                    <a href="{% url 'login' %}" class="account-info">Login</a>
+                {% endif %}
+            </span>
+        </div>
         {% block 'content' %}
         {% endblock %}
     </body>
