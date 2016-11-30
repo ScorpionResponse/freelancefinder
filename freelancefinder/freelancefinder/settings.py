@@ -26,7 +26,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'authtools',
 ]
+
+# Enable authtools
+AUTH_USER_MODEL = 'authtools.User'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
