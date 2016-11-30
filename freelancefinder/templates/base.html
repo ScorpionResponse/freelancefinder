@@ -10,7 +10,7 @@
     </head>
     <body>
         <div id="header">
-            <a href="/" id="header-logo" class="logo">FreelanceFinder</a>
+            <a href="{% url 'index' %}" id="header-logo" class="logo">FreelanceFinder</a>
             <ul id="header-menu">
                 <li><a href="{% url 'all-links' %}" class="header-menu-item">All</a></li>
                 <li><a href="{% url 'all-links' %}" class="header-menu-item">All (2)</a></li>
@@ -23,7 +23,12 @@
                 {% endif %}
             </span>
         </div>
-        {% block 'content' %}
-        {% endblock %}
+        <div id="content">
+            {% block 'content' %}
+            {% endblock %}
+        </div>
+        <div> id="footer">
+            &copy; Paul Moss {% now "Y" %}
+        </div>
     </body>
 </html>
