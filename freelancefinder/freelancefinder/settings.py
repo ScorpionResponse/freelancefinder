@@ -19,7 +19,7 @@ DEBUG = env('DEBUG')
 # TODO: Set this appropriately
 ALLOWED_HOSTS = ['*']
 
-INSTALLED_APPS = [
+PREREQ_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -28,6 +28,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'authtools',
 ]
+
+PROJECT_APPS = [
+    'users',
+]
+
+INSTALLED_APPS = PREREQ_APPS + PROJECT_APPS
 
 # Enable authtools
 AUTH_USER_MODEL = 'authtools.User'
