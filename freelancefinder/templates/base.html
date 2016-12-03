@@ -9,11 +9,13 @@
         {% endblock %}
     </head>
     <body>
-        <div id="header">
+        <header>
             <a href="{% url 'index' %}" id="header-logo" class="logo">FreelanceFinder</a>
-            <ul id="header-menu">
-                <li><a href="{% url 'all-links' %}" class="header-menu-item">All</a></li>
-                <li><a href="{% url 'all-links' %}" class="header-menu-item">All (2)</a></li>
+        </header>
+        <nav>
+            <ul>
+                <li><a href="{% url 'all-links' %}">All</a></li>
+                <li><a href="{% url 'all-links' %}">All (2)</a></li>
             </ul>
             <span id="header-account">
                 {% if user.is_authenticated %}
@@ -22,13 +24,13 @@
                     <a href="{% url 'login' %}" class="account-info">Login</a>
                 {% endif %}
             </span>
-        </div>
-        <div id="content">
+        </nav>
+        <section>
             {% block 'content' %}
             {% endblock %}
-        </div>
-        <div id="footer">
+        </section>
+        <footer>
             &copy; Paul Moss {% now "Y" %}
-        </div>
+        </footer>
     </body>
 </html>
