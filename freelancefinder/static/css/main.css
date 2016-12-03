@@ -1,6 +1,13 @@
 
+/* Basic setup */
 header, footer, aside, nav, article {
     display: block;
+}
+
+/* Global */
+body {
+    color: #FFFFFF;
+    background-color: #000000;
 }
 
 /* Header */
