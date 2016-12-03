@@ -2,3 +2,8 @@
 header, footer, aside, nav, article {
     display: block;
 }
+
+/* Header */
+#header-account {
+    float: right;
+}
