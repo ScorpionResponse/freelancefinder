@@ -44,6 +44,6 @@
       become: yes
       become_user: root
       pip:
-        name: Django
+        requirements: /home/ubuntu/freelancefinder/freelancefinder/requirements/development.txt
         virtualenv: /home/ubuntu/venv
         virtualenv_command: pyvenv
