@@ -3,7 +3,7 @@ get_password:
 	cat /vagrant/vault-password.file > ~/vault-password.file
 
 requirements:
-	ansible-galaxy install -f -r requirements.yml
+	ansible-galaxy install -r requirements.yml
 
 vault:
 	ansible-vault edit --vault-password-file=~/vault-password.file group_vars/all/secrets.yml
