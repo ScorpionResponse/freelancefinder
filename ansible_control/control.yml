@@ -18,6 +18,11 @@
   hosts: all
   roles:
     - paul-env
+    - ScorpionResponse.django
+  vars:
+    - django_debug: True
+    - django_secret_key: "abc123"
+    - django_db_url: "sqlite:///db.sqlite"
   tasks:
     - name: Checkout django repo
       git: repo=git@github.com:ScorpionResponse/freelancefinder.git dest=/home/ubuntu/freelancefinder accept_hostkey=True
@@ -37,7 +42,7 @@
         dest: /home/ubuntu/.bashrc
         block: |
           alias deploy='pushd ~/freelancefinder/ansible; make webservers; popd'
-          alias check='for i in `ls`; do if [ -d $i/.git ]; then cd $i; RES=`git status -s`; if [ "" != "$RES" ]; then echo "$i - $RES"; fi; cd ../; fi; done'
+          alias check='pushd ~/; for i in `ls`; do if [ -d $i/.git ]; then cd $i; RES=`git status -s`; if [ "" != "$RES" ]; then echo "$i - $RES"; fi; cd ../; fi; done; popd'
           source /home/ubuntu/venv/bin/activate
 
     - name: Install django
