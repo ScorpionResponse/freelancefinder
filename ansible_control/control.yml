@@ -3,6 +3,12 @@
   hosts: all
   become: yes
   become_user: root
+  roles:
+    - ScorpionResponse.django
+  vars:
+    - django_debug: True
+    - django_secret_key: "abc123"
+    - django_db_url: "sqlite:///db.sqlite"
   tasks:
     - name: apt-get install packages
       apt: pkg={{ item }} state=installed update_cache=true
@@ -18,11 +24,6 @@
   hosts: all
   roles:
     - paul-env
-    - ScorpionResponse.django
-  vars:
-    - django_debug: True
-    - django_secret_key: "abc123"
-    - django_db_url: "sqlite:///db.sqlite"
   tasks:
     - name: Checkout django repo
       git: repo=git@github.com:ScorpionResponse/freelancefinder.git dest=/home/ubuntu/freelancefinder accept_hostkey=True
