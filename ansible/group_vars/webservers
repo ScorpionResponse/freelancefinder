@@ -23,5 +23,5 @@ django_superuser_password: 'abc123abc'
 # Django settings
 django_debug: True
 django_secret_key: "abc123"
-django_db_url: "sqlite:///db.sqlite"
+django_db_url: "psql://freelancefinder:abc123-freelancefinder@192.168.2.4:5432/freelancefinder"
 
