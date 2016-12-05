@@ -3,3 +3,4 @@
 - src: ScorpionResponse.gunicorn
 - src: ScorpionResponse.nginx
 - src: ScorpionResponse.supervisord
+- src: ANXS.postgresql

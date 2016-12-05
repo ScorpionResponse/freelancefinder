@@ -1,5 +1,7 @@
 ---
 - name: Configure DB Server Roles
   hosts: dbservers
+  become: yes
+  become_user: root
   roles:
-    - postgresql
+    - ANXS.postgresql

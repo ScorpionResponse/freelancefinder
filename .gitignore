@@ -9,6 +9,7 @@ __pycache__
 vault-password.file
 
 ansible/roles/ScorpionResponse.*
+ansible/roles/ANXS.*
 ansible/*.retry
 
 freelancefinder/public
