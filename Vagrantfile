@@ -58,7 +58,7 @@ SCRIPT
 
   # Set the root password
   $root_script = <<SCRIPT2
-echo "ubuntu:vagrant" | chpasswd
+echo "ubuntu:vagrant" | chpasswd > /dev/null 2>&1
 SCRIPT2
 
   config.vm.provision :shell, privileged: true, inline: $root_script

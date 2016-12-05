@@ -45,5 +45,5 @@
       become_user: root
       pip:
         name: Django
-        executable: pip3
         virtualenv: /home/ubuntu/venv
+        virtualenv_python: python3
