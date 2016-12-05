@@ -32,5 +32,18 @@
         - ansible-pip
         - ansible-supervisord
 
-    - name: print SSH_AUTH_SOCK
-      debug: msg="SSH_AUTH_SOCK is {{ lookup('env','SSH_AUTH_SOCK') }}"
+    - name: Update bashrc
+      blockinfile:
+        dest: /home/ubuntu/.bashrc
+        block: |
+          alias deploy='pushd ~/freelancefinder/ansible; make webservers; popd'
+          alias check='for i in `ls`; do if [ -d $i/.git ]; then cd $i; RES=`git status -s`; if [ "" != "$RES" ]; then echo "$i - $RES"; fi; cd ../; fi; done'
+          source /home/ubuntu/venv/bin/activate
+
+    - name: Install django
+      become: yes
+      become_user: root
+      pip:
+        name: Django
+        executable: pip3
+        virtualenv: /home/ubuntu/venv
