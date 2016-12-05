@@ -9,6 +9,9 @@
     - django_debug: True
     - django_secret_key: "abc123"
     - django_db_url: "sqlite:///db.sqlite"
+    - django_settings:
+      - whatever: thing
+      - thing2: 3
   tasks:
     - name: apt-get install packages
       apt: pkg={{ item }} state=installed update_cache=true
