@@ -46,5 +46,4 @@
       pip:
         name: Django
         virtualenv: /home/ubuntu/venv
-        virtualenv_python: python3
         virtualenv_command: pyvenv
