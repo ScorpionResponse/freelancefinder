@@ -27,6 +27,7 @@ PREREQ_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'authtools',
+    'django_celery_beat',
 ]
 
 PROJECT_APPS = [
