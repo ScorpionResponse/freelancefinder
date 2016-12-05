@@ -31,6 +31,8 @@ PREREQ_APPS = [
 ]
 
 PROJECT_APPS = [
+    'jobs',
+    'remotes',
     'users',
 ]
 
