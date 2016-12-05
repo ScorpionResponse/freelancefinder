@@ -110,4 +110,4 @@ MEDIA_ROOT = public_root('media')
 MEDIA_URL = 'media/'
 
 STATIC_ROOT = public_root('static')
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
