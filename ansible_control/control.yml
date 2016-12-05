@@ -14,6 +14,7 @@
     - django_subdirectory: "freelancefinder/"
     - django_git_repo: "https://github.com/ScorpionResponse/freelancefinder.git"
     - django_environment: development
+    - django_user_name: ubuntu
     - django_settings: {}
   tasks:
     - name: apt-get install packages
