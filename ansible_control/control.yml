@@ -11,7 +11,7 @@
     - django_db_url: "sqlite:///db.sqlite"
     - django_project_name: "freelancefinder"
     - django_base_dir: /home/ubuntu
-    - django_subdirectory: "freelancefinder"
+    - django_subdirectory: "freelancefinder/"
     - django_settings: {}
   tasks:
     - name: apt-get install packages
