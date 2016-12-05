@@ -51,6 +51,7 @@ SCRIPT
     config.vm.provision "ansible_local" do |ansible|
       #ansible.limit = "freelance_control"
       ansible.playbook = "ansible/control.yml"
+      ansible.galaxy_role_file = "ansible/roles.yml"
       ansible.provisioning_path = "/home/ubuntu/provisioning"
       ansible.verbose = "v"
     end
