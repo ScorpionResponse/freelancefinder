@@ -1,7 +1,7 @@
 from django.conf.urls import url
 
-from .views import AllJobsView
+from .views import JobListView, PostListView
 
 urlpatterns = [
-    url(r'^$', AllJobsView.as_view(), name="all-jobs"),
+    url(r'^$', JobListView.as_view(), name="all-jobs"),
 ]
