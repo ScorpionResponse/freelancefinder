@@ -21,6 +21,8 @@ postgresql_users:
     pass: abc123-freelancefinder
     encrypted: no
 
+postgresql_pg_hba_passwd_hosts: ['192.168.2.3/32']
+
 # Logging
 postgresql_log_destination: csvlog
 postgresql_logging_collector: on

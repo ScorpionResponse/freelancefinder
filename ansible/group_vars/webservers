@@ -7,7 +7,7 @@ gunicorn_django_settings: "freelancefinder.settings"
 
 # nginx
 nginx_server_name: freelancefinder.com
-nginx_application_dir: /srv/freelancefinder/freelancefinder
+nginx_application_dir: /srv/freelancefinder/freelancefinder/public
 
 # django
 django_base_dir: /srv
