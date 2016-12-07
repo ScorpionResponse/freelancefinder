@@ -4,6 +4,7 @@
   become: yes
   become_user: root
   roles:
+    - ScorpionResponse.pip
     - ScorpionResponse.django
   vars:
     - use_python3: True
@@ -16,7 +17,6 @@
     - django_git_repo: "https://github.com/ScorpionResponse/freelancefinder.git"
     - django_environment: development
     - django_user_name: ubuntu
-    - django_settings: {}
   tasks:
     - name: apt-get install packages
       apt: pkg={{ item }} state=installed update_cache=true
@@ -61,4 +61,3 @@
         requirements: /home/ubuntu/freelancefinder/freelancefinder/requirements/development.txt
         virtualenv: /home/ubuntu/venv
         virtualenv_python: python3
-        #virtualenv_command: pyvenv
