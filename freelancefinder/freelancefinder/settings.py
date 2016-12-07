@@ -111,3 +111,4 @@ MEDIA_URL = 'media/'
 
 STATIC_ROOT = public_root('static')
 STATIC_URL = '/static/'
+STATICFILES_DIRS = [root('static')]
