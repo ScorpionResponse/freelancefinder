@@ -57,6 +57,33 @@ SCRIPT
     end
   end
 
+  # Define the build machine
+  config.vm.define "freelance_build", primary: true do |instance|
+    instance.vm.network "private_network", ip: "192.168.2.5"
+    instance.vm.provider "virtualbox" do |v|
+      v.name = "freelance_build"
+      v.memory = 1024
+      v.cpus = 1
+    end
+
+    # Copy the ansible provisioning info over to the local (not shared) drive
+    $script = <<SCRIPT
+mkdir provisioning
+cp -r /vagrant/ansible_vagrant provisioning/ansible
+SCRIPT
+  
+    config.vm.provision :shell, privileged: false, inline: $script
+  
+    # provision the rest with ansible
+    config.vm.provision "ansible_local" do |ansible|
+      #ansible.limit = "freelance_control"
+      ansible.playbook = "ansible/build.yml"
+      ansible.galaxy_role_file = "ansible/roles.yml"
+      ansible.provisioning_path = "/home/ubuntu/provisioning"
+      ansible.verbose = "v"
+    end
+  end
+
   # Set the root password
   $root_script = <<SCRIPT2
 echo "ubuntu:vagrant" | chpasswd > /dev/null 2>&1
