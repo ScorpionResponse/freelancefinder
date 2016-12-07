@@ -1,0 +1,7 @@
+---
+- name: Assign Jenkins role
+  hosts: all
+  vars:
+    jenkins_hostname: 192.168.2.5
+  roles:
+    - geerlingguy.jenkins

@@ -42,14 +42,13 @@ Vagrant.configure("2") do |config|
     # Copy the ansible provisioning info over to the local (not shared) drive
     $script = <<SCRIPT
 mkdir provisioning
-cp -r /vagrant/ansible_control provisioning/ansible
+cp -r /vagrant/ansible_vagrant provisioning/ansible
 SCRIPT
   
     config.vm.provision :shell, privileged: false, inline: $script
   
     # provision the rest with ansible
     config.vm.provision "ansible_local" do |ansible|
-      #ansible.limit = "freelance_control"
       ansible.playbook = "ansible/control.yml"
       ansible.galaxy_role_file = "ansible/roles.yml"
       ansible.provisioning_path = "/home/ubuntu/provisioning"
@@ -76,7 +75,6 @@ SCRIPT
   
     # provision the rest with ansible
     config.vm.provision "ansible_local" do |ansible|
-      #ansible.limit = "freelance_control"
       ansible.playbook = "ansible/build.yml"
       ansible.galaxy_role_file = "ansible/roles.yml"
       ansible.provisioning_path = "/home/ubuntu/provisioning"
