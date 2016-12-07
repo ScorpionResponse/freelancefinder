@@ -16,8 +16,8 @@
         <div class="pure-menu pure-menu-horizontal">
             <ul class="pure-menu-list">
                 <li class="pure-menu-item"><a class="pure-menu-link" href="{% url 'all-links' %}">All</a></li>
-                <li class="pure-menu-item"><a class="pure-menu-link" href="{% url 'job_list' %}">Job List</a></li>
-                <li class="pure-menu-item"><a class="pure-menu-link" href="{% url 'post_list' %}">Post List</a></li>
+                <li class="pure-menu-item"><a class="pure-menu-link" href="{% url 'job-list' %}">Job List</a></li>
+                <li class="pure-menu-item"><a class="pure-menu-link" href="{% url 'post-list' %}">Post List</a></li>
             </ul>
             <span id="header-account">
                 {% if user.is_authenticated %}
