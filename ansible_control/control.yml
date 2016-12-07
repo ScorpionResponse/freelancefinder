@@ -60,4 +60,5 @@
       pip:
         requirements: /home/ubuntu/freelancefinder/freelancefinder/requirements/development.txt
         virtualenv: /home/ubuntu/venv
-        virtualenv_command: pyvenv
+        virtualenv_python: python3
+        #virtualenv_command: pyvenv
