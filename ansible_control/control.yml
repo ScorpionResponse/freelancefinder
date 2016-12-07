@@ -6,9 +6,10 @@
   roles:
     - ScorpionResponse.django
   vars:
+    - use_python3: True
     - django_debug: True
     - django_secret_key: "abc123"
-    - django_db_url: "sqlite:///db.sqlite"
+    - django_db_url: "sqlite:////tmp/db.sqlite"
     - django_project_name: "freelancefinder"
     - django_base_dir: /home/ubuntu
     - django_subdirectory: "freelancefinder/"
