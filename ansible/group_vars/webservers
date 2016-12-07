@@ -1,4 +1,7 @@
 ---
+
+use_python3: True
+
 # Gunicorn
 gunicorn_project_dir: "/srv/freelancefinder/freelancefinder"
 gunicorn_wsgi_application: freelancefinder.wsgi:application
