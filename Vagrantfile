@@ -42,15 +42,42 @@ Vagrant.configure("2") do |config|
     # Copy the ansible provisioning info over to the local (not shared) drive
     $script = <<SCRIPT
 mkdir provisioning
-cp -r /vagrant/ansible_control provisioning/ansible
+cp -r /vagrant/ansible_vagrant provisioning/ansible
+rm provisioning/ansible/build.yml
 SCRIPT
   
-    config.vm.provision :shell, privileged: false, inline: $script
+    instance.vm.provision :shell, privileged: false, inline: $script
   
     # provision the rest with ansible
-    config.vm.provision "ansible_local" do |ansible|
-      #ansible.limit = "freelance_control"
+    instance.vm.provision "ansible_local" do |ansible|
       ansible.playbook = "ansible/control.yml"
+      ansible.galaxy_role_file = "ansible/roles.yml"
+      ansible.provisioning_path = "/home/ubuntu/provisioning"
+      ansible.verbose = "v"
+    end
+  end
+
+  # Define the build machine
+  config.vm.define "freelance_build" do |instance|
+    instance.vm.network "private_network", ip: "192.168.2.5"
+    instance.vm.provider "virtualbox" do |v|
+      v.name = "freelance_build"
+      v.memory = 1024
+      v.cpus = 1
+    end
+
+    # Copy the ansible provisioning info over to the local (not shared) drive
+    $script = <<SCRIPT
+mkdir provisioning
+cp -r /vagrant/ansible_vagrant provisioning/ansible
+rm provisioning/ansible/control.yml
+SCRIPT
+  
+    instance.vm.provision :shell, privileged: false, inline: $script
+  
+    # provision the rest with ansible
+    instance.vm.provision "ansible_local" do |ansible|
+      ansible.playbook = "ansible/build.yml"
       ansible.galaxy_role_file = "ansible/roles.yml"
       ansible.provisioning_path = "/home/ubuntu/provisioning"
       ansible.verbose = "v"
