@@ -5,8 +5,11 @@ python:
   - 3.5
 install:
   - pip install -r freelancefinder/requirements/development.txt
+before_script:
   - echo -e "DEBUG=True\nSECRET_KEY='abc123'\nDATABASE_URL='sqlite:////tmp/db.sqlite'\n" > freelancefinder/.env
 script:
-  - cd freelancefinder && py.test
-#after_success:
-#  - coveralls
+  - cd freelancefinder 
+  - py.test
+  
+after_success:
+  - if [ "${ENV}" = "python3.5" ]; then coveralls; fi

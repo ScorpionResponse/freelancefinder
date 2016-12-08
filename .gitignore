@@ -17,3 +17,5 @@ freelancefinder/.env
 
 *.sqlite
 .cache
+.coverage
+coverage.xml
