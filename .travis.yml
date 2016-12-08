@@ -3,7 +3,6 @@ python:
   - 2.7
   - 3.4
   - 3.5
-  - pypy
 install:
   - pip install -r freelancefinder/requirements/development.txt
   - echo -e "DEBUG=True\nSECRET_KEY='abc123'\nDATABASE_URL='sqlite:////tmp/db.sqlite'\n" > freelancefinder/.env
