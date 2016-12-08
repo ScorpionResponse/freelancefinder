@@ -12,4 +12,4 @@ script:
   - py.test
   
 after_success:
-  - if [ "${ENV}" = "python3.5" ]; then coveralls; fi
+  - if [[ $ENV == python=3.5* ]]; then coveralls; fi
