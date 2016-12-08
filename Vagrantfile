@@ -43,6 +43,7 @@ Vagrant.configure("2") do |config|
     $script = <<SCRIPT
 mkdir provisioning
 cp -r /vagrant/ansible_vagrant provisioning/ansible
+rm provisioning/ansible/build.yml
 SCRIPT
   
     config.vm.provision :shell, privileged: false, inline: $script
@@ -69,6 +70,7 @@ SCRIPT
     $script = <<SCRIPT
 mkdir provisioning
 cp -r /vagrant/ansible_vagrant provisioning/ansible
+rm provisioning/ansible/control.yml
 SCRIPT
   
     config.vm.provision :shell, privileged: false, inline: $script
