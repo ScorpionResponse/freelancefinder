@@ -25,19 +25,12 @@
     jenkins_hostname: 192.168.2.5
     jenkins_admin_username: "admin"
     jenkins_admin_password: "abc123-admin"
-    jenkins_plugins:
-      - ace-editor
-      - analysis-core
-      - ant
-      - antisamy-markup-formatter
-      - branch-api
+    jenkins_plugins_custom:
       - build-name-setter
-      - cloudbees-folder
       - cobertura
       - covcomplplot
       - credentials
-      - cvs
-      - dependency-check-jenkins-plugin OWASP Dependency-Check Plugin
+      - dependency-check-jenkins-plugin
       - durable-task
       - external-monitor-job
       - git-client
@@ -45,52 +38,33 @@
       - github-api
       - github-branch-source
       - github
-      - github-organization-folder
       - git-server
       - greenballs
       - handlebars
-      - javadoc
       - jquery-detached
       - junit
-      - ldap
-      - mailer
-      - matrix-auth
-      - matrix-project
-      - maven-plugin
-      - momentjs
-      - pam-auth
-      - pipeline-build-step
-      - pipeline-input-step
-      - pipeline-rest-api
-      - pipeline-stage-step
-      - pipeline-stage-view
       - plain-credentials
       - scm-api
       - script-security
       - simple-theme-plugin
       - sloccount
-      - ssh-credentials
-      - ssh-slaves
       - structs
-      - subversion
       - tasks
       - text-finder
       - token-macro
       - translation
       - violations
       - warnings
-      - windows-slaves
-      - workflow-aggregator
-      - workflow-api
-      - workflow-basic-steps
-      - workflow-cps-global-lib
-      - workflow-cps
-      - workflow-durable-task-step
-      - workflow-job
-      - workflow-multibranch
-      - workflow-scm-step
-      - workflow-step-api
-      - workflow-support
       - ws-cleanup
   roles:
     - geerlingguy.jenkins
+  tasks:
+    - name: Install Jenkins plugins using password.
+      command: >
+        java -jar {{ jenkins_jar_location }} -s http://{{ jenkins_hostname }}:{{ jenkins_http_port }}{{ jenkins_url_prefix | default('') }}/
+        install-plugin {{ item }}
+        creates="{{ jenkins_home }}/plugins/{{ item }}.jpi"
+      with_items: "{{ jenkins_plugins_custom }}"
+      loop_control:
+        pause: 1
+      notify: restart jenkins
