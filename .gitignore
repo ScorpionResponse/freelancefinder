@@ -16,3 +16,4 @@ freelancefinder/public
 freelancefinder/.env
 
 *.sqlite
+.cache
