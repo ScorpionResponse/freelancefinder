@@ -57,7 +57,7 @@ SCRIPT
   end
 
   # Define the build machine
-  config.vm.define "freelance_build", primary: true do |instance|
+  config.vm.define "freelance_build" do |instance|
     instance.vm.network "private_network", ip: "192.168.2.5"
     instance.vm.provider "virtualbox" do |v|
       v.name = "freelance_build"

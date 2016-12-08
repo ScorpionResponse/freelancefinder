@@ -1,7 +1,96 @@
 ---
 - name: Assign Jenkins role
   hosts: all
+  become: yes
+  become_user: root
   vars:
     jenkins_hostname: 192.168.2.5
+    jenkins_admin_username: "admin"
+    jenkins_admin_password: "abc123-admin"
+  roles:
+    - geerlingguy.jenkins
+  tasks:
+    - name: Turn off security
+      lineinfile:
+        dest: /var/lib/jenkins/config.xml
+        regexp: "<useSecurity>.*"
+        line: "<useSecurity>false</useSecurity>"
+      notify: restart jenkins
+
+- name: Assign Jenkins role again (to install plugins)
+  hosts: all
+  become: yes
+  become_user: root
+  vars:
+    jenkins_hostname: 192.168.2.5
+    jenkins_admin_username: "admin"
+    jenkins_admin_password: "abc123-admin"
+    jenkins_plugins:
+      - ace-editor
+      - analysis-core
+      - ant
+      - antisamy-markup-formatter
+      - branch-api
+      - build-name-setter
+      - cloudbees-folder
+      - cobertura
+      - covcomplplot
+      - credentials
+      - cvs
+      - dependency-check-jenkins-plugin OWASP Dependency-Check Plugin
+      - durable-task
+      - external-monitor-job
+      - git-client
+      - git
+      - github-api
+      - github-branch-source
+      - github
+      - github-organization-folder
+      - git-server
+      - greenballs
+      - handlebars
+      - javadoc
+      - jquery-detached
+      - junit
+      - ldap
+      - mailer
+      - matrix-auth
+      - matrix-project
+      - maven-plugin
+      - momentjs
+      - pam-auth
+      - pipeline-build-step
+      - pipeline-input-step
+      - pipeline-rest-api
+      - pipeline-stage-step
+      - pipeline-stage-view
+      - plain-credentials
+      - scm-api
+      - script-security
+      - simple-theme-plugin
+      - sloccount
+      - ssh-credentials
+      - ssh-slaves
+      - structs
+      - subversion
+      - tasks
+      - text-finder
+      - token-macro
+      - translation
+      - violations
+      - warnings
+      - windows-slaves
+      - workflow-aggregator
+      - workflow-api
+      - workflow-basic-steps
+      - workflow-cps-global-lib
+      - workflow-cps
+      - workflow-durable-task-step
+      - workflow-job
+      - workflow-multibranch
+      - workflow-scm-step
+      - workflow-step-api
+      - workflow-support
+      - ws-cleanup
   roles:
     - geerlingguy.jenkins
