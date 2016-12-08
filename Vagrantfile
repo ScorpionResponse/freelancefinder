@@ -46,10 +46,10 @@ cp -r /vagrant/ansible_vagrant provisioning/ansible
 rm provisioning/ansible/build.yml
 SCRIPT
   
-    config.vm.provision :shell, privileged: false, inline: $script
+    instance.vm.provision :shell, privileged: false, inline: $script
   
     # provision the rest with ansible
-    config.vm.provision "ansible_local" do |ansible|
+    instance.vm.provision "ansible_local" do |ansible|
       ansible.playbook = "ansible/control.yml"
       ansible.galaxy_role_file = "ansible/roles.yml"
       ansible.provisioning_path = "/home/ubuntu/provisioning"
@@ -73,10 +73,10 @@ cp -r /vagrant/ansible_vagrant provisioning/ansible
 rm provisioning/ansible/control.yml
 SCRIPT
   
-    config.vm.provision :shell, privileged: false, inline: $script
+    instance.vm.provision :shell, privileged: false, inline: $script
   
     # provision the rest with ansible
-    config.vm.provision "ansible_local" do |ansible|
+    instance.vm.provision "ansible_local" do |ansible|
       ansible.playbook = "ansible/build.yml"
       ansible.galaxy_role_file = "ansible/roles.yml"
       ansible.provisioning_path = "/home/ubuntu/provisioning"
