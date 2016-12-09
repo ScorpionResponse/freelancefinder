@@ -1,6 +1,6 @@
 [run]
 branch = True
-#timid = True
+timid = True
 
 omit =
     freelancefinder/freelancefinder/wsgi.py
