@@ -11,5 +11,10 @@ script:
   - cd freelancefinder 
   - py.test
   
+  # Fail on outdated requirements
+  - reqs=$(mktemp)
+  - pip list --outdated --format=columns | tee ${reqs}
+  - NUM=`wc -l ${reqs} | cut -f1 -d" "`; [ $NUM -eq 0 ] && (echo "Requirements test: pass" && exit 0) || (echo "Requirements test: fail" && exit 1)
+  
 after_success:
   - if [ "${TRAVIS_PYTHON_VERSION}" = "3.5" ]; then coveralls; fi
