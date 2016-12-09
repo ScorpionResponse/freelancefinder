@@ -1,6 +1,6 @@
 [run]
 branch = True
-timid = True
+#timid = True
 
 omit =
     freelancefinder/freelancefinder/wsgi.py
@@ -12,10 +12,12 @@ source = .
 plugins = django_coverage_plugin
 
 [report]
-# Regexes for lines to exclude from consideration
 exclude_lines =
     # Have to re-enable the standard pragma
     pragma: no cover
+
+    # Don't know why this doesn't get covered
+    {% endblock %}
 
     # Don't complain if non-runnable code isn't run:
     if 0:
