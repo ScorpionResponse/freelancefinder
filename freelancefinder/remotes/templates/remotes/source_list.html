@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block 'content' %}
+
+<h1>Source List</h1>
+<ol>
+{% for source in source_list %}
+    <li>{{ source }}</li>
+{% endfor %}
+</ol>
+
+{% endblock %}
