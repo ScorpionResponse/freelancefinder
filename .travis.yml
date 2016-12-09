@@ -9,7 +9,6 @@ install:
 before_script:
   - echo -e "DEBUG=True\nSECRET_KEY='abc123'\nDATABASE_URL='sqlite:////tmp/db.sqlite'\n" > freelancefinder/.env
 script:
-  - cd freelancefinder 
   - py.test
   
   # Fail on outdated requirements
