@@ -16,9 +16,6 @@ exclude_lines =
     # Have to re-enable the standard pragma
     pragma: no cover
 
-    # Don't know why this doesn't get covered
-    {% endblock %}
-
     # Don't complain if non-runnable code isn't run:
     if 0:
     if __name__ == .__main__.:
