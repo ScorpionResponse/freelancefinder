@@ -3,8 +3,8 @@ branch = True
 #timid = True
 
 omit =
-    freelancefinder/wsgi.py
-    manage.py
+    freelancefinder/freelancefinder/wsgi.py
+    freelancefinder/manage.py
     *migrations*
 
 source = .
