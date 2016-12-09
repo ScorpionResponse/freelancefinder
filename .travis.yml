@@ -12,4 +12,4 @@ script:
   - py.test
   
 after_success:
-  - if [[ $ENV == python=3.5* ]]; then coveralls; fi
+  - if [ "${TRAVIS_PYTHON_VERSION}" = "3.5" ]; then coveralls; fi
