@@ -1,3 +1,8 @@
+"""
+Configure urls for the jobs app.
+
+The default base for these urls is /jobs/
+"""
 from django.conf.urls import url
 
 from .views import JobListView, PostListView
