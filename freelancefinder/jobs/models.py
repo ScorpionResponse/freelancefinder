@@ -2,9 +2,12 @@
 
 import datetime
 
+from future.utils import python_2_unicode_compatible
+
 from django.db import models
 
 
+@python_2_unicode_compatible
 class Post(models.Model):
     """
     Simple model for tracking a Post.
@@ -22,9 +25,10 @@ class Post(models.Model):
 
     def __str__(self):
         """Representation for a Post."""
-        return "<Post ID:{}; Title:{}>".format(self.pk, self.title)
+        return u"<Post ID:{}; Title:{}>".format(self.pk, self.title)
 
 
+@python_2_unicode_compatible
 class Job(models.Model):
     """A Job is the actual opportunity.  There may be many Posts about the same Job."""
 
@@ -34,4 +38,4 @@ class Job(models.Model):
 
     def __str__(self):
         """Representation for a Job."""
-        return "<Job ID:{}; Title:{}>".format(self.pk, self.title)
+        return u"<Job ID:{}; Title:{}>".format(self.pk, self.title)

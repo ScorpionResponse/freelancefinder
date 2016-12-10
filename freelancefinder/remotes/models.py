@@ -1,7 +1,11 @@
 """Models for remotes app."""
+
+from future.utils import python_2_unicode_compatible
+
 from django.db import models
 
 
+@python_2_unicode_compatible
 class Source(models.Model):
     """Website where jobs may be posted."""
 
@@ -10,4 +14,4 @@ class Source(models.Model):
 
     def __str__(self):
         """Representation for a Source."""
-        return "<Source ID:{}; Name:{}>".format(self.pk, self.name)
+        return u"<Source ID:{}; Name:{}>".format(self.pk, self.name)
