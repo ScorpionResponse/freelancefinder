@@ -1,3 +1,8 @@
+"""
+Configure URLs for remotes app.
+
+The base URL for these pages is /remotes/
+"""
 from django.conf.urls import url
 
 from .views import SourceListView

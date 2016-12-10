@@ -22,7 +22,7 @@ class Post(models.Model):
 
     def __str__(self):
         """Representation for a Post."""
-        return "<Post ID:{}; Title:{}>".format(self.id, self.title)
+        return "<Post ID:{}; Title:{}>".format(self.pk, self.title)
 
 
 class Job(models.Model):
@@ -34,4 +34,4 @@ class Job(models.Model):
 
     def __str__(self):
         """Representation for a Job."""
-        return "<Job ID:{}; Title:{}>".format(self.id, self.title)
+        return "<Job ID:{}; Title:{}>".format(self.pk, self.title)

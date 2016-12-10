@@ -19,6 +19,16 @@ script:
     [ $NUM -eq 0 ] 
     && (echo "Requirements test: pass" && exit 0) 
     || (echo "Requirements test: fail" && exit 1)
+
+  # Fail on code style errors
+  - pushd freelancefinder
+  - pycodestyle
+  - popd
+
+  # Fail on doc style errors
+  - pushd freelancefinder
+  - pydocstyle --match-dir='(?!migrations).*'
+  - popd
   
 after_success:
   - if [ "${TRAVIS_PYTHON_VERSION}" = "3.5" ]; then coveralls; fi

@@ -1,12 +1,11 @@
+"""Tests related to users and accounts."""
 from django.test import TestCase
 
 from authtools.models import User
 
 
 class LoginTests(TestCase):
-    """
-    Tests related to login success/failure
-    """
+    """Tests related to login success/failure."""
 
     def setUp(self):
         User.objects.create_user(email='test1@example.com', password='test1')

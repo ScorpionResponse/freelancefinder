@@ -1,3 +1,8 @@
+"""
+Main URL configuration for the FreelanceFinder application.
+
+The base URL for this is /
+"""
 from django.conf.urls import url, include
 from django.contrib import admin
 
