@@ -1,0 +1,18 @@
+[MASTER]
+
+load-plugins=pylint_django
+
+disable=C0301,R0901
+
+ignore=lib,static,templates,migrations,wsgi.py,settings.py,db.sqlite
+ignore-patterns=test_*
+
+[MESSAGES CONTROL]
+# Disable the message(s) with the given id(s).
+# C0301 - Line too long
+# R0901 - Too many ancestors
+disable-msg=C0301,R0901
+
+[BASIC]
+# Don't ever report these as bad names
+good-names=logger,default_app_config

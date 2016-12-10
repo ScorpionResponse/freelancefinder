@@ -29,6 +29,12 @@ script:
   - pushd freelancefinder
   - pydocstyle --match-dir='(?!migrations).*'
   - popd
+
+  # Fail on pylint errors
+  - pushd freelancefinder
+  - PYLINTFILES=`find . | grep "py$" | grep -v "lib\|public" | cut -f2 -d"/" | uniq | xargs`
+  - pylint ${PYLINTFILES}
+  - popd
   
 after_success:
   - if [ "${TRAVIS_PYTHON_VERSION}" = "3.5" ]; then coveralls; fi
