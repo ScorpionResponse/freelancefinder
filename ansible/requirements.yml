@@ -4,3 +4,4 @@
 - src: ScorpionResponse.nginx
 - src: ScorpionResponse.supervisord
 - src: ANXS.postgresql
+- src: geerlingguy.redis

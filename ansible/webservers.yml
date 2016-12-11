@@ -8,6 +8,7 @@
     - ScorpionResponse.gunicorn
     - ScorpionResponse.nginx
     - ScorpionResponse.supervisord
+    - geerlingguy.redis
   tasks:
     - name: Restart gunicorn (lazy)
       debug: msg="restart gunicorn"
