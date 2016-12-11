@@ -13,7 +13,7 @@ def load_initial_sources(apps, schema_editor):
     '''Load new source data.'''
     Source = apps.get_model('remotes', 'Source')
     for source in NEW_SOURCES:
-        new_source = Source(source)
+        new_source = Source(**source)
         new_source.save()
 
 
