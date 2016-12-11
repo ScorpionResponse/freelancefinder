@@ -7,7 +7,7 @@ python:
 install:
   - pip install -r freelancefinder/requirements/development.txt
 before_script:
-  - echo -e "DEBUG=True\nSECRET_KEY='abc123'\nDATABASE_URL='sqlite:////tmp/db.sqlite'\n" > freelancefinder/.env
+  - echo -e "DEBUG=True\nSECRET_KEY='abc123'\nDATABASE_URL='sqlite:////tmp/db.sqlite'\nREDIS_CELERY_URL='redis://localhost:6379/0'\n" > freelancefinder/.env
 script:
   - py.test
   

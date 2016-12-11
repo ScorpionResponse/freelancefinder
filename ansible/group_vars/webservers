@@ -27,4 +27,5 @@ django_superuser_password: 'abc123abc'
 django_debug: True
 django_secret_key: "abc123"
 django_db_url: "psql://freelancefinder:abc123-freelancefinder@192.168.2.4:5432/freelancefinder"
-
+django_settings:
+  REDIS_CELERY_URL: 'redis://localhost:6379/0'

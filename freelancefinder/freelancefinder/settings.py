@@ -96,6 +96,12 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# Celery settings
+BROKER_URL = env('REDIS_CELERY_URL')
+CELERY_RESULT_BACKEND = env('REDIS_CELERY_URL')
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
 
 # Internationalization
 LANGUAGE_CODE = 'en-us'
