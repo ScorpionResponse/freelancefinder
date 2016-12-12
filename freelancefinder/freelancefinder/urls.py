@@ -5,6 +5,7 @@ The base URL for this is /
 """
 from django.conf.urls import url, include
 from django.contrib import admin
+from django.views.generic import TemplateView
 
 from .views import IndexPageView
 
@@ -18,4 +19,6 @@ urlpatterns = [
     url(r'^users/', include('users.urls')),
     url(r'^accounts/', include('authtools.urls')),
     url(r'^freelance_admin/', admin.site.urls),
+    url(r'^robots\.txt$', TemplateView.as_view(template_name='robots.txt', content_type='text/plain'), name='robots.txt'),
+    url(r'^humans\.txt$', TemplateView.as_view(template_name='humans.txt', content_type='text/plain'), name='humans.txt'),
 ]

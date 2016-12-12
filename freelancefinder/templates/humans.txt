@@ -1,0 +1,11 @@
+/* TEAM */
+	Developer: Paul Moss
+	Contact: moss.paul@gmail.com
+	Twitter: @scorpionrespons
+	From: Columbus, Ohio, USA
+
+/* SITE */
+	Language: English
+	Doctype: HTML5
+	IDE: Vim
+    Software: Django, gunicorn, nginx, Postgresql
