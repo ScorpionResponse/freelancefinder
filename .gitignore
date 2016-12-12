@@ -10,6 +10,7 @@ vault-password.file
 
 ansible/roles/ScorpionResponse.*
 ansible/roles/ANXS.*
+ansible/roles/geerlingguy.*
 ansible/*.retry
 
 freelancefinder/public
