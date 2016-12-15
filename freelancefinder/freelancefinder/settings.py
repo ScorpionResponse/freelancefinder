@@ -28,6 +28,7 @@ PREREQ_APPS = [
     'django.contrib.staticfiles',
     'authtools',
     'django_celery_beat',
+    'crispy_forms',
 ]
 
 PROJECT_APPS = [
@@ -74,6 +75,7 @@ TEMPLATES = [
         },
     },
 ]
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 WSGI_APPLICATION = 'freelancefinder.wsgi.application'
 

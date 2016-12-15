@@ -47,15 +47,17 @@
 				{% endfor %}
             </div>
         </section>
-        <section id="main-content">
+        <section id="content">
             <div class="container-fluid">
                 {% block 'content' %}
                 {% endblock %} <!-- pragme: no cover -->
             </div>
         </section>
-        <footer>
+        <footer class="footer">
             <div class="container-fluid">
-                &copy; Paul Moss {% now "Y" %}
+                <span class="text-muted">
+                    &copy; {% now "Y" %} <span class="logo">FreelanceFinder.com</span> - Paul Moss
+                </span>
             </div>
         </footer>
     </body>
