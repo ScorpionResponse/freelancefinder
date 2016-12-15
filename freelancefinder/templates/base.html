@@ -14,11 +14,13 @@
             <nav class="navbar navbar-dark bg-inverse">
                 <div class="container-fluid">
                     <a id="header-logo" class="navbar-brand" href="{% url 'index' %}">FreelanceFinder</a>
-                    <a class="nav-item nav-link" href="{% url 'all-links' %}">All</a>
-                    <a class="nav-item nav-link" href="{% url 'job-list' %}">Job List</a>
-                    <a class="nav-item nav-link" href="{% url 'post-list' %}">Post List</a>
-                    <a class="nav-item nav-link" href="{% url 'source-list' %}">Source List</a>
-                    <div id="header-account" class="pull-right">
+                    <div class="nav navbar-nav">
+                        <a class="nav-item nav-link" href="{% url 'all-links' %}">All</a>
+                        <a class="nav-item nav-link" href="{% url 'job-list' %}">Job List</a>
+                        <a class="nav-item nav-link" href="{% url 'post-list' %}">Post List</a>
+                        <a class="nav-item nav-link" href="{% url 'source-list' %}">Source List</a>
+                    </div>
+                    <div id="header-account" class="pull-right nav navbar-nav">
                         {% if user.is_authenticated %}
                             <!-- AUTH:YES -->
                             <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
