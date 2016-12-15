@@ -1,16 +1,11 @@
 
-/* Basic setup */
-header, footer, aside, nav, article {
-    display: block;
-}
-
 /* Global */
 body {
-    color: #FFFFFF;
+    color: #E0E0E0;
     background-color: #000000;
+    font-family: 'Montserrat', sans-serif;
 }
 
 /* Header */
 #header-account {
-    float: right;
 }
