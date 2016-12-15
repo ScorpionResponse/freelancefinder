@@ -1,13 +1,15 @@
 
 /* Global */
 body {
-    color: #E0E0E0;
     background-color: #000000;
+    color: #E0E0E0;
     font-family: 'Montserrat', sans-serif;
 }
 
 .logo {
+    color: #667C3E;
     font-family: 'Satisfy', cursive;
+    font-size: 200%;
 }
 
 /* Header */
