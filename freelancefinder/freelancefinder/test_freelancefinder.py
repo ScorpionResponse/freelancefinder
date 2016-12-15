@@ -9,7 +9,7 @@ def test_homepage(client):
     """Simple test for the root page."""
     response = client.get('/')
     assert response.status_code == 200
-    assert b'<html>' in response.content
+    assert b'<html' in response.content
 
 
 def test_robots_txt(client):
