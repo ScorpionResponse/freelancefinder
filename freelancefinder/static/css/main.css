@@ -9,12 +9,14 @@ body {
 .logo {
     color: #667C3E;
     font-family: 'Satisfy', cursive;
-    font-size: 200%;
 }
 
 /* Header */
 #header-logo {
+    color: #667C3E;
     float: left;
+    font-family: 'Satisfy', cursive;
+    font-size: 150%;
 }
 
 #header-account {
