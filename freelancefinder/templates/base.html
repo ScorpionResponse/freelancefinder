@@ -34,17 +34,17 @@
         </header>
         <section id="messages">
             <div class="container-fluid">
-				{% for message in messages %}
-					{% if message.level_tag == "error" %}
-						{# Include alert-error in the response (so the tests will find this
-						and confirm we executed the correct code block) but the actual class to
-						use for this is alert-danger #}
-						<!-- alert-error -->
-						<div class="alert alert-danger" role="alert">{{ message }}</div>
-					{% else %}
-						<div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}" role="alert">{{ message }}</div>
-					{% endif %}
-				{% endfor %}
+                {% for message in messages %}
+                    {% if message.level_tag == "error" %}
+                        {# Include alert-error in the response (so the tests will find this
+                        and confirm we executed the correct code block) but the actual class to
+                        use for this is alert-danger #}
+                        <!-- alert-error -->
+                        <div class="alert alert-danger" role="alert">{{ message }}</div>
+                    {% else %}
+                        <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}" role="alert">{{ message }}</div>
+                    {% endif %}
+                {% endfor %}
             </div>
         </section>
         <section id="content">
