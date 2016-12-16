@@ -18,7 +18,7 @@
     - django_environment: development
     - django_user_name: ubuntu
     - django_settings:
-      REDIS_CELERY_URL: 'redis://localhost:6379/0'
+        REDIS_CELERY_URL: 'redis://localhost:6379/0'
   tasks:
     - name: apt-get install packages
       apt: pkg={{ item }} state=installed update_cache=true
