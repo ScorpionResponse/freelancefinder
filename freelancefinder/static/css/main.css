@@ -7,13 +7,13 @@ body {
 }
 
 .logo {
-    color: #667C3E;
+    color: #658B38; /* Bareback Moss Green */
     font-family: 'Satisfy', cursive;
 }
 
 /* Header */
 #header-logo {
-    color: #667C3E;
+    color: #658B38;
     float: left;
     font-family: 'Satisfy', cursive;
     font-size: 150%;
