@@ -20,3 +20,4 @@ freelancefinder/.env
 .cache
 .coverage
 coverage.xml
+*.log
