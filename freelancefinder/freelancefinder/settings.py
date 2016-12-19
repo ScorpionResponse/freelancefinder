@@ -83,6 +83,8 @@ DATABASES = {
     'default': env.db()
 }
 
+LOG_LEVEL = DEBUG == 'DEBUG' and 'DEBUG' or 'INFO'
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -130,35 +132,25 @@ LOGGING = {
             'filters': ['require_debug_false', 'request_id'],
         },
         'logfile': {
-            'level': 'INFO',
+            'level': LOG_LEVEL,
             'class': 'logging.handlers.RotatingFileHandler',
             'filename': '/var/log/django/freelancefinder.log',
             'maxBytes': 1024 * 1024 * 5,  # 5 MB
             'backupCount': 7,
             'formatter': 'main',
-            'filters': ['require_debug_false', 'request_id'],
+            'filters': ['request_id'],
         },
         'celery': {
-            'level': 'INFO',
+            'level': LOG_LEVEL,
             'class': 'logging.handlers.RotatingFileHandler',
             'filename': '/var/log/django/freelancefinder_celery.log',
             'maxBytes': 1024 * 1024 * 5,  # 5 MB
             'backupCount': 7,
             'formatter': 'celery',
-            'filters': ['require_debug_false'],
         },
         'console': {
             'level': 'DEBUG',
             'class': 'logging.StreamHandler',
-            'formatter': 'main',
-            'filters': ['require_debug_true', 'request_id'],
-        },
-        'debug': {
-            'level': 'DEBUG',
-            'class': 'logging.handlers.RotatingFileHandler',
-            'filename': 'django_debug.log',
-            'maxBytes': 1024 * 1024 * 5,  # 5 MB
-            'backupCount': 7,
             'formatter': 'main',
             'filters': ['require_debug_true', 'request_id'],
         },
@@ -176,14 +168,14 @@ LOGGING = {
             'handlers': ['null', ],
         },
         'celery': {
-            'handlers': ['console', 'celery', 'debug'],
+            'handlers': ['console', 'celery'],
             'level': 'DEBUG',
         },
         'py.warnings': {
             'handlers': ['null', ],
         },
         '': {
-            'handlers': ['console', 'logfile', 'debug'],
+            'handlers': ['console', 'logfile'],
             'level': "DEBUG",
         },
     }
