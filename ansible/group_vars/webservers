@@ -9,7 +9,7 @@ gunicorn_install_path: "/srv/venv/bin"
 gunicorn_django_settings: "freelancefinder.settings"
 
 # nginx
-nginx_server_name: freelancefinder.com
+nginx_server_name: freelancefinder.work
 nginx_application_dir: /srv/freelancefinder/freelancefinder/public
 
 # django
