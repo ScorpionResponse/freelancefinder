@@ -15,9 +15,3 @@
       changed_when: true
       notify:
         - restart gunicorn
-
-    - name: Create Django superuser
-      shell: ". {{ django_virtualenv_path }}/bin/activate && echo \"from authtools.models import User; u = User.objects.create_superuser(email='{{ django_superuser_email }}', password='{{ django_superuser_password }}');\" | python manage.py shell"
-      args:
-        chdir: "{{ django_base_dir }}/{{ django_project_name }}/{{ django_subdirectory }}"
-      when: django_superuser_name is defined
