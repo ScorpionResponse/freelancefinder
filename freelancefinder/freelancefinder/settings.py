@@ -33,6 +33,7 @@ PREREQ_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.github',
+    'allauth.socialaccount.providers.google',
     'allauth.socialaccount.providers.linkedin',
     'allauth.socialaccount.providers.reddit',
 ]
@@ -57,6 +58,7 @@ ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_USER_MODEL_USERNAME_FIELD = None
+SOCIALACCOUNT_QUERY_EMAIL = True
 SITE_ID = 1
 
 MIDDLEWARE = [
