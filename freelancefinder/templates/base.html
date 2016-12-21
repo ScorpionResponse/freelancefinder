@@ -23,10 +23,10 @@
                     <div id="header-account" class="pull-right nav navbar-nav">
                         {% if user.is_authenticated %}
                             <!-- AUTH:YES -->
-                            <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
+                            <a class="nav-item nav-link" href="{% url 'account_logout' %}">Logout</a>
                         {% else %}
                             <!-- AUTH:NO -->
-                            <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
+                            <a class="nav-item nav-link" href="{% url 'account_login' %}">Login</a>
                         {% endif %}
                     </div>
                 </div>
