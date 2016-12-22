@@ -9,3 +9,4 @@ pycodestyle==2.2.0
 pydocstyle==1.1.1
 pylint==1.6.4
 pylint-django==0.7.2
+django-debug-toolbar==1.6

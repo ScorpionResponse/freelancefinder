@@ -5,6 +5,7 @@ Requires django-environ
 """
 
 import environ
+from . import VERSION
 
 root = environ.Path(__file__) - 2
 env = environ.Env(DEBUG=(bool, False),)
@@ -38,6 +39,11 @@ PREREQ_APPS = [
     'allauth.socialaccount.providers.reddit',
 ]
 
+if DEBUG:
+    PREREQ_APPS += [
+        'debug_toolbar',
+    ]
+
 PROJECT_APPS = [
     'jobs',
     'remotes',
@@ -58,8 +64,26 @@ ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_USER_MODEL_USERNAME_FIELD = None
-SOCIALACCOUNT_QUERY_EMAIL = True
 SITE_ID = 1
+
+SOCIALACCOUNT_QUERY_EMAIL = True
+SOCIALACCOUNT_PROVIDERS = {
+    'github': {},
+    'google': {
+        'SCOPE': ['profile', 'email'],
+        'AUTH_PARAMS': {'access_type': 'online'},
+    },
+    'linkedin': {
+        'SCOPE': ['r_emailaddress'],
+        'PROFILE_FIELDS': ['id', 'first-name', 'last-name', 'email-address',
+                           'picture-url', 'public-profile-url'],
+    },
+    'reddit': {
+        'AUTH_PARAMS': {'duration': 'permanent'},
+        'SCOPE': ['identity', 'submit'],
+        'USER_AGENT': 'django:work.freelancefinder:{} (by /u/phile19_81)'.format(VERSION),
+    },
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -70,6 +94,18 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+if DEBUG:
+    MIDDLEWARE += [
+        'debug_toolbar.middleware.DebugToolbarMiddleware',
+    ]
+    INTERNAL_IPS = [
+        '192.168.2.1',
+        '192.168.2.2',
+        '192.168.2.3',
+        '192.168.2.4',
+        '192.168.2.5',
+    ]
 
 ROOT_URLCONF = 'freelancefinder.urls'
 
