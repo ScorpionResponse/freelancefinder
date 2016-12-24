@@ -3,7 +3,11 @@
 body {
     background-color: #000000;
     color: #E0E0E0;
-    font-family: 'Montserrat', sans-serif;
+    font-family: "Montserrat", "Helvetica Neue", "Calibri Light", Roboto, sans-serif;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    letter-spacing: 0.02em;
 }
 
 .logo {
