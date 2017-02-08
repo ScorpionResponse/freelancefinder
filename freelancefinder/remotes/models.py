@@ -16,3 +16,12 @@ class Source(models.Model):
     def __str__(self):
         """Representation for a Source."""
         return u"<Source Code:{}; Name:{}>".format(self.code, self.name)
+
+    def harvester(self):
+        """Gets the harvester for this source."""
+        source_harvester = None
+        if self.code == "reddit":
+            from .sources.reddit.harvest import Harvester
+
+        source_harvester = Harvester(self.code, self.name)
+        return source_harvester
