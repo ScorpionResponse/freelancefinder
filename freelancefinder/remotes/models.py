@@ -23,5 +23,5 @@ class Source(models.Model):
         if self.code == "reddit":
             from .sources.reddit.harvest import Harvester
 
-        source_harvester = Harvester(self.code, self.name)
+        source_harvester = Harvester(self)
         return source_harvester
