@@ -7,6 +7,7 @@ class Harvester(object):
     """Simple Harvester to gather reddit posts."""
 
     def __init__(self, code, name):
+        """Init the harvester with basic info."""
         self.code = code
         self.name = name
 

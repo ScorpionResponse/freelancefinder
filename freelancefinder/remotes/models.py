@@ -18,7 +18,7 @@ class Source(models.Model):
         return u"<Source Code:{}; Name:{}>".format(self.code, self.name)
 
     def harvester(self):
-        """Gets the harvester for this source."""
+        """Get the harvester for this source."""
         source_harvester = None
         if self.code == "reddit":
             from .sources.reddit.harvest import Harvester
