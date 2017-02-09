@@ -259,6 +259,7 @@ CELERY_RESULT_BACKEND = env('REDIS_CELERY_URL')
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
+CELERY_IMPORTS = ('remotes.tasks',)
 
 # Internationalization
 LANGUAGE_CODE = 'en-us'
