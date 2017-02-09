@@ -33,3 +33,4 @@ django_settings:
 # Celery
 celery_project_name: freelancefinder
 celery_project_dir: "/srv/freelancefinder/freelancefinder"
+celery_bin_dir: "/srv/venv/bin/"
