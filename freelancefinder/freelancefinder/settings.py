@@ -199,7 +199,7 @@ LOGGING = {
         'celery': {
             'level': LOG_LEVEL,
             'class': 'logging.handlers.RotatingFileHandler',
-            'filename': '/var/log/django/freelancefinder_celery.log',
+            'filename': '/var/log/celery/freelancefinder.log',
             'maxBytes': 1024 * 1024 * 5,  # 5 MB
             'backupCount': 7,
             'formatter': 'celery',

@@ -1,12 +1,13 @@
 """Tasks to perform periodic tasks with remotes."""
 
-from celery import shared_task
 from celery.utils.log import get_task_logger
+
+from freelancefinder import celery_app
 
 logger = get_task_logger(__name__)
 
 
-@shared_task
+@celery_app.task
 def harvest_sources():
     """Get a new batch of data from all sources."""
     from .models import Source
