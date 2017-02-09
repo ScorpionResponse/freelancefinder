@@ -4,6 +4,7 @@
   become: yes
   become_user: root
   roles:
+    - ScorpionResponse.celery
     - ScorpionResponse.django
     - ScorpionResponse.gunicorn
     - ScorpionResponse.nginx
@@ -15,3 +16,15 @@
       changed_when: true
       notify:
         - restart gunicorn
+
+    - name: Restart celeryworker (lazy)
+      debug: msg="restart celeryworker"
+      changed_when: true
+      notify:
+        - restart celeryworker
+
+    - name: Restart celerybeat (lazy)
+      debug: msg="restart celerybeat"
+      changed_when: true
+      notify:
+        - restart celerybeat

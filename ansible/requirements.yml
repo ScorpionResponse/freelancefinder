@@ -1,4 +1,5 @@
 ---
+- src: ScorpionResponse.celery
 - src: ScorpionResponse.django
 - src: ScorpionResponse.gunicorn
 - src: ScorpionResponse.nginx
