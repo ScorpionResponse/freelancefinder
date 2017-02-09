@@ -5,7 +5,8 @@ Requires django-environ
 """
 
 import environ
-from . import VERSION
+# from . import VERSION
+VERSION = '0.0.3'
 
 root = environ.Path(__file__) - 2
 env = environ.Env(DEBUG=(bool, False),)
