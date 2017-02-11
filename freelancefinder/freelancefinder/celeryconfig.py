@@ -14,8 +14,8 @@ celery_app.autodiscover_tasks()
 
 # Configure periodic tasks
 celery_app.conf.beat_schedule = {
-    'harvest_every_minute': {
+    'harvest_every_10_minutes': {
         'task': 'remotes.tasks.harvest_sources',
-        'schedule': crontab(),
+        'schedule': crontab(minute='*/10'),
     },
 }
