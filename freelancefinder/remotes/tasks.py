@@ -1,10 +1,22 @@
 """Tasks to perform periodic tasks with remotes."""
 
+from django_celery_beat.models import IntervalSchedule, PeriodicTask
 from celery.utils.log import get_task_logger
 
 from freelancefinder import celery_app
 
+
 logger = get_task_logger(__name__)
+
+
+@celery_app.on_after_configure.connect
+def setup_periodic_tasks(sender, **kwargs):
+    """Ensure periodic tasks are present in the DB."""
+
+    schedule, created = IntervalSchedule.objects.get_or_create(every=10, period=IntervalSchedule.minutes)
+
+    PeriodicTask.get_or_create(interval=schedule, name='Harvest Remotes',
+                               task='remotes.tasks.harvest_sources')
 
 
 @celery_app.task
