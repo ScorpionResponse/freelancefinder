@@ -13,7 +13,7 @@ logger = get_task_logger(__name__)
 def setup_periodic_tasks(sender, **kwargs):
     """Ensure periodic tasks are present in the DB."""
 
-    schedule, created = IntervalSchedule.objects.get_or_create(every=10, period=IntervalSchedule.minutes)
+    schedule, created = IntervalSchedule.objects.get_or_create(every=10, period=IntervalSchedule.MINUTES)
 
     PeriodicTask.get_or_create(interval=schedule, name='Harvest Remotes',
                                task='remotes.tasks.harvest_sources')
