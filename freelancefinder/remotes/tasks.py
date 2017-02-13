@@ -1,11 +1,11 @@
 """Tasks to perform periodic tasks with remotes."""
 
 from django_celery_beat.models import IntervalSchedule, PeriodicTask
+from celery import Celery
 from celery.utils.log import get_task_logger
 
-from freelancefinder import celery_app
 
-
+celery_app = Celery()
 logger = get_task_logger(__name__)
 
 
