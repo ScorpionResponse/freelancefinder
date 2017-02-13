@@ -15,8 +15,8 @@ def setup_periodic_tasks(sender, **kwargs):
 
     schedule, created = IntervalSchedule.objects.get_or_create(every=10, period=IntervalSchedule.MINUTES)
 
-    PeriodicTask.get_or_create(interval=schedule, name='Harvest Remotes',
-                               task='remotes.tasks.harvest_sources')
+    PeriodicTask.objects.get_or_create(interval=schedule, name='Harvest Remotes',
+                                       task='remotes.tasks.harvest_sources')
 
 
 @celery_app.task
