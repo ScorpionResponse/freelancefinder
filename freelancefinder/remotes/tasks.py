@@ -4,6 +4,8 @@ from django_celery_beat.models import IntervalSchedule, PeriodicTask
 from celery import Celery
 from celery.utils.log import get_task_logger
 
+import maya
+
 
 celery_app = Celery()
 logger = get_task_logger(__name__)
@@ -16,7 +18,7 @@ def setup_periodic_tasks(sender, **kwargs):
     schedule, created = IntervalSchedule.objects.get_or_create(every=10, period=IntervalSchedule.MINUTES)
 
     PeriodicTask.objects.get_or_create(interval=schedule, name='Harvest Remotes',
-                                       task='remotes.tasks.harvest_sources')
+                                       task='remotes.tasks.harvest_sources', expires=maya.now().add(minutes=30).datetime())
 
 
 @celery_app.task
