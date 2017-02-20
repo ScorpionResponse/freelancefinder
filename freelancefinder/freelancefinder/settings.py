@@ -38,6 +38,7 @@ PREREQ_APPS = [
     'allauth.socialaccount.providers.google',
     'allauth.socialaccount.providers.linkedin',
     'allauth.socialaccount.providers.reddit',
+    'django_logtail',
 ]
 
 if DEBUG:
@@ -237,6 +238,18 @@ LOGGING = {
     }
 }
 
+# Logtail config
+LOGTAIL_FILES = {
+    'celery_beat': '/var/log/celery/beat.log',
+    'celery_worker': '/var/log/celery/worker.log',
+    'django': '/var/log/django/freelancefinder.log',
+    'gunicorn_access': '/var/log/gunicorn/access.log',
+    'gunicorn_error': '/var/log/gunicorn/error.log',
+    'nginx_access': '/var/log/nginx/access.log',
+    'nginx_error': '/var/log/nginx/error.log',
+    'redis': '/var/log/redis/redis-server.log',
+    'supervisord': '/var/log/supervisord/supervisord.log',
+}
 
 AUTH_PASSWORD_VALIDATORS = [
     {
