@@ -60,6 +60,8 @@ AUTHENTICATION_BACKENDS = [
     'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
+REDDIT_USER_AGENT = 'django:work.freelancefinder:{} (by /u/phile19_81)'.format(VERSION)
+
 # Configure allauth, no username
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_REQUIRED = True
@@ -83,7 +85,7 @@ SOCIALACCOUNT_PROVIDERS = {
     'reddit': {
         'AUTH_PARAMS': {'duration': 'permanent'},
         'SCOPE': ['identity', 'submit'],
-        'USER_AGENT': 'django:work.freelancefinder:{} (by /u/phile19_81)'.format(VERSION),
+        'USER_AGENT': REDDIT_USER_AGENT,
     },
 }
 

@@ -29,6 +29,8 @@ django_secret_key: "abc123"
 django_db_url: "psql://freelancefinder:abc123-freelancefinder@192.168.2.4:5432/freelancefinder"
 django_settings:
   REDIS_CELERY_URL: 'redis://localhost:6379/0'
+  REDDIT_CLIENT_ID: "{{ _REDDIT_CLIENT_ID }}"
+  REDDIT_CLIENT_SECRET: "{{ _REDDIT_CLIENT_SECRET }}"
 
 # Celery
 celery_project_name: freelancefinder

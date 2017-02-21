@@ -1,5 +1,9 @@
 """Harvest process for the Reddit Source."""
 
+import praw
+
+from django.conf import settings
+
 from jobs.models import Post
 
 
@@ -10,6 +14,9 @@ class Harvester(object):
         """Init the harvester with basic info."""
         self.source = source
         self.status_info = {'count': 0}
+        self.client = praw.Reddit(client_id=settings.REDDIT_CLIENT_ID,
+                                  client_secret=settings.REDDIT_CLIENT_SECRET,
+                                  user_agent=settings.REDDIT_USER_AGENT)
 
     def harvest(self):
         """Gather some Posts from reddit."""
