@@ -20,8 +20,8 @@ class Harvester(object):
 
     def harvest(self):
         """Gather some Posts from reddit."""
-        for index in range(10):
-            post = Post(url="http://reddit.com/", source=self.source, title="Test Post {}".format(index), description="Steve")
+        for submission in self.client.subreddit('freelance_forhire').new(limit=10):
+            post = Post(url=submission.url, source=self.source, title=submission.title, description=submission.description)
             self.status_info['count'] += 1
             yield post
 
