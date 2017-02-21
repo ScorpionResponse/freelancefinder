@@ -20,7 +20,9 @@ class Harvester(object):
 
     def harvest(self):
         """Gather some Posts from reddit."""
-        for submission in self.client.subreddit('freelance_forhire').new(limit=10):
+        subreddits_to_monitor = self.source.config['subreddits']
+        subreddit_joined = '+'.join(subreddits_to_monitor)
+        for submission in self.client.subreddit(subreddit_joined).new(limit=10):
             if not Post.objects.filter(source=self.source, unique=submission.id).exists():
                 post = Post(url=submission.url, source=self.source, title=submission.title, description=submission.selftext, unique=submission.id)
                 self.status_info['count'] += 1
