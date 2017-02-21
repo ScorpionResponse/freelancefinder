@@ -22,7 +22,7 @@ def setup_periodic_tasks(sender, **kwargs):
     pertask, created = PeriodicTask.objects.get_or_create(interval=schedule, name='Harvest Remotes', task='remotes.tasks.harvest_sources', expires=maya.now().add(minutes=30).datetime())
     logger.debug("Got periodic task: %s", pertask)
 
-    if not created and pertask.expires < maya.now().datetime():
+    if not created:
         logger.info("Deleting old periodic task and creating a new one.")
         pertask.delete()
         PeriodicTask.objects.get_or_create(interval=schedule, name='Harvest Remotes', task='remotes.tasks.harvest_sources', expires=maya.now().add(minutes=30).datetime())
