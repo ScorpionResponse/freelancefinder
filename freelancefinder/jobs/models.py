@@ -16,7 +16,7 @@ class Post(models.Model):
     postition was found.
     """
 
-    job = models.ForeignKey('Job', on_delete=models.CASCADE, related_name="posts")
+    job = models.ForeignKey('Job', on_delete=models.CASCADE, related_name="posts", blank=True, null=True)
     url = models.URLField()
     source = models.ForeignKey('remotes.Source', on_delete=models.SET_NULL, blank=True, null=True, related_name="posts")
     date_added = models.DateTimeField(default=datetime.datetime.now)
