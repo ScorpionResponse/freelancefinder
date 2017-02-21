@@ -3,6 +3,7 @@
 from future.utils import python_2_unicode_compatible
 
 from django.db import models
+from django.contrib.postgres.fields import JSONField
 
 
 @python_2_unicode_compatible
@@ -12,6 +13,7 @@ class Source(models.Model):
     code = models.CharField(max_length=20, primary_key=True)
     name = models.CharField(max_length=200)
     url = models.URLField()
+    config = JSONField()
 
     def __str__(self):
         """Representation for a Source."""
