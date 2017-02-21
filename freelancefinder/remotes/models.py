@@ -13,7 +13,7 @@ class Source(models.Model):
     code = models.CharField(max_length=20, primary_key=True)
     name = models.CharField(max_length=200)
     url = models.URLField()
-    config = JSONField()
+    config = JSONField(default=dict)
 
     def __str__(self):
         """Representation for a Source."""
