@@ -61,6 +61,8 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 REDDIT_USER_AGENT = 'django:work.freelancefinder:{} (by /u/phile19_81)'.format(VERSION)
+REDDIT_CLIENT_ID = env('REDDIT_CLIENT_ID')
+REDDIT_CLIENT_SECRET = env('REDDIT_CLIENT_SECRET')
 
 # Configure allauth, no username
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
