@@ -3,12 +3,13 @@
 import datetime
 
 from future.utils import python_2_unicode_compatible
+from model_utils.models import TimeStampedModel
 
 from django.db import models
 
 
 @python_2_unicode_compatible
-class Post(models.Model):
+class Post(TimeStampedModel):
     """
     Simple model for tracking a Post.
 
@@ -22,6 +23,10 @@ class Post(models.Model):
     date_added = models.DateTimeField(default=datetime.datetime.now)
     title = models.CharField(max_length=255)
     description = models.TextField()
+    unique = models.CharField(max_length=255)
+
+    class Meta:
+        unique_together = ("source", "unique")
 
     def __str__(self):
         """Representation for a Post."""
