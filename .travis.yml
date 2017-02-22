@@ -17,7 +17,7 @@ script:
   
   # Fail on outdated requirements
   - reqs=$(mktemp)
-  - pip list --outdated | tee ${reqs}
+  - pip list --outdated --format=columns | tee ${reqs}
   - >
     NUM=`wc -l ${reqs} | cut -f1 -d" "`; 
     [ $NUM -eq 0 ] 
