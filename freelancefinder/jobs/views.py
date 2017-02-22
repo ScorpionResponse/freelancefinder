@@ -15,4 +15,5 @@ class PostListView(ListView):
     """List all Posts."""
 
     model = Post
+    queryset = Post.objects.all().order_by('-created')
     template_name = "jobs/post_list.html"
