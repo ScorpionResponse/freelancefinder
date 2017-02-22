@@ -30,7 +30,7 @@ def delete_config_data(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('remotes', '0005_auto_20170222_1422'),
+        ('remotes', '0003_auto_20170222_1422'),
     ]
 
     operations = [
