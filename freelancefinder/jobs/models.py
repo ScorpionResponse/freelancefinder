@@ -20,7 +20,6 @@ class Post(TimeStampedModel):
     job = models.ForeignKey('Job', on_delete=models.CASCADE, related_name="posts", blank=True, null=True)
     url = models.URLField()
     source = models.ForeignKey('remotes.Source', on_delete=models.SET_NULL, blank=True, null=True, related_name="posts")
-    date_added = models.DateTimeField(default=datetime.datetime.now)
     title = models.CharField(max_length=255)
     description = models.TextField()
     unique = models.CharField(max_length=255)
@@ -32,7 +31,7 @@ class Post(TimeStampedModel):
 
     def __str__(self):
         """Representation for a Post."""
-        return u"<Post ID:{}; Title:{}>".format(self.pk, self.title)
+        return u"<Post ID:{}; Unique:{}; Title:{}>".format(self.pk, self.unique, self.title)
 
 
 @python_2_unicode_compatible

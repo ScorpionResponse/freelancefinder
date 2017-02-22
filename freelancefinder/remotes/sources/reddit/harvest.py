@@ -30,7 +30,7 @@ class Harvester(object):
                 logger.info("Reddit harvester got duplication post id %s, assuming everything new is harvested.", submission.id)
                 break
             else:
-                post = Post(url=submission.url, source=self.source, title=submission.title, description=submission.selftext, unique=submission.id)
+                post = Post(url=submission.url, source=self.source, title=submission.title[:255], description=submission.selftext, unique=submission.id)
                 self.status_info['count'] += 1
                 yield post
         logger.info("Reddit harvester got %s posts", self.status_info['count'])

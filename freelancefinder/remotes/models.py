@@ -37,7 +37,7 @@ class SourceConfig(models.Model):
 
     def __str__(self):
         """Config value."""
-        return u"<SourceConfig: K: {}; V: {}".format(self.config_key, self.config_value)
+        return u"<SourceConfig:{}; K:{}; V:{}".format(self.pk, self.config_key, self.config_value)
 
     class Meta:
         """Meta info for SourceConfig."""
