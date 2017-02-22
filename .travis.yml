@@ -4,8 +4,10 @@ python:
   - 2.7
   - 3.4
   - 3.5
+  - 3.6
 install:
   - pip install -r freelancefinder/requirements/development.txt
+  - pip install -r freelancefinder/requirements/travis.txt
   - sudo mkdir /var/log/django && sudo chmod 777 /var/log/django
 before_script:
   - echo -e "DEBUG=True\nSECRET_KEY='abc123'\nDATABASE_URL='sqlite:////tmp/db.sqlite'\nREDIS_CELERY_URL='redis://localhost:6379/0'\nREDDIT_CLIENT_ID='steve'\nREDDIT_CLIENT_SECRET='steve2'\n" > freelancefinder/.env
