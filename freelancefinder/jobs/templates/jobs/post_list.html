@@ -4,7 +4,7 @@
 <h1>Post List</h1>
 <ol>
 {% for job in post_list %}
-<li>{{ job }} - <a href="{{ job.url }}">Source Post</a></li>
+<li>{{ job }} - <a target="_blank" href="{{ job.url }}">Source Post</a></li>
 {% endfor %}
 </ol>
 
