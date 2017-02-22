@@ -21,10 +21,6 @@ class Migration(migrations.Migration):
                 ('config_value', models.CharField(blank=True, max_length=255, null=True)),
             ],
         ),
-        migrations.RemoveField(
-            model_name='source',
-            name='config',
-        ),
         migrations.AddField(
             model_name='sourceconfig',
             name='source',
