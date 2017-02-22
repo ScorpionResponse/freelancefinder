@@ -6,6 +6,7 @@ python:
   - 3.5
   - 3.6
 install:
+  - pip install --upgrade pip
   - pip install -r freelancefinder/requirements/development.txt
   - pip install -r freelancefinder/requirements/travis.txt
   - sudo mkdir /var/log/django && sudo chmod 777 /var/log/django
