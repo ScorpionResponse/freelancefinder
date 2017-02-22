@@ -15,5 +15,6 @@ class SourceConfigAdmin(admin.ModelAdmin):
 
     pass
 
+
 admin.site.register(Source, SourceAdmin)
 admin.site.register(SourceConfig, SourceConfigAdmin)
