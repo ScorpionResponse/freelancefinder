@@ -1,10 +1,13 @@
 """Harvest process for the Reddit Source."""
 
+import logging
 import praw
 
 from django.conf import settings
 
 from jobs.models import Post
+
+logger = logging.getLogger(__name__)
 
 
 class Harvester(object):
@@ -22,11 +25,15 @@ class Harvester(object):
         """Gather some Posts from reddit."""
         subreddits_to_monitor = self.source.config.filter(config_key='subreddits').first().config_value.split('|')
         subreddit_joined = '+'.join(subreddits_to_monitor)
-        for submission in self.client.subreddit(subreddit_joined).new(limit=10):
-            if not Post.objects.filter(source=self.source, unique=submission.id).exists():
+        for submission in self.client.subreddit(subreddit_joined).new(limit=100):
+            if Post.objects.filter(source=self.source, unique=submission.id).exists():
+                logger.info("Reddit harvester got duplication post id %s, assuming everything new is harvested.", submission.id)
+                break
+            else:
                 post = Post(url=submission.url, source=self.source, title=submission.title, description=submission.selftext, unique=submission.id)
                 self.status_info['count'] += 1
                 yield post
+        logger.info("Reddit harvester got %s posts", self.status_info['count'])
 
     def status(self):
         """Return the current status of this harvester."""
