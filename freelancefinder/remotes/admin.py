@@ -1,7 +1,7 @@
 """Admin pages for remotes."""
 from django.contrib import admin
 
-from .models import Source
+from .models import Source, SourceConfig
 
 
 class SourceAdmin(admin.ModelAdmin):
@@ -10,4 +10,10 @@ class SourceAdmin(admin.ModelAdmin):
     pass
 
 
+class SourceConfigAdmin(admin.ModelAdmin):
+    """Basic admin for sourceconfig."""
+
+    pass
+
 admin.site.register(Source, SourceAdmin)
+admin.site.register(SourceConfig, SourceConfigAdmin)
