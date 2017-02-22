@@ -40,4 +40,6 @@ class SourceConfig(models.Model):
         return u"<SourceConfig: K: {}; V: {}".format(self.config_key, self.config_value)
 
     class Meta:
+        """Meta info for SourceConfig."""
+
         unique_together = ("source", "config_key")

@@ -26,6 +26,8 @@ class Post(TimeStampedModel):
     unique = models.CharField(max_length=255)
 
     class Meta:
+        """Meta info for Post."""
+
         unique_together = ("source", "unique")
 
     def __str__(self):

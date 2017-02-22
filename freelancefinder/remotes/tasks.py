@@ -14,7 +14,6 @@ logger = get_task_logger(__name__)
 @celery_app.on_after_configure.connect
 def setup_periodic_tasks(sender, **kwargs):
     """Ensure periodic tasks are present in the DB."""
-
     logger.info("Configuring periodic tasks.")
 
     schedule, created = IntervalSchedule.objects.get_or_create(every=10, period=IntervalSchedule.MINUTES)
