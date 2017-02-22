@@ -20,7 +20,7 @@ class Harvester(object):
 
     def harvest(self):
         """Gather some Posts from reddit."""
-        subreddits_to_monitor = self.source.config['subreddits']
+        subreddits_to_monitor = self.source.config.filter(config_key='subreddits').first().split('|')
         subreddit_joined = '+'.join(subreddits_to_monitor)
         for submission in self.client.subreddit(subreddit_joined).new(limit=10):
             if not Post.objects.filter(source=self.source, unique=submission.id).exists():

@@ -13,7 +13,6 @@ class Source(models.Model):
     code = models.CharField(max_length=20, primary_key=True)
     name = models.CharField(max_length=200)
     url = models.URLField()
-    config = JSONField(default=dict)
 
     def __str__(self):
         """Representation for a Source."""
@@ -27,3 +26,19 @@ class Source(models.Model):
 
         source_harvester = Harvester(self)
         return source_harvester
+
+
+@python_2_unicode_compatible
+class SourceConfig(models.Model):
+    """Config values for Sources."""
+
+    source = models.ForeignKey("Source", on_delete=models.CASCADE, related_name="config")
+    config_key = models.CharField(max_length=32)
+    config_value = models.CharField(max_length=255, blank=True, null=True)
+
+    def __str__(self):
+        """Config value."""
+        return u"<SourceConfig: K: {}; V: {}".format(self.config_key, self.config_value)
+
+    class Meta:
+        unique_together = ("source", "config_key")
