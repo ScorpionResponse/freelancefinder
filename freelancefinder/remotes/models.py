@@ -3,7 +3,6 @@
 from future.utils import python_2_unicode_compatible
 
 from django.db import models
-from django.contrib.postgres.fields import JSONField
 
 
 @python_2_unicode_compatible
