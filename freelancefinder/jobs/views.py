@@ -23,3 +23,10 @@ class PostListView(FormMixin, ListView):
 
     def get_queryset(self):
         return Post.objects.all().order_by('-created')
+
+    def get_context_data(self, **kwargs):
+        context = super(PostListView, self).get_context_data(**kwargs)
+
+        context['form'] = self.get_form()
+
+        return context
