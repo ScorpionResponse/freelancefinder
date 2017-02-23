@@ -1,5 +1,10 @@
 
 /* Global */
+html {
+    position: relative;
+    min-height: 100%;
+}
+
 body {
     background-color: #000000;
     color: #E0E0E0;
@@ -8,6 +13,7 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     letter-spacing: 0.02em;
+    margin-bottom: 60px;
 }
 
 .logo {
