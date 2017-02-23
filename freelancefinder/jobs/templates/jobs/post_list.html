@@ -1,7 +1,12 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
 {% block 'content' %}
 
 <h1>Post List</h1>
+<div class='searchform'>
+    {{ crispy form }}
+</div>
 <ol>
 {% for job in post_list %}
 <li>{{ job }} - <a target="_blank" href="{{ job.url }}">Source Post</a></li>

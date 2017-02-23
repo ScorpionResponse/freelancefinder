@@ -23,6 +23,8 @@ class Post(TimeStampedModel):
     title = models.CharField(max_length=255)
     description = models.TextField()
     unique = models.CharField(max_length=255)
+    is_job_posting = models.BooleanField(default=False)
+    is_freelance = models.BooleanField(default=False)
 
     class Meta:
         """Meta info for Post."""
