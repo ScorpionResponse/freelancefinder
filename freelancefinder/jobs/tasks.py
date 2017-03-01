@@ -31,7 +31,7 @@ def process_new_posts():
 
     for post in Post.objects.new():
         post.processed = True
-        if post.title.lower().contains('[hiring]'):
+        if '[hiring]' in post.title.lower():
             post.is_job_posting = True
             post.is_freelance = True
         post.save()
