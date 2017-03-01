@@ -11,16 +11,19 @@
     </head>
     <body>
         <header>
-            <nav class="navbar navbar-dark bg-inverse">
-                <div class="container-fluid">
-                    <a id="header-logo" class="navbar-brand logo" href="{% url 'index' %}">FreelanceFinder</a>
-                    <div class="nav navbar-nav">
+            <nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse">
+                <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <a id="header-logo" class="navbar-brand logo" href="{% url 'index' %}">FreelanceFinder</a>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <div class="navbar-nav">
                         <a class="nav-item nav-link" href="{% url 'all-links' %}">All</a>
                         <a class="nav-item nav-link" href="{% url 'job-list' %}">Job List</a>
                         <a class="nav-item nav-link" href="{% url 'post-list' %}">Post List</a>
                         <a class="nav-item nav-link" href="{% url 'source-list' %}">Source List</a>
                     </div>
-                    <div id="header-account" class="pull-right nav navbar-nav">
+                    <div id="header-account" class="navbar-nav justify-content-md-end">
                         {% if user.is_authenticated %}
                             <!-- AUTH:YES -->
                             <a class="nav-item nav-link" href="{% url 'account_logout' %}">Logout</a>
