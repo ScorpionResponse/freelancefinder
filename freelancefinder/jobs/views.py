@@ -10,7 +10,12 @@ class JobListView(ListView):
     """List all jobs."""
 
     model = Job
+    paginate_by = 20
     template_name = "jobs/job_list.html"
+
+    def get_queryset(self):
+        """Queryset should sort by desc created by default."""
+        return Job.objects.all().order_by('-created')
 
 
 class PostListView(FormMixin, ListView):

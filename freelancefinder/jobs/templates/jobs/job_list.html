@@ -2,10 +2,12 @@
 {% block 'content' %}
 
 <h1>Job List</h1>
+{% include 'helpers/pagination.html' %}
 <ul>
 {% for job in job_list %}
     <li>{{ job }}</li>
 {% endfor %}
 </ul>
+{% include 'helpers/pagination.html' %}
 
 {% endblock %}
