@@ -7,10 +7,12 @@
 <div class='searchform'>
     {% crispy form %}
 </div>
+{% include 'helpers/pagination.html' %}
 <ol>
 {% for job in post_list %}
 <li>{{ job }} - <a target="_blank" href="{{ job.url }}">Source Post</a></li>
 {% endfor %}
 </ol>
+{% include 'helpers/pagination.html' %}
 
 {% endblock %}
