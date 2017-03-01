@@ -40,7 +40,9 @@ def process_new_posts():
 @celery_app.task
 def create_jobs():
     """Create a Job from a Post."""
-    from .models import Post
+    from .models import Post, Job
 
     for post in Post.objects.pending_freelance_jobs():
-        post.job.create(title=post.title, description=post.description)
+        job = Job.objects.create(title=post.title, description=post.description)
+        post.job = job
+        post.save()
