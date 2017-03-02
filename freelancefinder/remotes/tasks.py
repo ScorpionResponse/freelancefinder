@@ -45,11 +45,12 @@ def setup_periodic_tasks(sender, **kwargs):
 
     if settings.DEBUG:
         # Expire the harvest task when we're debugging
+        expiry_time = maya.now().add(minutes=60).datetime()
         if created:
             logger.debug('Newly created harvest task, set expiry.')
-            pertask.expires = maya.now().add(minutes=30).datetime()
+            pertask.expires = expiry_time
             pertask.save()
         else:
             logger.info("Deleting old periodic task and creating a new one.")
             pertask.delete()
-            PeriodicTask.objects.create(interval=schedule_10_minutes, name='Harvest Remotes', task='remotes.tasks.harvest_sources', expires=maya.now().add(minutes=30).datetime())
+            PeriodicTask.objects.create(interval=schedule_10_minutes, name='Harvest Remotes', task='remotes.tasks.harvest_sources', expires=expiry_time)
