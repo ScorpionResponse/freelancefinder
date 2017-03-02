@@ -13,3 +13,5 @@ Add Behance API:
 - https://www.behance.net/dev
 
 Add Hackernews scraper
+
+- https://github.com/avinassh/haxor

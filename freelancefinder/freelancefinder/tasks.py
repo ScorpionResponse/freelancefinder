@@ -37,3 +37,9 @@ def setup_periodic_tasks(sender, **kwargs):
         logger.info("Deleting old periodic task and creating a new one.")
         pertask.delete()
         PeriodicTask.objects.create(interval=schedule_10_minutes, name='Harvest Remotes', task='remotes.tasks.harvest_sources', expires=maya.now().add(minutes=30).datetime())
+
+
+@celery_app.task(bind=True)
+def debug_task(self):
+    """Debug Task to prove this file is loaded."""
+    print('Request: {0!r}'.format(self.request))
