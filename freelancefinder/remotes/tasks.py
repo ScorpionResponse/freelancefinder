@@ -1,5 +1,7 @@
 """Tasks to perform periodic tasks with remotes."""
 
+from django.conf import settings
+
 from django_celery_beat.models import IntervalSchedule, PeriodicTask
 from celery import Celery
 from celery.utils.log import get_task_logger
@@ -41,11 +43,13 @@ def setup_periodic_tasks(sender, **kwargs):
     pertask, created = PeriodicTask.objects.get_or_create(interval=schedule_10_minutes, name='Harvest Remotes', task='remotes.tasks.harvest_sources')
     logger.debug("PeriodicTask: %s; Created: %s", pertask, created)
 
-    if created:
-        logger.debug('Newly created harvest task, set expiry.')
-        pertask.expires = maya.now().add(minutes=30).datetime()
-        pertask.save()
-    else:
-        logger.info("Deleting old periodic task and creating a new one.")
-        pertask.delete()
-        PeriodicTask.objects.create(interval=schedule_10_minutes, name='Harvest Remotes', task='remotes.tasks.harvest_sources', expires=maya.now().add(minutes=30).datetime())
+    if settings.DEBUG:
+        # Expire the harvest task when we're debugging
+        if created:
+            logger.debug('Newly created harvest task, set expiry.')
+            pertask.expires = maya.now().add(minutes=30).datetime()
+            pertask.save()
+        else:
+            logger.info("Deleting old periodic task and creating a new one.")
+            pertask.delete()
+            PeriodicTask.objects.create(interval=schedule_10_minutes, name='Harvest Remotes', task='remotes.tasks.harvest_sources', expires=maya.now().add(minutes=30).datetime())
