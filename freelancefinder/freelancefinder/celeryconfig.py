@@ -1,7 +1,6 @@
 """Celery bootstrap and configuration process."""
 import os
 
-from django_celery_beat.models import IntervalSchedule, PeriodicTask
 from celery import Celery
 from celery.utils.log import get_task_logger
 
@@ -22,6 +21,7 @@ celery_app.autodiscover_tasks()
 @celery_app.on_after_configure.connect
 def setup_periodic_tasks(sender, **kwargs):
     """Ensure periodic tasks are scheduled."""
+    from django_celery_beat.models import IntervalSchedule, PeriodicTask
     logger.info("Configuring periodic tasks.")
     logger.debug('Sender: %s; kwargs: %s', sender, kwargs)
 
