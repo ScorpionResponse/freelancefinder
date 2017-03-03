@@ -23,6 +23,7 @@ class JobDetailView(DetailView):
     """Show a single job."""
 
     model = Job
+    template_name = 'jobs/job_detail.html'
 
 
 class PostListView(FormMixin, ListView):
