@@ -1,4 +1,6 @@
 """Pages relating to the jobs app."""
+
+from django.db.models import Q
 from django.views.generic import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import FormMixin
@@ -29,7 +31,7 @@ class JobListView(ListView, FormGetMixin):
         search = self.request.GET.get('search', None)
         querys = Job.objects.all()
         if search is not None:
-            querys = querys.filter(title__icontains=search, description__icontains=search)
+            querys = querys.filter(Q(title__icontains=search) | Q(description__icontains=search))
         return querys.order_by('-created')
 
     def get_context_data(self, **kwargs):
