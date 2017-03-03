@@ -1,11 +1,12 @@
 {% extends 'base.html' %}
+{% load markdown %}
 {% block 'content' %}
 
 <h1>{{ job.title }}</h1>
 <small>Created: {{ job.created }} - Updated: {{ job.modified }}</small>
 
 <p>
-{{ job.description }}
+{{ job.description|markdown }}
 </p>
 
 <h5>Source Posts</h5>
