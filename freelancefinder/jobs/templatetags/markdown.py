@@ -8,7 +8,7 @@ import markdown
 register = template.Library()
 
 
-@register.filter(name='markdown')
+@register.filter(name='markdown', is_safe=True)
 @stringfilter
 def markdown_filter(value):
     """Convert markdown value to html."""
