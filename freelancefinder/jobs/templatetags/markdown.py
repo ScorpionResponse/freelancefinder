@@ -11,4 +11,8 @@ register = template.Library()
 @register.filter(name='markdown', is_safe=True)
 def markdown_filter(value):
     """Convert markdown value to html."""
-    return bleach.clean(markdown.markdown(value), tags=bleach.ALLOWED_TAGS + ['p'])
+    import logging
+    logger = logging.getLogger(__name__)
+    description = bleach.clean(markdown.markdown(value), tags=bleach.ALLOWED_TAGS + ['p'])
+    logger.info('Description: %s', description)
+    return description
