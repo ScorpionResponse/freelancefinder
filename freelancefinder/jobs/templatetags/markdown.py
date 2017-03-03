@@ -1,6 +1,7 @@
 """Markdown template filter."""
 
 from django import template
+from django.utils.safestring import mark_safe
 
 import bleach
 import markdown
@@ -8,11 +9,9 @@ import markdown
 register = template.Library()
 
 
-@register.filter(name='markdown', is_safe=True)
+@register.filter(name='markdown')
 def markdown_filter(value):
     """Convert markdown value to html."""
-    import logging
-    logger = logging.getLogger(__name__)
-    description = bleach.clean(markdown.markdown(value), tags=bleach.ALLOWED_TAGS + ['p'])
-    logger.info('Description: %s', description)
-    return description
+    rendered_html = markdown.markdown(value)
+    bleached_html = bleach.clean(rendered_html, tags=bleach.ALLOWED_TAGS + ['p'])
+    return mark_safe(bleached_html)
