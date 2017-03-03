@@ -1,10 +1,18 @@
 {% extends 'base.html' %}
 {% block 'content' %}
 
-<h1>Job Detail</h1>
+<h1>{{ job.title }}</h1>
+<small>Created: {{ job.created }} - Updated: {{ job.updated }}</small>
 
 <p>
-{{ job }}
+{{ job.description }}
 </p>
+
+<h5>Source Posts</h5>
+<ul>
+    {% for post in job.posts.all %}
+        <li><a href="{{ post.url }}">{{ post.source.name }}</a> - {{ post.created }}</li>
+    {% endfor %}
+</ul>
 
 {% endblock %}
