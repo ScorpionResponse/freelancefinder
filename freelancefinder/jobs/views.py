@@ -45,7 +45,7 @@ class PostListView(FormMixin, ListView):
         if is_freelance:
             querys.filter(is_freelance=is_freelance)
         if title:
-            querys.filter(title__ilike=title)
+            querys.filter(title__icontains=title)
         return querys.order_by('-created')
 
     def get_context_data(self, **kwargs):
