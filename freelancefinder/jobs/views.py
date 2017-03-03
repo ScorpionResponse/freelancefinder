@@ -34,6 +34,11 @@ class PostListView(FormMixin, ListView):
     form_class = PostFilterForm
     template_name = "jobs/post_list.html"
 
+    def get_form_kwargs(self):
+        """Use GET for form info."""
+        kwargs = {'initial': self.get_initial(), 'data': self.request.GET}
+        return kwargs
+
     def get_queryset(self):
         """Queryset should sort by desc created by default."""
         title = self.request.GET.get('title', None)
@@ -54,8 +59,8 @@ class PostListView(FormMixin, ListView):
 
         context['form'] = self.get_form()
 
-        context['title'] = self.request.GET.get('title', None)
-        context['is_job_posting'] = self.request.GET.get('is_job_posting', False)
-        context['is_freelance'] = self.request.GET.get('is_freelance', False)
+        # context['title'] = self.request.GET.get('title', None)
+        # context['is_job_posting'] = self.request.GET.get('is_job_posting', False)
+        # context['is_freelance'] = self.request.GET.get('is_freelance', False)
 
         return context
