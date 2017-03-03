@@ -1,5 +1,6 @@
 """Pages relating to the jobs app."""
 from django.views.generic import ListView
+from django.views.generic.detail import DetailView
 from django.views.generic.edit import FormMixin
 
 from .forms import PostFilterForm
@@ -16,6 +17,12 @@ class JobListView(ListView):
     def get_queryset(self):
         """Queryset should sort by desc created by default."""
         return Job.objects.all().order_by('-created')
+
+
+class JobDetailView(DetailView):
+    """Show a single job."""
+
+    model = Job
 
 
 class PostListView(FormMixin, ListView):

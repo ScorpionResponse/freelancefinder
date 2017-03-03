@@ -5,7 +5,7 @@
 {% include 'helpers/pagination.html' %}
 <ul>
 {% for job in job_list %}
-    <li>{{ job }}</li>
+<li>{{ job }} <a href="{% url 'job-detail' job.id %}">Detail</a></li>
 {% endfor %}
 </ul>
 {% include 'helpers/pagination.html' %}
