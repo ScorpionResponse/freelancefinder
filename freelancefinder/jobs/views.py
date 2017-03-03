@@ -41,10 +41,10 @@ class PostListView(FormMixin, ListView):
         is_freelance = self.request.GET.get('is_freelance', False)
         querys = Post.objects.all()
         if is_job_posting:
-            querys.filter(is_job_posting=is_job_posting)
+            querys.filter(is_job_posting=True)
         if is_freelance:
-            querys.filter(is_freelance=is_freelance)
-        if title:
+            querys.filter(is_freelance=True)
+        if title is not None:
             querys.filter(title__icontains=title)
         return querys.order_by('-created')
 
