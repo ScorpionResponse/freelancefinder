@@ -3,20 +3,42 @@ from django.views.generic import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import FormMixin
 
-from .forms import PostFilterForm
+from .forms import PostFilterForm, JobSearchForm
 from .models import Job, Post
 
 
-class JobListView(ListView):
+class FormGetMixin(FormMixin):
+    """FormMixin which uses GET request data."""
+
+    def get_form_kwargs(self):
+        """Pull field values from GET data."""
+        kwargs = {'initial': self.get_initial(), 'data': self.request.GET}
+        return kwargs
+
+
+class JobListView(ListView, FormGetMixin):
     """List all jobs."""
 
     model = Job
     paginate_by = 20
+    form_class = JobSearchForm
     template_name = "jobs/job_list.html"
 
     def get_queryset(self):
         """Queryset should sort by desc created by default."""
-        return Job.objects.all().order_by('-created')
+        search = self.request.GET.get('search', None)
+        querys = Job.objects.all()
+        if search is not None:
+            querys = querys.filter(title__icontains=search, description__icontains=search)
+        return querys.order_by('-created')
+
+    def get_context_data(self, **kwargs):
+        """Include search/filter form."""
+        context = super(JobListView, self).get_context_data(**kwargs)
+
+        context['form'] = self.get_form()
+
+        return context
 
 
 class JobDetailView(DetailView):
@@ -58,9 +80,5 @@ class PostListView(FormMixin, ListView):
         context = super(PostListView, self).get_context_data(**kwargs)
 
         context['form'] = self.get_form()
-
-        # context['title'] = self.request.GET.get('title', None)
-        # context['is_job_posting'] = self.request.GET.get('is_job_posting', False)
-        # context['is_freelance'] = self.request.GET.get('is_freelance', False)
 
         return context

@@ -19,3 +19,16 @@ class PostFilterForm(forms.Form):
         self.helper.form_class = 'form-inline'
         self.helper.form_method = 'get'
         self.helper.add_input(Submit('submit', 'Filter'))
+
+
+class JobSearchForm(forms.Form):
+    """Form for filtering the JobListView."""
+
+    search = forms.CharField(required=False)
+
+    def __init__(self, *args, **kwargs):
+        super(JobSearchForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_class = 'form-inline'
+        self.helper.form_method = 'get'
+        self.helper.add_input(Submit('submit', 'Search'))
