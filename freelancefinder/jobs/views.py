@@ -36,7 +36,17 @@ class PostListView(FormMixin, ListView):
 
     def get_queryset(self):
         """Queryset should sort by desc created by default."""
-        return Post.objects.all().order_by('-created')
+        title = self.request.GET.get('title', None)
+        is_job_posting = self.request.GET.get('is_job_posting', False)
+        is_freelance = self.request.GET.get('is_freelance', False)
+        querys = Post.objects.all()
+        if is_job_posting:
+            querys.filter(is_job_posting=is_job_posting)
+        if is_freelance:
+            querys.filter(is_freelance=is_freelance)
+        if title:
+            querys.filter(title__ilike=title)
+        return querys.order_by('-created')
 
     def get_context_data(self, **kwargs):
         """Include search/filter form."""

@@ -17,5 +17,5 @@ class PostFilterForm(forms.Form):
         super(PostFilterForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.form_class = 'form-inline'
-        # self.helper.form_method = 'get'
+        self.helper.form_method = 'get'
         self.helper.add_input(Submit('submit', 'Filter'))
