@@ -41,11 +41,11 @@ class PostListView(FormMixin, ListView):
         is_freelance = self.request.GET.get('is_freelance', False)
         querys = Post.objects.all()
         if is_job_posting:
-            querys.filter(is_job_posting=True)
+            querys = querys.filter(is_job_posting=True)
         if is_freelance:
-            querys.filter(is_freelance=True)
+            querys = querys.filter(is_freelance=True)
         if title is not None:
-            querys.filter(title__icontains=title)
+            querys = querys.filter(title__icontains=title)
         return querys.order_by('-created')
 
     def get_context_data(self, **kwargs):
@@ -53,5 +53,9 @@ class PostListView(FormMixin, ListView):
         context = super(PostListView, self).get_context_data(**kwargs)
 
         context['form'] = self.get_form()
+
+        context['title'] = self.request.GET.get('title', None)
+        context['is_job_posting'] = self.request.GET.get('is_job_posting', False)
+        context['is_freelance'] = self.request.GET.get('is_freelance', False)
 
         return context
