@@ -8,10 +8,12 @@ import markdown
 
 register = template.Library()
 
+ADDITIONAL_TAGS = ['p', 'br']
+
 
 @register.filter(name='markdown')
 def markdown_filter(value):
     """Convert markdown value to html."""
     rendered_html = markdown.markdown(value)
-    bleached_html = bleach.clean(rendered_html, tags=bleach.ALLOWED_TAGS + ['p'])
+    bleached_html = bleach.clean(rendered_html, tags=bleach.ALLOWED_TAGS + ADDITIONAL_TAGS)
     return mark_safe(bleached_html)
