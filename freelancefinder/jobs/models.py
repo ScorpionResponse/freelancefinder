@@ -30,6 +30,7 @@ class Post(TimeStampedModel):
     job = models.ForeignKey('Job', on_delete=models.CASCADE, related_name="posts", blank=True, null=True)
     url = models.URLField()
     source = models.ForeignKey('remotes.Source', on_delete=models.SET_NULL, blank=True, null=True, related_name="posts")
+    subarea = models.CharField(max_length=100, blank=True, null=True)
     title = models.CharField(max_length=255)
     description = models.TextField()
     unique = models.CharField(max_length=255)
