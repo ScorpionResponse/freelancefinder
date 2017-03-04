@@ -2,6 +2,7 @@
 
 from future.utils import python_2_unicode_compatible
 from model_utils.models import TimeStampedModel
+from taggit.managers import TaggableManager
 
 from django.db import models
 
@@ -55,6 +56,7 @@ class Job(TimeStampedModel):
 
     title = models.CharField(max_length=255)
     description = models.TextField()
+    tags = TaggableManager()
 
     def __str__(self):
         """Representation for a Job."""
