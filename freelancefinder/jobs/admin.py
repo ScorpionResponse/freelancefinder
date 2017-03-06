@@ -15,9 +15,17 @@ class JobAdmin(admin.ModelAdmin):
     """The Job model needs no special admin configuration."""
 
     model = Job
-    list_display = ('title', 'tags', 'created', 'modified')
+    list_display = ('title', 'tag_list', 'created', 'modified')
     fields = ('title', 'description', 'tags', 'created', 'modified')
     actions = [remove_tags]
+
+    def get_queryset(self, request):
+        """Prefetch the tags data to make this more efficient."""
+        return super(JobAdmin, self).get_queryset(request).prefetch_related('tags')
+
+    def tag_list(self, obj):
+        """Concatenate all tags for each job."""
+        return u", ".join(o.name for o in obj.tags.all())
 
 
 class PostAdmin(admin.ModelAdmin):
