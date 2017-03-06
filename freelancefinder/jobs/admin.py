@@ -17,7 +17,7 @@ class JobAdmin(admin.ModelAdmin):
 
     model = Job
     list_display = ('title', 'tag_list', 'created', 'modified')
-    fields = ('title', 'description', 'tags')
+    fields = ('title', 'description', 'tags', 'created', 'modified')
     readonly_fields = ('created', 'modified')
     actions = [remove_tags]
 
@@ -35,7 +35,7 @@ class PostAdmin(admin.ModelAdmin):
 
     model = Post
     list_display = ('title', 'source', 'subarea', 'is_job_posting', 'is_freelance', 'processed', 'created')
-    fields = ('title', 'url', 'source', 'subarea', 'description', 'unique', 'is_job_posting', 'is_freelance', 'processed')
+    fields = ('title', 'url', 'source', 'subarea', 'description', 'unique', 'is_job_posting', 'is_freelance', 'processed', 'created', 'modified')
     readonly_fields = ('created', 'modified')
 
 
