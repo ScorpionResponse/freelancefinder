@@ -41,13 +41,13 @@ def tag_jobs():
     from taggit.models import Tag
     from .models import Job
 
-    all_tags = list(Tag.objects.all().values_list('name'))
+    all_tags = list(Tag.objects.all().values_list('name', flat=True))
     logger.info('Got all tags list: %s', all_tags)
 
     for job in Job.objects.filter(tags__isnull=True):
         description_words = job.description.split(' ')
         joined_words = [' '.join(x) for x in list(bigrams(description_words))]
-        areas = list(job.posts.all().values_list('subarea'))
+        areas = list(job.posts.all().values_list('subarea', flat=True))
 
         taggable_words = description_words + joined_words + areas
         logger.info('Job: %s - All Taggable Words: %s', job, taggable_words)
