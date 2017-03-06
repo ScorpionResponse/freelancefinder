@@ -9,8 +9,24 @@
 </div>
 {% include 'helpers/pagination.html' %}
 <ul>
-{% for job in post_list %}
-<li>{{ job }} - <a target="_blank" href="{{ job.url }}">Source Post</a></li>
+{% for post in post_list %}
+    <li>
+        <div class="col">
+            {{ post.title }} <small>Created: {{ post.created }}</small>
+        </div>
+        <div class="col">
+            <a target="_blank" href="{{ post.url }}">{{ post.source.name }} > {{ post.subarea }}</a> - {{ post.unique }}
+        </div>
+        <div class="col">
+            {{ post.is_job_posting }}
+        </div>
+        <div class="col">
+            {{ post.is_freelance }}
+        </div>
+        <div>
+            {{ post.description }}
+        </div>
+    </li> 
 {% endfor %}
 </ul>
 {% include 'helpers/pagination.html' %}
