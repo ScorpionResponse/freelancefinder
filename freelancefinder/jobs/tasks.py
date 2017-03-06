@@ -37,6 +37,7 @@ def create_jobs():
 @celery_app.task
 def tag_jobs():
     """Add tags for jobs."""
+    from nltk import bigrams
     from taggit.models import Tag
     from .models import Job
 
@@ -44,9 +45,11 @@ def tag_jobs():
     logger.debug('Got all tags list: %s', all_tags)
 
     for job in Job.objects.filter(tags__isnull=True):
-        taggable_words = job.description.split(' ')
+        description_words = job.description.split(' ')
+        joined_words = [' '.join(x) for x in list(bigrams(description_words))]
         areas = job.posts.all().values_list('subarea')
-        taggable_words += areas
+
+        taggable_words = description_words + joined_words + areas
         for word in taggable_words:
             if word in all_tags:
                 logger.info('Add tag %s to job %s', word, job)
