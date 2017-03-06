@@ -32,3 +32,24 @@ def create_jobs():
         job = Job.objects.create(title=post.title, description=post.description)
         post.job = job
         post.save()
+
+
+@celery_app.task
+def tag_jobs():
+    """Add tags for jobs."""
+    from taggit.models import Tag
+    from .models import Job
+
+    all_tags = Tag.objects.all().values_list('name')
+    logger.debug('Got all tags list: %s', all_tags)
+
+    for job in Job.objects.filter(tags__isnull=True):
+        taggable_words = job.description.split(' ')
+        areas = job.posts.all().values_list('subarea')
+        taggable_words += areas
+        for word in taggable_words:
+            if word in all_tags:
+                logger.info('Add tag %s to job %s', word, job)
+                job.tags.add(word)
+        job.tags.add('job')
+        job.savem2m()
