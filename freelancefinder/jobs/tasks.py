@@ -47,7 +47,7 @@ def tag_jobs():
     for job in Job.objects.filter(tags__isnull=True):
         description_words = job.description.split(' ')
         joined_words = [' '.join(x) for x in list(bigrams(description_words))]
-        areas = job.posts.all().values_list('subarea')
+        areas = list(job.posts.all().values_list('subarea'))
 
         taggable_words = description_words + joined_words + areas
         for word in taggable_words:
