@@ -51,7 +51,7 @@ def tag_jobs():
         areas = list(job.posts.all().values_list('subarea', flat=True))
 
         taggable_words = description_words + joined_words + areas
-        taggable_words = [x.lower() for x in taggable_words]
+        taggable_words = [x.lower() for x in taggable_words if x is not None]
         logger.info('Job: %s - All Taggable Words: %s', job, taggable_words)
         for word in set(taggable_words):
             if word in all_tags:
