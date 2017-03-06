@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load markdown %}
 {% load crispy_forms_tags %}
 
 {% block 'content' %}
@@ -10,21 +11,23 @@
 {% include 'helpers/pagination.html' %}
 <ul>
 {% for post in post_list %}
-    <li>
-        <div class="col">
-            {{ post.title }} <small>Created: {{ post.created }}</small>
+<li id="post-{{ post.id }}" class="post">
+        <div class="row" id="postinfo-{{ post.id }}">
+            <div class="col">
+                {{ post.title }} <small>Created: {{ post.created }}</small>
+            </div>
+            <div class="col">
+                <a target="_blank" href="{{ post.url }}">{{ post.source.name }} > {{ post.subarea }}</a> - {{ post.unique }}
+            </div>
+            <div class="col">
+                {{ post.is_job_posting }}
+            </div>
+            <div class="col">
+                {{ post.is_freelance }}
+            </div>
         </div>
-        <div class="col">
-            <a target="_blank" href="{{ post.url }}">{{ post.source.name }} > {{ post.subarea }}</a> - {{ post.unique }}
-        </div>
-        <div class="col">
-            {{ post.is_job_posting }}
-        </div>
-        <div class="col">
-            {{ post.is_freelance }}
-        </div>
-        <div>
-            {{ post.description }}
+        <div class="row collapse" id="postdesc-{{ post.id }}">
+            {{ post.description|markdown }}
         </div>
     </li> 
 {% endfor %}
