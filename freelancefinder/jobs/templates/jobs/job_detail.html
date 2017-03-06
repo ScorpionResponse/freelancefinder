@@ -10,7 +10,7 @@
 <h5>Source Posts</h5>
 <ul>
     {% for post in job.posts.all %}
-    <li><a href="{{ post.url }}">{{ post.source.name }}{% if post.subarea %} &gt; {{ post.subarea }}{% endif %}</a> - {{ post.created }}</li>
+    <li><a target="_blank" href="{{ post.url }}">{{ post.source.name }}{% if post.subarea %} &gt; {{ post.subarea }}{% endif %}</a> - {{ post.created }}</li>
     {% endfor %}
 </ul>
 
