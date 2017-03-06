@@ -7,7 +7,8 @@ from .models import Post, Job
 
 def remove_tags(modeladmin, request, queryset):
     """Remove tags."""
-    queryset.update(tags=None)
+    for obj in queryset:
+        obj.tags.clear()
 remove_tags.short_description = "Remove Tags"
 
 
