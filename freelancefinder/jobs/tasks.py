@@ -42,6 +42,7 @@ def tag_jobs():
     from .models import Job
 
     all_tags = list(Tag.objects.all().values_list('name', flat=True))
+    all_tags = [x.lower() for x in all_tags]
     logger.info('Got all tags list: %s', all_tags)
 
     for job in Job.objects.filter(tags__isnull=True):
@@ -50,6 +51,7 @@ def tag_jobs():
         areas = list(job.posts.all().values_list('subarea', flat=True))
 
         taggable_words = description_words + joined_words + areas
+        taggable_words = [x.lower() for x in taggable_words]
         logger.info('Job: %s - All Taggable Words: %s', job, taggable_words)
         for word in set(taggable_words):
             if word in all_tags:
