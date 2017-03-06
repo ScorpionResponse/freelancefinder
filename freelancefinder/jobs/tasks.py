@@ -52,4 +52,4 @@ def tag_jobs():
                 logger.info('Add tag %s to job %s', word, job)
                 job.tags.add(word)
         job.tags.add('job')
-        job.save_m2m()
+        job.save()
