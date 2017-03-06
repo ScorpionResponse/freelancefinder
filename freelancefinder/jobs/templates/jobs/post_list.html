@@ -9,9 +9,9 @@
     {% crispy form %}
 </div>
 {% include 'helpers/pagination.html' %}
-<ul>
+<ul class="list-group">
 {% for post in post_list %}
-<li id="post-{{ post.id }}" class="post">
+<li id="post-{{ post.id }}" class="list-group-item post">
         <div class="row" id="postinfo-{{ post.id }}">
             <div class="col">
                 {{ post.title }} <small>Created: {{ post.created }}</small>
