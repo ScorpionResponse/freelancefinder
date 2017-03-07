@@ -21,6 +21,10 @@ body {
     font-family: 'Satisfy', cursive;
 }
 
+.form-inline {
+    padding: 5px;
+}
+
 /* Header */
 #header-logo {
     color: #658B38;
