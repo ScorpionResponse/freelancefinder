@@ -25,6 +25,10 @@ body {
     padding: 5px;
 }
 
+.list-group {
+    color: #606060;
+}
+
 /* Header */
 #header-logo {
     color: #658B38;
