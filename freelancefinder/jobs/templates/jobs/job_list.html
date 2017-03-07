@@ -17,20 +17,21 @@
             <h5>{{ job.title }}</h5>
             <small>{{ job.created }}</small>
         </div>
-        <div class="d-flex flex-row w-100 justify-content-between">
-            <a href="{% url 'job-detail' job.id %}">Detail</a>
-            <span class="tag-list">
-                {% for tag in job.tags.all %}
-                    <span class="tag">{{ tag }}</span>
-                {% endfor %}
-            </span>
+    </a>
+    <div class="d-flex flex-row w-100 justify-content-between">
+        <a href="{% url 'job-detail' job.id %}">Detail</a>
+        <span class="tag-list">
+            {% for tag in job.tags.all %}
+                <span class="tag">{{ tag }}</span>
+            {% endfor %}
+        </span>
+    </div>
+    <div class="d-flex flex-row w-100">
+        <div class="collapse" id="jobdesc-{{ job.id }}">
+            {{ job.description|markdown }}
         </div>
-        <div class="d-flex flex-row w-100">
-            <div class="collapse" id="jobdesc-{{ job.id }}">
-                {{ job.description|markdown }}
-            </div>
-        </div>
-    </li>
+    </div>
+</li>
 {% endfor %}
 </ul>
 {% include 'helpers/pagination.html' %}
