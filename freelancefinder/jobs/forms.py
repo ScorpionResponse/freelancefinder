@@ -4,6 +4,7 @@ from django import forms
 
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
+from taggit.models import Tag
 
 
 class PostFilterForm(forms.Form):
@@ -25,6 +26,7 @@ class JobSearchForm(forms.Form):
     """Form for filtering the JobListView."""
 
     search = forms.CharField(required=False)
+    tag = forms.ChoiceField(choices=Tag.objects.all())
 
     def __init__(self, *args, **kwargs):
         super(JobSearchForm, self).__init__(*args, **kwargs)
