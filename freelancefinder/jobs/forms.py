@@ -26,7 +26,7 @@ class JobSearchForm(forms.Form):
     """Form for filtering the JobListView."""
 
     search = forms.CharField(required=False)
-    tag = forms.ChoiceField(choices=list(Tag.objects.all().values_list('name')), required=False)
+    tag = forms.ChoiceField(choices=list(Tag.objects.all().values_list('slug', 'name').order_by('slug')), required=False)
 
     def __init__(self, *args, **kwargs):
         super(JobSearchForm, self).__init__(*args, **kwargs)
