@@ -20,6 +20,11 @@
     </a>
     <div class="d-flex flex-row w-100 justify-content-between">
         <a href="{% url 'job-detail' job.id %}">Detail</a>
+        <span class="source-info">
+            {% for post in job.posts.all %}
+                <a href="{{ post.url }}" target="_blank">{{ post.source.name }} &gt;{{ post.subarea }}</a>
+            {% endfor %}
+        </span>
         <span class="tag-list">
             {% for tag in job.tags.all %}
                 <span class="tag">{{ tag }}</span>
