@@ -31,9 +31,9 @@ class JobListView(ListView, FormGetMixin):
         search = self.request.GET.get('search', None)
         tag = self.request.GET.get('tag', None)
         querys = Job.objects.all()
-        if search is not None:
+        if search is not None and search != '':
             querys = querys.filter(Q(title__icontains=search) | Q(description__icontains=search))
-        if tag is not None:
+        if tag is not None and tag != '':
             querys = querys.filter(tags__slug__in=[tag]).distinct()
         return querys.order_by('-created')
 
