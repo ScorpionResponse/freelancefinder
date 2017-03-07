@@ -21,7 +21,7 @@ body {
     font-family: 'Satisfy', cursive;
 }
 
-.form-inline {
+.form-inline > .form-group {
     padding: 5px;
 }
 
