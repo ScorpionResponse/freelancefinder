@@ -34,7 +34,7 @@ class JobListView(ListView, FormGetMixin):
         if search is not None:
             querys = querys.filter(Q(title__icontains=search) | Q(description__icontains=search))
         if tag is not None:
-            querys = querys.filter(tags__name__in=[tag]).distinct()
+            querys = querys.filter(tags__slug__in=[tag]).distinct()
         return querys.order_by('-created')
 
     def get_context_data(self, **kwargs):

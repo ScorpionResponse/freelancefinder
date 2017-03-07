@@ -25,8 +25,10 @@ class PostFilterForm(forms.Form):
 class JobSearchForm(forms.Form):
     """Form for filtering the JobListView."""
 
+    TAG_CHOICES = [('', 'All')] + list(Tag.objects.all().values_list('slug', 'name').order_by('slug'))
+
     search = forms.CharField(required=False)
-    tag = forms.ChoiceField(choices=list(Tag.objects.all().values_list('slug', 'name').order_by('slug')), required=False)
+    tag = forms.ChoiceField(choices=TAG_CHOICES, required=False)
 
     def __init__(self, *args, **kwargs):
         super(JobSearchForm, self).__init__(*args, **kwargs)
