@@ -11,19 +11,22 @@
 {% include 'helpers/pagination.html' %}
 <ul class="list-group">
 {% for post in post_list %}
-<li id="post-{{ post.id }}" class="list-group-item post">
+<li id="post-{{ post.id }}" class="list-group-item flex-column align-items-start post">
         <div class="row" id="postinfo-{{ post.id }}">
-            <div class="col">
-                {{ post.title }} <small>Created: {{ post.created }}</small>
+            <div class="d-flex w-100 justify-content-between">
+                <h4>{{ post.title }}</h4>
+                <small>{{ post.created }}</small>
             </div>
-            <div class="col">
+            <div class="d-flex justify-content-start">
                 <a target="_blank" href="{{ post.url }}">{{ post.source.name }} > {{ post.subarea }}</a> - {{ post.unique }}
             </div>
-            <div class="col">
-                {{ post.is_job_posting }}
-            </div>
-            <div class="col">
-                {{ post.is_freelance }}
+            <div class="d-flex justify-content-start">
+                {% if post.is_freelance %}
+                    Freelance 
+                {% endif %}
+                {% if post.is_job_posting %}
+                    Job Posting
+                {% endif %}
             </div>
         </div>
         <div class="row collapse" id="postdesc-{{ post.id }}">
