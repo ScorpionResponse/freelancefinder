@@ -46,11 +46,12 @@ def tag_jobs():
     logger.info('Got all tags list: %s', all_tags)
 
     for job in Job.objects.filter(tags__isnull=True):
+        title_words = job.title.split(' ')
         description_words = job.description.split(' ')
         joined_words = [' '.join(x) for x in list(bigrams(description_words))]
         areas = list(job.posts.all().values_list('subarea', flat=True))
 
-        taggable_words = description_words + joined_words + areas
+        taggable_words = title_words + description_words + joined_words + areas
         taggable_words = [x.lower() for x in taggable_words if x is not None]
         logger.info('Job: %s - All Taggable Words: %s', job, taggable_words)
         for word in set(taggable_words):
