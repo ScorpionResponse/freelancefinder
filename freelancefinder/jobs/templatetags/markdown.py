@@ -15,5 +15,5 @@ ADDITIONAL_TAGS = ['p', 'br']
 def markdown_filter(value):
     """Convert markdown value to html."""
     rendered_html = markdown.markdown(value)
-    bleached_html = bleach.clean(rendered_html, tags=bleach.ALLOWED_TAGS + ADDITIONAL_TAGS)
+    bleached_html = bleach.clean(rendered_html, tags=bleach.ALLOWED_TAGS + ADDITIONAL_TAGS, strip=True)
     return mark_safe(bleached_html)

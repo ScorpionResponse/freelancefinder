@@ -21,7 +21,7 @@ class Harvester(object):
 
     def harvest(self):
         """Gather some Posts from hackernews."""
-        for story_id in self.client.job_stories():
+        for story_id in self.client.job_stories(limit=100):
             story = self.client.get_item(story_id)
             if Post.objects.filter(source=self.source, unique=story.item_id).exists():
                 logger.info("HackerNews harvester got duplicate post id %s, assuming everything new is harvested.", story.item_id)
