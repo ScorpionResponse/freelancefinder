@@ -30,7 +30,10 @@ class Harvester(object):
                 desc = ''
                 if story.text:
                     desc = story.text
-                post = Post(url=story.url, source=self.source, title=story.title[:255], description=desc, unique=story.item_id, subarea='jobs')
+                url = story.url
+                if not url:
+                    url = "https://news.ycombinator.com/item?id={}".format(story.item_id)
+                post = Post(url=url, source=self.source, title=story.title[:255], description=desc, unique=story.item_id, subarea='jobs')
                 self.status_info['count-job'] += 1
                 self.status_info['total'] += 1
                 yield post
