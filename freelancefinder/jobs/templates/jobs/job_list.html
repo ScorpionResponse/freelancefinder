@@ -12,12 +12,16 @@
 <ul class="list-group">
 {% for job in job_list %}
 <li id="job-{{ job.id }}" class="d-flex list-group-item flex-column align-items-start job">
+    {% if job.description %}
     <a href="#" data-toggle="collapse" data-target="#jobdesc-{{ job.id }}" class="list-group-item-action">
+    {% endif %}
         <div class="d-flex flex-row w-100 justify-content-between">
             <h5>{{ job.title }}</h5>
             <small>{{ job.created }}</small>
         </div>
+    {% if job.description %}
     </a>
+    {% endif %}
     <div class="d-flex flex-row w-100 justify-content-between">
         <a href="{% url 'job-detail' job.id %}">Detail</a>
         <span class="source-info">
@@ -31,11 +35,13 @@
             {% endfor %}
         </span>
     </div>
+    {% if job.description %}
     <div class="d-flex flex-row w-100">
         <div class="collapse" id="jobdesc-{{ job.id }}">
             {{ job.description|markdown }}
         </div>
     </div>
+    {% endif %}
 </li>
 {% endfor %}
 </ul>

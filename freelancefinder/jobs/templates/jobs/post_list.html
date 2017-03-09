@@ -12,12 +12,16 @@
 <ul class="list-group">
 {% for post in post_list %}
     <li id="post-{{ post.id }}" class="d-flex list-group-item flex-column align-items-start post">
+        {% if post.description %}
         <a href="#" data-toggle="collapse" data-target="#postdesc-{{ post.id }}" class="list-group-item-action" id="postinfo-{{ post.id }}">
+        {% endif %}
             <div class="d-flex flex-row w-100 justify-content-between">
                 <h5>{{ post.title }}</h5>
                 <small>{{ post.created }}</small>
             </div>
+        {% if post.description %}
         </a>
+        {% endif %}
         <div class="d-flex flex-row w-100 justify-content-between">
             <span>
                 <a target="_blank" href="{{ post.url }}">{{ post.source.name }} > {{ post.subarea }}</a> - {{ post.unique }}
@@ -32,11 +36,13 @@
                 {% endif %}
             </span>
         </div>
+        {% if post.description %}
         <div class="d-flex flex-row w-100">
             <div class="collapse" id="postdesc-{{ post.id }}">
                 {{ post.description|markdown }}
             </div>
         </div>
+        {% endif %}
     </li> 
 {% endfor %}
 </ul>
