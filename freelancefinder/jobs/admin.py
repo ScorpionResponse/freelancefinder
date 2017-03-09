@@ -1,14 +1,20 @@
 """Admin site configuration for the jobs app."""
+import logging
 
 from django.contrib import admin
 
 from .models import Post, Job
 
+logger = logging.getLogger(__name__)
+
 
 def remove_tags(modeladmin, request, queryset):
     """Remove tags."""
+    logger.debug('MA: %s, request: %s', modeladmin, request)
     for obj in queryset:
         obj.tags.clear()
+
+
 remove_tags.short_description = "Remove Tags"
 
 
@@ -27,6 +33,7 @@ class JobAdmin(admin.ModelAdmin):
 
     def tag_list(self, obj):
         """Concatenate all tags for each job."""
+        logger.debug('Called Tag_list in admin: %s', self)
         return u", ".join(o.name for o in obj.tags.all())
 
 

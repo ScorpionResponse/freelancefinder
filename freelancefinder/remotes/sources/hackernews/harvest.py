@@ -14,10 +14,10 @@ class Harvester(object):
     """Simple Harvester to gather hackernews posts."""
 
     def __init__(self, source):
-        """Init the harvester with basic info."""
+        """Init the hackernews harvester."""
         self.source = source
-        self.status_info = defaultdict(int)
         self.client = HackerNews()
+        self.status_info = defaultdict(int)
 
     def harvest(self):
         """Gather some Posts from hackernews."""

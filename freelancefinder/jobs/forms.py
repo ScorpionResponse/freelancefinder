@@ -15,6 +15,7 @@ class PostFilterForm(forms.Form):
     is_freelance = forms.BooleanField(required=False)
 
     def __init__(self, *args, **kwargs):
+        """Create PostFilterForm with crispy form helpers."""
         super(PostFilterForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.form_class = 'form-inline'
@@ -31,6 +32,7 @@ class JobSearchForm(forms.Form):
     tag = forms.ChoiceField(choices=TAG_CHOICES, required=False)
 
     def __init__(self, *args, **kwargs):
+        """Create JobSearchForm with crispy form helpers."""
         super(JobSearchForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.form_class = 'form-inline'
