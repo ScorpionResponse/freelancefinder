@@ -27,7 +27,10 @@ class Harvester(object):
                 logger.info("HackerNews harvester got duplicate post id %s, assuming everything new is harvested.", story.item_id)
                 break
             else:
-                post = Post(url=story.url, source=self.source, title=story.title[:255], description=story.text, unique=story.item_id, subarea='jobs')
+                desc = ''
+                if story.text:
+                    desc = story.text
+                post = Post(url=story.url, source=self.source, title=story.title[:255], description=desc, unique=story.item_id, subarea='jobs')
                 self.status_info['count-job'] += 1
                 self.status_info['total'] += 1
                 yield post
