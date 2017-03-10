@@ -47,7 +47,7 @@ def setup_periodic_tasks(sender, **kwargs):
 
     if settings.DEBUG:
         # Expire the harvest task when we're debugging
-        expiry_time = maya.now().add(minutes=60).datetime()
+        expiry_time = maya.now().add(minutes=300).datetime()
         if created:
             logger.debug('Newly created harvest task, set expiry.')
             pertask.expires = expiry_time
