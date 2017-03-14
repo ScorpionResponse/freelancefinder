@@ -1,3 +1,4 @@
+{% load within_page_range %}
 {% load querystring %}
 {% if is_paginated %}
 <nav aria-label="Page navigation">
@@ -7,13 +8,21 @@
     {% else %}
     <li class="page-item disabled"><a class="page-link" href="?{% querystring request page=page_obj.number %}">&laquo;</a></li>
     {% endif %}
+    {% if not 1|within_page_range:page_obj.number %}
+        <li class="page-item"><a class="page-link" href="?{% querystring request page=1 %}">1</a></li>
+    {% endif %}
     {% for i in paginator.page_range %}
       {% if page_obj.number == i %}
         <li class="page-item active"><a class="page-link" href="?{% querystring request page=i %}">{{ i }} <span class="sr-only">(current)</span></a></li>
       {% else %}
-        <li class="page-item"><a class="page-link" href="?{% querystring request page=i %}">{{ i }}</a></li>
+        {% if not i|within_page_range:page_obj.number %}
+            <li class="page-item"><a class="page-link" href="?{% querystring request page=i %}">{{ i }}</a></li>
+        {% endif %}
       {% endif %}
     {% endfor %}
+    {% if not paginator.num_pages|within_page_range:page_obj.number %}
+        <li class="page-item"><a class="page-link" href="?{% querystring request page=paginator.num_pages %}">{{ paginator.num_pages }}</a></li>
+    {% endif %}
     {% if page_obj.has_next %}
       <li class="page-item"><a class="page-link" href="?{% querystring request page=page_obj.next_page_number %}">&raquo;</a></li>
     {% else %}
