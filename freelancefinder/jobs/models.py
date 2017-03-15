@@ -61,3 +61,15 @@ class Job(TimeStampedModel):
     def __str__(self):
         """Representation for a Job."""
         return u"<Job ID:{}; Title:{}>".format(self.pk, self.title)
+
+
+@python_2_unicode_compatible
+class TagVariant(models.Model):
+    """A TagVariant will map several versions of a tag to one normalized Tag."""
+
+    variant = models.CharField(max_length=255)
+    tag = models.ForeignKey("taggit.Tag", on_delete=models.CASCADE)
+
+    def __str__(self):
+        """Representation of a TagVariant."""
+        return u"<TagVariant ID:{}; Variant:{}; Tag:{}>".format(self.pk, self.variant, self.tag.name)
