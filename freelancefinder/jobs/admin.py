@@ -56,3 +56,4 @@ class TagVariantAdmin(admin.ModelAdmin):
 
 admin.site.register(Job, JobAdmin)
 admin.site.register(Post, PostAdmin)
+admin.site.register(TagVariant, TagVariantAdmin)
