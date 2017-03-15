@@ -10,6 +10,7 @@
     {% endif %}
     {% if not 1|within_page_range:page_obj.number %}
         <li class="page-item"><a class="page-link" href="?{% querystring request page=1 %}">1</a></li>
+        <li class="page-item"><span class="page-link">&hellip;</span></li>
     {% endif %}
     {% for i in paginator.page_range %}
       {% if page_obj.number == i %}
@@ -21,6 +22,7 @@
       {% endif %}
     {% endfor %}
     {% if not paginator.num_pages|within_page_range:page_obj.number %}
+        <li class="page-item"><span class="page-link">&hellip;</span></li>
         <li class="page-item"><a class="page-link" href="?{% querystring request page=paginator.num_pages %}">{{ paginator.num_pages }}</a></li>
     {% endif %}
     {% if page_obj.has_next %}
