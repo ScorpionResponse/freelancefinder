@@ -43,7 +43,7 @@ def tag_jobs():
 
     all_tags = list(Tag.objects.all().values_list('name', flat=True))
     all_tags = {x.lower(): x for x in all_tags}
-    variant_tags = {variant: tag for variant, tag in TagVariant.objects.all().values_list('variant', 'tag', flat=True)}
+    variant_tags = {variant: tag for variant, tag in TagVariant.objects.all().values_list('variant', 'tag')}
     all_tags.update(variant_tags)
     logger.info('Got all tags list: %s', all_tags)
 
