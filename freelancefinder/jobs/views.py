@@ -1,5 +1,7 @@
 """Pages relating to the jobs app."""
 
+from braces.views import GroupRequiredMixin
+
 from django.db.models import Q
 from django.views.generic import ListView
 from django.views.generic.detail import DetailView
@@ -53,11 +55,12 @@ class JobDetailView(DetailView):
     template_name = 'jobs/job_detail.html'
 
 
-class PostListView(FormMixin, ListView):
+class PostListView(FormMixin, ListView, GroupRequiredMixin):
     """List all Posts."""
 
     model = Post
     paginate_by = 20
+    group_required = u'Administrators'
     form_class = PostFilterForm
     template_name = "jobs/post_list.html"
 
