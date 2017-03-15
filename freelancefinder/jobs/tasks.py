@@ -39,10 +39,12 @@ def tag_jobs():
     """Add tags for jobs."""
     from nltk import bigrams
     from taggit.models import Tag
-    from .models import Job
+    from .models import Job, TagVariant
 
     all_tags = list(Tag.objects.all().values_list('name', flat=True))
-    all_tags = [x.lower() for x in all_tags]
+    all_tags = {x.lower(): x for x in all_tags}
+    variant_tags = {variant: tag for variant, tag in TagVariant.objects.all().values_list('variant', 'tag', flat=True)}
+    all_tags.update(variant_tags)
     logger.info('Got all tags list: %s', all_tags)
 
     for job in Job.objects.filter(tags__isnull=True):
@@ -56,7 +58,7 @@ def tag_jobs():
         logger.info('Job: %s - All Taggable Words: %s', job, taggable_words)
         for word in set(taggable_words):
             if word in all_tags:
-                logger.info('Add tag %s to job %s', word, job)
-                job.tags.add(word)
+                logger.info('Add tag %s to job %s', all_tags[word], job)
+                job.tags.add(all_tags[word])
         job.tags.add('job')
         job.save()
