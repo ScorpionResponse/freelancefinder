@@ -3,7 +3,7 @@ import logging
 
 from django.contrib import admin
 
-from .models import Post, Job
+from .models import Post, Job, TagVariant
 
 logger = logging.getLogger(__name__)
 
@@ -44,6 +44,14 @@ class PostAdmin(admin.ModelAdmin):
     list_display = ('title', 'source', 'subarea', 'is_job_posting', 'is_freelance', 'processed', 'created')
     fields = ('title', 'url', 'source', 'subarea', 'description', 'unique', 'is_job_posting', 'is_freelance', 'processed', 'created', 'modified')
     readonly_fields = ('created', 'modified')
+
+
+class TagVariantAdmin(admin.ModelAdmin):
+    """The TagVariant admin lets the user put in new tags."""
+
+    model = TagVariant
+    list_display = ('variant', 'tag')
+    fields = ('variant', 'tag')
 
 
 admin.site.register(Job, JobAdmin)
