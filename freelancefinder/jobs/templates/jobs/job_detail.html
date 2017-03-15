@@ -7,7 +7,7 @@
 <p>Tags: 
 {% for tag in job.tags.all %}
     {% if tag.name != 'job' %}
-        <span class="tag badge badge-info">{{ tag.name }}</span>
+        <span class="tag badge badge-default">{{ tag.name }}</span>
     {% endif %}
 {% endfor %}
 </p>

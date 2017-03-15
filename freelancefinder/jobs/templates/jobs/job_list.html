@@ -34,7 +34,7 @@
         <span class="tag-list p-2 ml-auto">
             {% for tag in job.tags.all %}
                 {% if tag.name != 'job' %}
-                    <span class="tag badge badge-info">{{ tag.name }}</span>
+                    <span class="tag badge badge-default">{{ tag.name }}</span>
                 {% endif %}
             {% endfor %}
         </span>
