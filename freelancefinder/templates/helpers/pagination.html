@@ -15,7 +15,7 @@
       {% if page_obj.number == i %}
         <li class="page-item active"><a class="page-link" href="?{% querystring request page=i %}">{{ i }} <span class="sr-only">(current)</span></a></li>
       {% else %}
-        {% if not i|within_page_range:page_obj.number %}
+        {% if i|within_page_range:page_obj.number %}
             <li class="page-item"><a class="page-link" href="?{% querystring request page=i %}">{{ i }}</a></li>
         {% endif %}
       {% endif %}
