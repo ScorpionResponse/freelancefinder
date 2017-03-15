@@ -18,10 +18,14 @@
                 <a id="header-logo" class="navbar-brand logo" href="{% url 'index' %}">FreelanceFinder</a>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <div class="navbar-nav">
-                        <a class="nav-item nav-link" href="{% url 'all-links' %}">All</a>
+                        <a class="nav-item nav-link" href="{% url 'index' %}">Home</a>
                         <a class="nav-item nav-link" href="{% url 'job-list' %}">Job List</a>
-                        <a class="nav-item nav-link" href="{% url 'post-list' %}">Post List</a>
-                        <a class="nav-item nav-link" href="{% url 'source-list' %}">Source List</a>
+                        {% if user|in_group:"Administrators" %}
+                            <a class="nav-item nav-link" href="{% url 'post-list' %}">Post List</a>
+                        {% endif %}
+                        {% if user|in_group:"Debuggers" %}
+                            <a class="nav-item nav-link" href="{% url 'source-list' %}">Source List</a>
+                        {% endif %}
                     </div>
                     <div id="header-account" class="navbar-nav justify-content-md-end">
                         {% if user.is_authenticated %}
