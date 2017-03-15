@@ -4,6 +4,13 @@
 
 <h1>{{ job.title }}</h1>
 <small>Created: {{ job.created }} - Updated: {{ job.modified }}</small>
+<p>Tags: 
+{% for tag in job.tags.all %}
+    {% if tag.name != 'job' %}
+        <span class="tag badge badge-info">{{ tag.name }}</span>
+    {% endif %}
+{% endfor %}
+</p>
 
 {{ job.description|markdown }}
 
