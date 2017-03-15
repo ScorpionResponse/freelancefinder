@@ -22,14 +22,16 @@
     {% if job.description %}
     </a>
     {% endif %}
-    <div class="d-flex flex-row w-100 justify-content-between">
-        <a href="{% url 'job-detail' job.id %}">Detail</a>
-        <span class="source-info">
+    <div class="d-flex flex-row w-100 justify-content-start">
+        <span class="p-2">
+            <a href="{% url 'job-detail' job.id %}">Detail</a>
+        </span>
+        <span class="source-info p-2">
             {% for post in job.posts.all %}
-                <a href="{{ post.url }}" target="_blank">{{ post.source.name }} &gt;{{ post.subarea }}</a>
+                <a href="{{ post.url }}" target="_blank">{{ post.source.name }} &gt; {{ post.subarea }}</a>
             {% endfor %}
         </span>
-        <span class="tag-list">
+        <span class="tag-list p-2 ml-auto">
             {% for tag in job.tags.all %}
                 <span class="tag">{{ tag }}</span>
             {% endfor %}
