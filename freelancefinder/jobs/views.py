@@ -78,7 +78,7 @@ class PostListView(FormMixin, ListView, GroupRequiredMixin):
         title = self.request.GET.get('title', None)
         is_job_posting = self.request.GET.get('is_job_posting', False)
         is_freelance = self.request.GET.get('is_freelance', False)
-        querys = Post.objects.all()
+        querys = Post.objects.all().select_related('source')
         if is_job_posting:
             querys = querys.filter(is_job_posting=True)
         if is_freelance:
