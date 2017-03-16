@@ -14,7 +14,6 @@ admin.autodiscover()
 
 urlpatterns = [
     url(r'^$', IndexPageView.as_view(), name='index'),
-    url(r'^$', IndexPageView.as_view(), name='all-links'),
     url(r'^jobs/', include('jobs.urls')),
     url(r'^remotes/', include('remotes.urls')),
     url(r'^users/', include('users.urls')),
