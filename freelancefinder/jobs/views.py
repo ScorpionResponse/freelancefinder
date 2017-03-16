@@ -1,5 +1,7 @@
 """Pages relating to the jobs app."""
 
+import logging
+
 from braces.views import GroupRequiredMixin
 
 from django.db.models import Q
@@ -9,6 +11,8 @@ from django.views.generic.edit import FormMixin
 
 from .forms import PostFilterForm, JobSearchForm
 from .models import Job, Post
+
+logger = logging.getLogger(__name__)
 
 
 class FormGetMixin(FormMixin):
@@ -30,6 +34,7 @@ class JobListView(ListView, FormGetMixin):
 
     def get_queryset(self):
         """Queryset should sort by desc created by default."""
+        logger.debug("Job Get Queryset: %s", request.GET)
         search = self.request.GET.get('search', None)
         tag = self.request.GET.get('tag', None)
         querys = Job.objects.all()
