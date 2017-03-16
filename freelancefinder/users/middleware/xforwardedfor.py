@@ -17,7 +17,7 @@ class XForwardedForMiddleware(MiddlewareMixin):
     def process_request(self, request):
         """Process request, add header."""
         logger.info("X-Forwarded-For middleware: %s", request.META)
-        if ('REMOTE_ADDR' not in request.META or len(request.META['REMOTE_ADDR']) == 0) and 'HTTP_X_FORWARDED_FOR' in request.META:
+        if 'HTTP_X_FORWARDED_FOR' in request.META:
             logger.info("X-Forwarded-For middleware setting REMOTE ADDR to: %s", request.META['HTTP_X_FORWARDED_FOR'])
             request.META['REMOTE_ADDR'] = request.META['HTTP_X_FORWARDED_FOR'].split(",")[0].strip()
         return None
