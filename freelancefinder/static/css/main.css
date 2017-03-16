@@ -46,6 +46,10 @@ body {
     color: #FFFFFF;
 }
 
+.postdesc,.jobdesc {
+    background-color: #CCCCCC;
+}
+
 /* Footer */
 .footer {
   position: absolute;
