@@ -207,7 +207,7 @@ LOGGING = {
         'celery': {
             'level': LOG_LEVEL,
             'class': 'logging.handlers.RotatingFileHandler',
-            'filename': '/var/log/django/freelancefinder.log',
+            'filename': '/var/log/django/freelancefinder_celery.log',
             'maxBytes': 1024 * 1024 * 5,  # 5 MB
             'backupCount': 7,
             'formatter': 'celery',
@@ -250,6 +250,7 @@ LOGTAIL_FILES = {
     'celery_beat': '/var/log/celery/beat.log',
     'celery_worker': '/var/log/celery/worker.log',
     'django': '/var/log/django/freelancefinder.log',
+    'django_celery': '/var/log/django/freelancefinder_celery.log',
     'gunicorn_access': '/var/log/gunicorn/access.log',
     'gunicorn_error': '/var/log/gunicorn/error.log',
     'nginx_access': '/var/log/nginx/access.log',
