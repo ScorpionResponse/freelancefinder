@@ -34,7 +34,7 @@ class JobListView(ListView, FormGetMixin):
 
     def get_queryset(self):
         """Queryset should sort by desc created by default."""
-        logger.debug("Job Get Queryset: %s", request.GET)
+        logger.debug("Job Get Queryset: %s", self.request.GET)
         search = self.request.GET.get('search', None)
         tag = self.request.GET.get('tag', None)
         querys = Job.objects.all()
