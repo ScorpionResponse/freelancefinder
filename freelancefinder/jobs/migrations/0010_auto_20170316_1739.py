@@ -29,14 +29,12 @@ TAGS = {
 
 def load_tags(apps, schema_editor):
     """Load new tags."""
-    Tag = apps.get_model('taggit', 'Tag')
-    TagVariant = apps.get_model('jobs', 'TagVariant')
+    from taggit.models import Tag
+    from jobs.models import TagVariant
     for tag in TAGS:
-        new_tag = Tag(name=tag)
-        new_tag.save()
+        new_tag, created = Tag.objects.get_or_create(name=tag)
         for variant in TAGS[tag]:
-            new_variant = TagVariant(variant=variant, tag=new_tag)
-            new_variant.save()
+            new_variant = TagVariant.objects.get_or_create(variant=variant, tag=new_tag)
 
 
 def delete_tags(apps, schema_editor):
