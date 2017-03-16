@@ -104,9 +104,9 @@ MIDDLEWARE = [
 ]
 
 if DEBUG:
-    MIDDLEWARE = [
+    MIDDLEWARE += [
         'debug_toolbar.middleware.DebugToolbarMiddleware',
-    ] + MIDDLEWARE
+    ]
 
     INTERNAL_IPS = [
         '192.168.2.1',

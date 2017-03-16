@@ -41,6 +41,11 @@ body {
     float: right;
 }
 
+/* Results List */
+.post > h5 {
+    color: #FFFFFF;
+}
+
 /* Footer */
 .footer {
   position: absolute;
