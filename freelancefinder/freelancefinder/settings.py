@@ -93,7 +93,7 @@ SOCIALACCOUNT_PROVIDERS = {
 }
 
 MIDDLEWARE = [
-    'django.middleware.http.SetRemoteAddrFromForwardedFor',
+    'freelancefinder.middleware.xforwardedfor.XForwardedForMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
