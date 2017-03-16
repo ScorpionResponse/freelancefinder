@@ -147,7 +147,7 @@ DATABASES = {
     'default': env.db()
 }
 
-LOG_LEVEL = DEBUG == 'DEBUG' and 'DEBUG' or 'INFO'
+LOG_LEVEL = DEBUG and 'DEBUG' or 'INFO'
 
 LOGGING = {
     'version': 1,
