@@ -10,6 +10,7 @@ class XForwardedForMiddleware(object):
     def __init__(self, get_response):
         """Init the middleware."""
         self.get_response = get_response
+        logger.debug("initializing x-forwarded-for middleware.")
 
     def __call__(self, request):
         """Call the middleware."""
@@ -22,3 +23,8 @@ class XForwardedForMiddleware(object):
         response = self.get_response(request)
 
         return response
+
+    def process_request(self, request):
+        """Process."""
+        logger.debug("Processing request: %s", request.META)
+        return request
