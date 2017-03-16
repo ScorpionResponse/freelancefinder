@@ -48,8 +48,8 @@ def tag_jobs():
     logger.info('Got all tags list: %s', all_tags)
 
     for job in Job.objects.filter(tags__isnull=True):
-        title_words = job.title.split(' ')
-        description_words = job.description.split(' ')
+        title_words = job.title.replace(',', '').replace('/', ' ').split(' ')
+        description_words = job.description.replace(', ', '').replace('/', ' ').split(' ')
         joined_words = [' '.join(x) for x in list(bigrams(description_words))]
         areas = list(job.posts.all().values_list('subarea', flat=True))
 

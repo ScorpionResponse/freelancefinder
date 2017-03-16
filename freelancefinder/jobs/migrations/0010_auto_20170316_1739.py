@@ -5,25 +5,43 @@ from __future__ import unicode_literals
 from django.db import migrations
 
 TAGS = {
-    'Full Time': ['full-time', 'fulltime'],
-    'Part Time': ['part-time', 'parttime'],
-    'Contract': [],
-    'Django': [],
-    'Python': [],
-    'Node.js': ['node'],
-    'Javascript': ['js'],
-    'Ruby': [],
-    'Rails': [],
-    'WordPress': [],
-    'MongoDB': ['mongo'],
-    'PostgreSQL': [],
-    'MySQL': [],
-    'GoLang': [],
+    '.NET': [],
+    'ASP.NET': [],
+    'Android': [],
+    'AngularJS': ['angular.js', 'angular'],
     'Ansible': [],
-    'PHP': [],
-    'Project Manager': [],
-    'Product Manager': [],
+    'Bootstrap': [],
+    'Chef': [],
+    'Contract': [],
+    'Copywriting': ['copywriter'],
     'DevOps': [],
+    'Django': [],
+    'Full Time': ['full-time', 'fulltime'],
+    'GoLang': [],
+    'Javascript': ['js'],
+    'Marketing': ['marketer'],
+    'MongoDB': ['mongo'],
+    'MySQL': [],
+    'Node.js': ['node'],
+    'PHP': [],
+    'Part Time': ['part-time', 'parttime'],
+    'PostgreSQL': [],
+    'Product Manager': [],
+    'Project Manager': [],
+    'Puppet': [],
+    'Python': [],
+    'Rails': [],
+    'React.js': ['react'],
+    'Ruby': [],
+    'SEO': [],
+    'Sales': [],
+    'Social Media': [],
+    'Video': [],
+    'Web Design': ['web designer'],
+    'WordPress': [],
+    'iOS': [],
+    'jQuery': ['j-query'],
+    'scraping': ['scraper', 'scrape'],
 }
 
 
@@ -34,7 +52,7 @@ def load_tags(apps, schema_editor):
     for tag in TAGS:
         new_tag, created = Tag.objects.get_or_create(name=tag)
         for variant in TAGS[tag]:
-            new_variant = TagVariant.objects.get_or_create(variant=variant, tag=new_tag)
+            TagVariant.objects.get_or_create(variant=variant, tag=new_tag)
 
 
 def delete_tags(apps, schema_editor):
