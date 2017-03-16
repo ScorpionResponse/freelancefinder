@@ -7,6 +7,7 @@ gunicorn_project_dir: "/srv/freelancefinder/freelancefinder"
 gunicorn_wsgi_application: freelancefinder.wsgi:application
 gunicorn_install_path: "/srv/venv/bin"
 gunicorn_django_settings: "freelancefinder.settings"
+gunicorn_user_name: "django"
 
 # nginx
 nginx_server_name: freelancefinder.work
