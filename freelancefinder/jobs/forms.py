@@ -27,7 +27,7 @@ class JobSearchForm(forms.Form):
     """Form for filtering the JobListView."""
 
     search = forms.CharField(required=False)
-    tag = forms.ModelChoiceField(queryset=Tag.objects.all().order_by('slug'), empty_label='All', required=False)
+    tag = forms.ModelChoiceField(queryset=Tag.objects.all().order_by('slug'), empty_label='All', to_field_name="slug", required=False)
 
     def __init__(self, *args, **kwargs):
         """Create JobSearchForm with crispy form helpers."""
