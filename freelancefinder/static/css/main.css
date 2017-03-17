@@ -42,7 +42,7 @@ body {
 }
 
 /* Results List */
-.post h5 {
+.post h5,.post small {
     color: #FFFFFF;
 }
 
