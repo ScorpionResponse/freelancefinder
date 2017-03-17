@@ -3,7 +3,7 @@ import logging
 
 from django.contrib import admin
 
-from .models import Post, Job, TagVariant
+from .models import Post, Job, TagVariant, Freelancer
 
 logger = logging.getLogger(__name__)
 
@@ -19,7 +19,7 @@ remove_tags.short_description = "Remove Tags"
 
 
 class JobAdmin(admin.ModelAdmin):
-    """The Job model needs no special admin configuration."""
+    """The Job model admin has some special tag handling."""
 
     model = Job
     list_display = ('title', 'tag_list', 'created', 'modified')
@@ -33,6 +33,25 @@ class JobAdmin(admin.ModelAdmin):
 
     def tag_list(self, obj):
         """Concatenate all tags for each job."""
+        logger.debug('Called Tag_list in admin: %s', self)
+        return u", ".join(o.name for o in obj.tags.all())
+
+
+class FreelancerAdmin(admin.ModelAdmin):
+    """The Freelancer model has special tag handling."""
+
+    model = Freelancer
+    list_display = ('title', 'tag_list', 'created', 'modified')
+    fields = ('title', 'description', 'tags', 'created', 'modified')
+    readonly_fields = ('created', 'modified')
+    actions = [remove_tags]
+
+    def get_queryset(self, request):
+        """Prefetch the tags data to make this more efficient."""
+        return super(FreelancerAdmin, self).get_queryset(request).prefetch_related('tags')
+
+    def tag_list(self, obj):
+        """Concatenate all tags for each freelancer."""
         logger.debug('Called Tag_list in admin: %s', self)
         return u", ".join(o.name for o in obj.tags.all())
 

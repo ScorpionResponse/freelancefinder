@@ -18,6 +18,10 @@ class PostManager(models.Manager):
         """Get only freelance job posts which are not linked."""
         return self.get_queryset().filter(is_freelance=True, is_job_posting=True, job__isnull=True).order_by('created')
 
+    def pending_freelancers(self):
+        """Get only freelancer posts which are not linked."""
+        return self.get_queryset().filter(is_freelance=True, is_freelancer=True, freelancer__isnull=True).order_by('created')
+
 
 @python_2_unicode_compatible
 class Post(TimeStampedModel):
@@ -29,6 +33,7 @@ class Post(TimeStampedModel):
     """
 
     job = models.ForeignKey('Job', on_delete=models.CASCADE, related_name="posts", blank=True, null=True)
+    freelancer = models.ForeignKey('Freelancer', on_delete=models.CASCADE, related_name="posts", blank=True, null=True)
     url = models.URLField()
     source = models.ForeignKey('remotes.Source', on_delete=models.SET_NULL, blank=True, null=True, related_name="posts")
     subarea = models.CharField(max_length=100, blank=True, null=True)
@@ -37,6 +42,7 @@ class Post(TimeStampedModel):
     unique = models.CharField(max_length=255)
     is_job_posting = models.BooleanField(default=False)
     is_freelance = models.BooleanField(default=False)
+    is_freelancer = models.BooleanField(default=False)
     processed = models.BooleanField(default=False)
     objects = PostManager()
 
@@ -61,6 +67,19 @@ class Job(TimeStampedModel):
     def __str__(self):
         """Representation for a Job."""
         return u"<Job ID:{}; Title:{}>".format(self.pk, self.title)
+
+
+@python_2_unicode_compatible
+class Freelancer(TimeStampedModel):
+    """A Freelancer is a person looking for a position."""
+
+    title = models.CharField(max_length=255)
+    description = models.TextField()
+    tags = TaggableManager()
+
+    def __str__(self):
+        """Representation for a Freelancer."""
+        return u"<Freelancer ID:{}; Title:{}>".format(self.pk, self.title)
 
 
 @python_2_unicode_compatible

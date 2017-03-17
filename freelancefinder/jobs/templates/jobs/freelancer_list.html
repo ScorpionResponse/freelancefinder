@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load markdown_filter %}
+{% load crispy_forms_tags %}
+
+{% block 'content' %}
+
+<h1>Freelancer List</h1>
+<div class='searchform'>
+    {% crispy form %}
+</div>
+{% include 'helpers/pagination.html' %}
+<ul class="list-group">
+{% for freelancer in freelancer_list %}
+<li id="freelancer-{{ freelancer.id }}" class="d-flex list-group-item flex-column align-items-start freelancer">
+    {% if freelancer.description %}
+    <a href="#" data-toggle="collapse" data-target="#freelancerdesc-{{ freelancer.id }}" class="list-group-item-action">
+    {% endif %}
+        <div class="d-flex flex-row w-100 justify-content-between">
+            <h5>{{ freelancer.title }}</h5>
+            <small>{{ freelancer.created }}</small>
+        </div>
+    {% if freelancer.description %}
+    </a>
+    {% endif %}
+    <div class="d-flex flex-row w-100 justify-content-start">
+        <span class="p-2">
+            <a href="{% url 'freelancer-detail' freelancer.id %}">Detail</a>
+        </span>
+        <span class="source-info p-2">
+            {% for post in freelancer.posts.all %}
+                <a href="{{ post.url }}" target="_blank">{{ post.source.name }} &gt; {{ post.subarea }}</a>
+            {% endfor %}
+        </span>
+        <span class="tag-list p-2 ml-auto">
+            {% for tag in freelancer.tags.all %}
+                {% if tag.name != 'freelancer' %}
+                    <span class="tag badge badge-default">{{ tag.name }}</span>
+                {% endif %}
+            {% endfor %}
+        </span>
+    </div>
+    {% if freelancer.description %}
+    <div class="d-flex flex-row w-100">
+        <div class="collapse freelancerdesc rounded p-2" id="freelancerdesc-{{ freelancer.id }}">
+            {{ freelancer.description|markdown }}
+        </div>
+    </div>
+    {% endif %}
+</li>
+{% endfor %}
+</ul>
+{% include 'helpers/pagination.html' %}
+
+{% endblock %}

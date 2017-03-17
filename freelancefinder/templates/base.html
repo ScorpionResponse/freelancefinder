@@ -20,12 +20,13 @@
                 <div class="collapse navbar-collapse justify-content-start" id="navbarNav">
                     <div class="navbar-nav p-2">
                         <a class="nav-item nav-link" href="{% url 'index' %}">Home</a>
-                        <a class="nav-item nav-link" href="{% url 'job-list' %}">Job List</a>
+                        <a class="nav-item nav-link" href="{% url 'job-list' %}">Jobs</a>
+                        <a class="nav-item nav-link" href="{% url 'freelancer-list' %}">Freelancers</a>
                         {% if user|in_group:"Administrators" %}
-                            <a class="nav-item nav-link" href="{% url 'post-list' %}">Post List</a>
+                            <a class="nav-item nav-link" href="{% url 'post-list' %}">Posts</a>
                         {% endif %}
                         {% if user|in_group:"Debuggers" %}
-                            <a class="nav-item nav-link" href="{% url 'source-list' %}">Source List</a>
+                            <a class="nav-item nav-link" href="{% url 'source-list' %}">Sources</a>
                         {% endif %}
                     </div>
                     <div id="header-account" class="navbar-nav p-2 ml-auto">

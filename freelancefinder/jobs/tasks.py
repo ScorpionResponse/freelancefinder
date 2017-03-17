@@ -19,6 +19,9 @@ def process_new_posts():
         if '[hiring]' in post.title.lower():
             post.is_job_posting = True
             post.is_freelance = True
+        if '[for hire]' in post.title.lower():
+            post.is_freelancer = True
+            post.is_freelance = True
         post.save()
 
 
@@ -31,6 +34,18 @@ def create_jobs():
         logger.debug("Creating job from post: %s", post)
         job = Job.objects.create(title=post.title, description=post.description)
         post.job = job
+        post.save()
+
+
+@celery_app.task
+def create_freelancers():
+    """Create a Freelancer from a Post."""
+    from .models import Post, Freelancer
+
+    for post in Post.objects.pending_freelancers():
+        logger.debug("Creating freelancer from post: %s", post)
+        freelancer = Freelancer.objects.create(title=post.title, description=post.description)
+        post.freelancer = freelancer
         post.save()
 
 
@@ -62,3 +77,33 @@ def tag_jobs():
                 job.tags.add(all_tags[word])
         job.tags.add('job')
         job.save()
+
+
+@celery_app.task
+def tag_freelancers():
+    """Add tags for freelancers."""
+    from nltk import bigrams
+    from taggit.models import Tag
+    from .models import Freelancer, TagVariant
+
+    all_tags = list(Tag.objects.all().values_list('name', flat=True))
+    all_tags = {x.lower(): x for x in all_tags}
+    variant_tags = {variant: tag for variant, tag in TagVariant.objects.all().values_list('variant', 'tag__name')}
+    all_tags.update(variant_tags)
+    logger.info('Got all tags list: %s', all_tags)
+
+    for freelancer in Freelancer.objects.filter(tags__isnull=True):
+        title_words = freelancer.title.replace(',', '').replace('/', ' ').split(' ')
+        description_words = freelancer.description.replace(', ', '').replace('/', ' ').split(' ')
+        joined_words = [' '.join(x) for x in list(bigrams(description_words))]
+        areas = list(freelancer.posts.all().values_list('subarea', flat=True))
+
+        taggable_words = title_words + description_words + joined_words + areas
+        taggable_words = [x.lower() for x in taggable_words if x is not None]
+        logger.info('freelancer: %s - All Taggable Words: %s', freelancer, taggable_words)
+        for word in set(taggable_words):
+            if word in all_tags:
+                logger.info('Add tag %s to freelancer %s', all_tags[word], freelancer)
+                freelancer.tags.add(all_tags[word])
+        freelancer.tags.add('freelancer')
+        freelancer.save()

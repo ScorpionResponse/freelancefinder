@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load markdown_filter %}
+{% block 'content' %}
+
+<h1>{{ freelancer.title }}</h1>
+<small>Created: {{ freelancer.created }} - Updated: {{ freelancer.modified }}</small>
+<p>Tags: 
+{% for tag in freelancer.tags.all %}
+    {% if tag.name != 'freelancer' %}
+        <span class="tag badge badge-default">{{ tag.name }}</span>
+    {% endif %}
+{% endfor %}
+</p>
+
+{{ freelancer.description|markdown }}
+
+<h5>Source Posts</h5>
+<ul>
+    {% for post in freelancer.posts.all %}
+    <li><a target="_blank" href="{{ post.url }}">{{ post.source.name }}{% if post.subarea %} &gt; {{ post.subarea }}{% endif %}</a> - {{ post.created }}</li>
+    {% endfor %}
+</ul>
+
+{% endblock %}

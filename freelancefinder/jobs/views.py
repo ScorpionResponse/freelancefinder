@@ -9,8 +9,8 @@ from django.views.generic import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import FormMixin
 
-from .forms import PostFilterForm, JobSearchForm
-from .models import Job, Post
+from .forms import PostFilterForm, JobSearchForm, FreelancerSearchForm
+from .models import Job, Post, Freelancer
 
 logger = logging.getLogger(__name__)
 
@@ -57,6 +57,41 @@ class JobDetailView(DetailView):
 
     model = Job
     template_name = 'jobs/job_detail.html'
+
+
+class FreelancerListView(ListView, FormGetMixin):
+    """List all freelancers."""
+
+    model = Freelancer
+    paginate_by = 20
+    form_class = FreelancerSearchForm
+    template_name = "jobs/freelancer_list.html"
+
+    def get_queryset(self):
+        """Queryset should sort by desc created by default."""
+        search = self.request.GET.get('search', None)
+        tag = self.request.GET.get('tag', None)
+        querys = Freelancer.objects.all().prefetch_related('posts', 'tags', 'posts__source')
+        if search is not None and search != '':
+            querys = querys.filter(Q(title__icontains=search) | Q(description__icontains=search))
+        if tag is not None and tag != '':
+            querys = querys.filter(tags__slug__in=[tag]).distinct()
+        return querys.order_by('-created')
+
+    def get_context_data(self, **kwargs):
+        """Include search/filter form."""
+        context = super(FreelancerListView, self).get_context_data(**kwargs)
+
+        context['form'] = self.get_form()
+
+        return context
+
+
+class FreelancerDetailView(DetailView):
+    """Show a single freelancer."""
+
+    model = Freelancer
+    template_name = 'jobs/freelancer_detail.html'
 
 
 class PostListView(FormMixin, ListView, GroupRequiredMixin):
