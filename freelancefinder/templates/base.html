@@ -17,8 +17,8 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <a id="header-logo" class="navbar-brand logo" href="{% url 'index' %}">FreelanceFinder</a>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <div class="navbar-nav">
+                <div class="collapse navbar-collapse justify-content-start" id="navbarNav">
+                    <div class="navbar-nav p-2">
                         <a class="nav-item nav-link" href="{% url 'index' %}">Home</a>
                         <a class="nav-item nav-link" href="{% url 'job-list' %}">Job List</a>
                         {% if user|in_group:"Administrators" %}
@@ -28,7 +28,7 @@
                             <a class="nav-item nav-link" href="{% url 'source-list' %}">Source List</a>
                         {% endif %}
                     </div>
-                    <div id="header-account" class="navbar-nav justify-content-md-end">
+                    <div id="header-account" class="navbar-nav p-2 ml-auto">
                         {% if user.is_authenticated %}
                             <!-- AUTH:YES -->
                             <span><a class="nav-item nav-link" href="{% url 'user-profile' %}">{{ user.username }}</a></span>
