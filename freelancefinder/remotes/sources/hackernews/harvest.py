@@ -1,6 +1,7 @@
 """Harvest process for the HackerNews Source."""
 
 import datetime
+import itertools
 import logging
 from collections import defaultdict
 
@@ -75,12 +76,11 @@ class Harvester(object):
 
     def _process_threads(self):
         """Process each hiring thread."""
-        for post in self._process_who_is_hiring():
-            yield post
-        for post in self._process_who_wants_to_be_hired():
-            yield post
-        for post in self._process_freelancer():
-            yield post
+        return itertools.chain(
+            self._process_who_is_hiring(),
+            self._process_who_wants_to_be_hired(),
+            self._process_freelancer()
+        )
 
     def _process_who_is_hiring(self):
         """Process the Who is hiring? thread."""
