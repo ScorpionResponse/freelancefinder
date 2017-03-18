@@ -30,9 +30,13 @@
                 {% if post.is_freelance %}
                     Freelance
                 {% endif %}
-                &nbsp;
                 {% if post.is_job_posting %}
+                    &nbsp;
                     Job Posting
+                {% endif %}
+                {% if post.is_freelancer %}
+                    &nbsp;
+                    Freelancer
                 {% endif %}
             </span>
         </div>
