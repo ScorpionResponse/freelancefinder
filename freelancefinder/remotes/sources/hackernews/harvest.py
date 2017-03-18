@@ -96,6 +96,9 @@ class Harvester(object):
                 logger.debug('Already processed comment %s.', comment_id)
                 continue
             comment = self.client.get_item(comment_id)
+            if comment.text is None:
+                logger.debug("Skipping blank comment: %s", comment)
+                continue
             url = "https://news.ycombinator.com/item?id={}".format(comment_id)
             title = comment.text.split('<')[0][:255]
             post = Post(url=url, source=self.source, title=title, description=comment.text, unique=comment_id, subarea='who_is_hiring', is_job_posting=True)
@@ -117,6 +120,9 @@ class Harvester(object):
                 logger.debug('Already processed comment %s.', comment_id)
                 continue
             comment = self.client.get_item(comment_id)
+            if comment.text is None:
+                logger.debug("Skipping blank comment: %s", comment)
+                continue
             url = "https://news.ycombinator.com/item?id={}".format(comment_id)
             title = comment.by + ' - ' + comment.text.split('<')[0]
             post = Post(url=url, source=self.source, title=title[:255], description=comment.text, unique=comment_id, subarea='who_wants_to_be_hired', is_freelancer=True)
@@ -138,6 +144,9 @@ class Harvester(object):
                 logger.debug('Already processed comment %s.', comment_id)
                 continue
             comment = self.client.get_item(comment_id)
+            if comment.text is None:
+                logger.debug("Skipping blank comment: %s", comment)
+                continue
             url = "https://news.ycombinator.com/item?id={}".format(comment_id)
             title = comment.by + ' - ' + comment.text.split('<')[0]
             post = Post(url=url, source=self.source, title=title[:255], description=comment.text, unique=comment_id, subarea='freelancer', is_freelance=True)
