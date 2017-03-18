@@ -72,7 +72,7 @@ def tag_jobs():
         taggable_words = [x.lower() for x in taggable_words if x is not None]
         logger.info('Job: %s - All Taggable Words: %s', job, taggable_words)
         for word in set(taggable_words):
-            if word in all_tags:
+            if word in all_tags and word != 'freelancer':
                 logger.info('Add tag %s to job %s', all_tags[word], job)
                 job.tags.add(all_tags[word])
         job.tags.add('job')
@@ -102,7 +102,7 @@ def tag_freelancers():
         taggable_words = [x.lower() for x in taggable_words if x is not None]
         logger.info('freelancer: %s - All Taggable Words: %s', freelancer, taggable_words)
         for word in set(taggable_words):
-            if word in all_tags:
+            if word in all_tags and word != 'job':
                 logger.info('Add tag %s to freelancer %s', all_tags[word], freelancer)
                 freelancer.tags.add(all_tags[word])
         freelancer.tags.add('freelancer')
