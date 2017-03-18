@@ -100,7 +100,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'freelancefinder.middleware.xforwardedfor.XForwardedForMiddleware',
+    # 'freelancefinder.middleware.xforwardedfor.XForwardedForMiddleware',
+    'freelancefinder.middleware.xforwardedfor.xforwardedfor',
 ]
 
 if DEBUG:
