@@ -9,7 +9,8 @@ logger = logging.getLogger(__name__)
 
 def is_in_group(user, groups):
     """
-    Returns a boolean indicating if a user belongs to a group.
+    Return a boolean indicating if a user belongs to a group.
+
     Usage: {% if request.user|in_group:"Group Name" %}
     """
     logger.debug('Checking whether user (%s) is in groups (%s)', user, groups)
