@@ -5,7 +5,7 @@ import itertools
 import logging
 from collections import defaultdict
 
-from hackernews import HackerNews
+from hackernews import HackerNews, InvalidItemID
 
 from jobs.models import Post
 
@@ -95,7 +95,11 @@ class Harvester(object):
             if Post.objects.filter(source=self.source, unique=comment_id).exists():
                 logger.debug('Already processed comment %s.', comment_id)
                 continue
-            comment = self.client.get_item(comment_id)
+            try:
+                comment = self.client.get_item(comment_id)
+            except InvalidItemID as iiid:
+                logger.warning('Tried to get non-existent comment with ID: %s; ex: %s', comment_id, iiid)
+                continue
             if comment.text is None:
                 logger.debug("Skipping blank comment: %s", comment)
                 continue
@@ -119,7 +123,11 @@ class Harvester(object):
             if Post.objects.filter(source=self.source, unique=comment_id).exists():
                 logger.debug('Already processed comment %s.', comment_id)
                 continue
-            comment = self.client.get_item(comment_id)
+            try:
+                comment = self.client.get_item(comment_id)
+            except InvalidItemID as iiid:
+                logger.warning('Tried to get non-existent comment with ID: %s; ex: %s', comment_id, iiid)
+                continue
             if comment.text is None:
                 logger.debug("Skipping blank comment: %s", comment)
                 continue
@@ -143,7 +151,11 @@ class Harvester(object):
             if Post.objects.filter(source=self.source, unique=comment_id).exists():
                 logger.debug('Already processed comment %s.', comment_id)
                 continue
-            comment = self.client.get_item(comment_id)
+            try:
+                comment = self.client.get_item(comment_id)
+            except InvalidItemID as iiid:
+                logger.warning('Tried to get non-existent comment with ID: %s; ex: %s', comment_id, iiid)
+                continue
             if comment.text is None:
                 logger.debug("Skipping blank comment: %s", comment)
                 continue
