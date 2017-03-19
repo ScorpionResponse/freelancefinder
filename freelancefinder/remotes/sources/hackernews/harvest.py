@@ -67,10 +67,10 @@ class Harvester(object):
                     new_posts[2] = post_id
 
         if all(new_posts):
-            self.source.config.update_or_create(config_key='processed_date-last_month', config_value=month_year)
-            self.source.config.update_or_create(config_key='post_id-who_is_hiring', config_value=new_posts[0])
-            self.source.config.update_or_create(config_key='post_id-freelancer', config_value=new_posts[1])
-            self.source.config.update_or_create(config_key='post_id-who_wants_to_be_hired', config_value=new_posts[2])
+            self.source.config.update_or_create(config_key='processed_date-last_month', defaults={'config_value': month_year})
+            self.source.config.update_or_create(config_key='post_id-who_is_hiring', defaults={'config_value': new_posts[0]})
+            self.source.config.update_or_create(config_key='post_id-freelancer', defaults={'config_value': new_posts[1]})
+            self.source.config.update_or_create(config_key='post_id-who_wants_to_be_hired', defaults={'config_value': new_posts[2]})
             return True
         return False
 
@@ -105,7 +105,7 @@ class Harvester(object):
             self.status_info['count-who_is_hiring'] += 1
             self.status_info['total'] += 1
             yield post
-        self.source.config.update_or_create(config_key='processed_date-who_is_hiring', config_value=today)
+        self.source.config.update_or_create(config_key='processed_date-who_is_hiring', defaults={'config_value': today})
 
     def _process_who_wants_to_be_hired(self):
         """Process the Who wants to be hired? thread."""
@@ -129,7 +129,7 @@ class Harvester(object):
             self.status_info['count-who_wants_to_be_hired'] += 1
             self.status_info['total'] += 1
             yield post
-        self.source.config.update_or_create(config_key='processed_date-who_wants_to_be_hired', config_value=today)
+        self.source.config.update_or_create(config_key='processed_date-who_wants_to_be_hired', defaults={'config_value': today})
 
     def _process_freelancer(self):
         """Process the Freelancer/Seeking freelancer? thread."""
@@ -157,7 +157,7 @@ class Harvester(object):
             self.status_info['count-freelancer'] += 1
             self.status_info['total'] += 1
             yield post
-        self.source.config.update_or_create(config_key='processed_date-freelancer', config_value=today)
+        self.source.config.update_or_create(config_key='processed_date-freelancer', defaults={'config_value': today})
 
     def status(self):
         """Return the current status of this harvester."""
