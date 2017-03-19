@@ -9,7 +9,7 @@ from django.db import models
 class Source(models.Model):
     """Website where jobs may be posted."""
 
-    code = models.CharField(max_length=20, primary_key=True)
+    code = models.CharField(max_length=40, primary_key=True)
     name = models.CharField(max_length=200)
     url = models.URLField()
 
@@ -34,7 +34,7 @@ class SourceConfig(models.Model):
     """Config values for Sources."""
 
     source = models.ForeignKey("Source", on_delete=models.CASCADE, related_name="config")
-    config_key = models.CharField(max_length=32)
+    config_key = models.CharField(max_length=100)
     config_value = models.CharField(max_length=255, blank=True, null=True)
 
     def __str__(self):

@@ -23,11 +23,9 @@ class Harvester(object):
 
     def harvest(self):
         """Gather some Posts from hackernews."""
-        for post in self._process_job_stories():
+        self._check_for_new_hiring_threads()
+        for post in itertools.chain(self._process_job_stories(), self._process_threads()):
             yield post
-        if self._check_for_new_hiring_threads():
-            for post in self._process_threads():
-                yield post
         logger.info("HackerNews harvester status: %s", dict(self.status_info))
 
     def _process_job_stories(self):
@@ -53,7 +51,7 @@ class Harvester(object):
         """Find new hiring posts from the whoishiring user."""
         month_year = datetime.date.today().strftime("%B %Y")
         if self.source.config.filter(config_key='processed_date-last_month', config_value=month_year).exists():
-            return False
+            return
         who_is_hiring_user = self.client.get_user('whoishiring')
         new_posts = [False, False, False]
         for post_id in who_is_hiring_user.submitted[:7]:
@@ -71,8 +69,6 @@ class Harvester(object):
             self.source.config.update_or_create(config_key='post_id-who_is_hiring', defaults={'config_value': new_posts[0]})
             self.source.config.update_or_create(config_key='post_id-freelancer', defaults={'config_value': new_posts[1]})
             self.source.config.update_or_create(config_key='post_id-who_wants_to_be_hired', defaults={'config_value': new_posts[2]})
-            return True
-        return False
 
     def _process_threads(self):
         """Process each hiring thread."""
