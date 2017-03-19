@@ -19,9 +19,12 @@ def harvest_sources():
     for source in Source.objects.all():
         logger.info("Harvesting from Source: %s", source)
         harvester = source.harvester()
-        for post in harvester.harvest():
-            logger.info("Got new Post: %s", post)
-            post.save()
+        try:
+            for post in harvester.harvest():
+                logger.info("Got new Post: %s", post)
+                post.save()
+        except Exception as harvester_exception:  # pylint: disable=broad-except
+            logger.exception('Source %s harvester is broken due to: %s', source, harvester_exception)
 
 
 @celery_app.on_after_configure.connect
