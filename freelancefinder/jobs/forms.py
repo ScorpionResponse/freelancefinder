@@ -13,6 +13,7 @@ class PostFilterForm(forms.Form):
     title = forms.CharField(required=False)
     is_job_posting = forms.BooleanField(required=False)
     is_freelance = forms.BooleanField(required=False)
+    is_freelancer = forms.BooleanField(required=False)
 
     def __init__(self, *args, **kwargs):
         """Create PostFilterForm with crispy form helpers."""
