@@ -16,7 +16,8 @@ def process_new_posts():
     for post in Post.objects.new():
         logger.debug("Processing post: %s", post)
         post.processed = True
-        if '[hiring]' in post.title.lower():
+        title_match_phrases = ['[hiring]', '[part-time]', '[freelance]']
+        if any(word in post.title.lower() for word in title_match_phrases):
             post.is_job_posting = True
             post.is_freelance = True
         if '[for hire]' in post.title.lower():
