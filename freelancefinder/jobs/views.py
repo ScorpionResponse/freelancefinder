@@ -114,13 +114,17 @@ class PostListView(FormMixin, ListView, GroupRequiredMixin):
         is_job_posting = self.request.GET.get('is_job_posting', False)
         is_freelance = self.request.GET.get('is_freelance', False)
         is_freelancer = self.request.GET.get('is_freelancer', False)
+        is_not_classified = self.request.GET.get('is_not_classified', False)
         querys = Post.objects.all().select_related('source')
-        if is_job_posting:
-            querys = querys.filter(is_job_posting=True)
-        if is_freelance:
-            querys = querys.filter(is_freelance=True)
-        if is_freelancer:
-            querys = querys.filter(is_freelancer=True)
+        if is_not_classified:
+            querys = querys.filter(is_job_posting=False, is_freelance=False, is_freelancer=False)
+        else:
+            if is_job_posting:
+                querys = querys.filter(is_job_posting=True)
+            if is_freelance:
+                querys = querys.filter(is_freelance=True)
+            if is_freelancer:
+                querys = querys.filter(is_freelancer=True)
         if title is not None:
             querys = querys.filter(title__icontains=title)
         return querys.order_by('-created')
