@@ -10,6 +10,7 @@ django-model-utils==2.6.1
 django-taggit==0.22.0
 django_celery_beat==1.0.1
 django_logtail==0.3.0
+feedparser==5.2.1
 future==0.16.0
 gunicorn==19.7.0
 haxor==0.3.1
