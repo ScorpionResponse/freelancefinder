@@ -33,8 +33,8 @@ class Harvester(object):
                     logger.info("Reddit harvester got duplication post id %s in subreddit %s, assuming everything new is harvested.", submission.id, subr)
                     break
                 else:
-                    created_time = datetime.datetime.fromtimestamp(submission.created)
-                    logger.debug('Reddit harvester got datetime %s from %s', created_time, submission.created)
+                    created_time = datetime.datetime.utcfromtimestamp(submission.created_utc)
+                    logger.debug('Reddit harvester got datetime %s from %s', created_time, submission.created_utc)
                     post = Post(url=submission.url, source=self.source, title=submission.title[:255], description=submission.selftext, unique=submission.id, subarea=submission.subreddit, created=created_time)
                     self.status_info['count-%s' % (subr,)] += 1
                     self.status_info['total'] += 1
