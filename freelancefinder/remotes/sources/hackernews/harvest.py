@@ -43,7 +43,7 @@ class Harvester(object):
                 url = story.url
                 if not url:
                     url = "https://news.ycombinator.com/item?id={}".format(story.item_id)
-                post = Post(url=url, source=self.source, title=bleach.clean(story.title[:255], strip=True), description=desc, unique=story.item_id, subarea='jobs', is_job_posting=True)
+                post = Post(url=url, source=self.source, title=bleach.clean(story.title[:255], strip=True), description=desc, unique=story.item_id, created=story.submission_time, subarea='jobs', is_job_posting=True)
                 self.status_info['count-job'] += 1
                 self.status_info['total'] += 1
                 yield post
@@ -102,7 +102,7 @@ class Harvester(object):
                 continue
             url = "https://news.ycombinator.com/item?id={}".format(comment_id)
             title = bleach.clean(comment.text.split('<')[0][:255], strip=True)
-            post = Post(url=url, source=self.source, title=title, description=comment.text, unique=comment_id, subarea='who_is_hiring', is_job_posting=True)
+            post = Post(url=url, source=self.source, title=title, description=comment.text, unique=comment_id, created=comment.submission_time, subarea='who_is_hiring', is_job_posting=True)
             self.status_info['count-who_is_hiring'] += 1
             self.status_info['total'] += 1
             yield post
@@ -130,7 +130,7 @@ class Harvester(object):
                 continue
             url = "https://news.ycombinator.com/item?id={}".format(comment_id)
             title = bleach.clean(comment.by + ' - ' + comment.text.split('<')[0], strip=True)
-            post = Post(url=url, source=self.source, title=title[:255], description=comment.text, unique=comment_id, subarea='who_wants_to_be_hired', is_freelancer=True)
+            post = Post(url=url, source=self.source, title=title[:255], description=comment.text, unique=comment_id, created=comment.submission_time, subarea='who_wants_to_be_hired', is_freelancer=True)
             self.status_info['count-who_wants_to_be_hired'] += 1
             self.status_info['total'] += 1
             yield post
@@ -158,7 +158,7 @@ class Harvester(object):
                 continue
             url = "https://news.ycombinator.com/item?id={}".format(comment_id)
             title = bleach.clean(comment.by + ' - ' + comment.text.split('<')[0], strip=True)
-            post = Post(url=url, source=self.source, title=title[:255], description=comment.text, unique=comment_id, subarea='freelancer', is_freelance=True)
+            post = Post(url=url, source=self.source, title=title[:255], description=comment.text, unique=comment_id, created=comment.submission_time, subarea='freelancer', is_freelance=True)
             if 'SEEKING WORK' in title.upper():
                 post.is_freelancer = True
             elif 'SEEKING FREELANCER' in title.upper():

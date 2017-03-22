@@ -32,7 +32,8 @@ class Harvester(object):
             if Post.objects.filter(source=self.source, unique=job_info.id).exists():
                 logger.debug('Alread processed this item %s, skipping the rest.', job_info.id)
                 break
-            post = Post(url=job_info.link, source=self.source, title=job_info.title, description=bleach.clean(job_info.description, tags=bleach.ALLOWED_TAGS + ADDITIONAL_TAGS, strip=True), unique=job_info.id, subarea='all', is_job_posting=True)
+            created = datetime.datetime(*job_info.updated_parsed[0:6])
+            post = Post(url=job_info.link, source=self.source, title=job_info.title, description=bleach.clean(job_info.description, tags=bleach.ALLOWED_TAGS + ADDITIONAL_TAGS, strip=True), unique=job_info.id, created=created, subarea='all', is_job_posting=True)
             self.status_info['count-rss'] += 1
             self.status_info['total'] += 1
             yield post
