@@ -12,12 +12,12 @@ django_celery_beat==1.0.1
 django_logtail==0.3.0
 feedparser==5.2.1
 future==0.16.0
-gunicorn==19.7.0
+gunicorn==19.7.1
 haxor==0.3.1
 markdown==2.6.8
 maya==0.1.8
 nltk==3.2.2
 praw==4.4.0
-psycopg2==2.7
-python-json-logger==0.1.6
+psycopg2==2.7.1
+python-json-logger==0.1.7
 pytzdata==2017.1
