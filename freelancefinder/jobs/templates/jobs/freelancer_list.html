@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
-{% load markdown_filter %}
 {% load crispy_forms_tags %}
+{% load markdown_filter %}
+{% load tz %}
 
 {% block 'content' %}
 
@@ -17,7 +18,7 @@
     {% endif %}
         <div class="d-flex flex-row w-100 justify-content-between">
             <h5>{{ freelancer.title }}</h5>
-            <small>{{ freelancer.created }}</small>
+            <small>{{ freelancer.created|localtime }}</small>
         </div>
     {% if freelancer.description %}
     </a>

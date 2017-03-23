@@ -1,9 +1,11 @@
 {% extends 'base.html' %}
 {% load markdown_filter %}
+{% load tz %}
+
 {% block 'content' %}
 
 <h1>{{ job.title }}</h1>
-<small>Created: {{ job.created }} - Updated: {{ job.modified }}</small>
+<small>Created: {{ job.created|localtime }} - Updated: {{ job.modified|localtime }}</small>
 <p>Tags: 
 {% for tag in job.tags.all %}
     {% if tag.name != 'job' %}
@@ -17,7 +19,7 @@
 <h5>Source Posts</h5>
 <ul>
     {% for post in job.posts.all %}
-    <li><a target="_blank" href="{{ post.url }}">{{ post.source.name }}{% if post.subarea %} &gt; {{ post.subarea }}{% endif %}</a> - {{ post.created }}</li>
+    <li><a target="_blank" href="{{ post.url }}">{{ post.source.name }}{% if post.subarea %} &gt; {{ post.subarea }}{% endif %}</a> - {{ post.created|localtime }}</li>
     {% endfor %}
 </ul>
 
