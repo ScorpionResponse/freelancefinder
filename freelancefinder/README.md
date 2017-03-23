@@ -20,3 +20,5 @@ Add Behance API:
 - https://developer.hubstaff.com/docs/api
  
 - https://djangojobs.net/jobs/
+- https://www.python.org/jobs/
+- http://pythonjobs.github.io/ (lower priority)
