@@ -8,7 +8,7 @@ import markdown as markdown_
 
 register = template.Library()
 
-ADDITIONAL_TAGS = ['p', 'br']
+ADDITIONAL_TAGS = ['p', 'br', 'pre']
 
 
 @register.filter(name='markdown')
