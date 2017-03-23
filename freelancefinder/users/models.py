@@ -16,6 +16,7 @@ logger = logging.getLogger(__name__)
 @python_2_unicode_compatible
 class Profile(models.Model):
     """Hold user profile options not in default user model."""
+
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")
     custom_timezone = models.CharField(choices=TIMEZONE_CHOICES, max_length=100, default='America/New_York')
 
