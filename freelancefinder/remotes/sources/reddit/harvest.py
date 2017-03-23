@@ -7,6 +7,7 @@ import logging
 import praw
 
 from django.conf import settings
+from django.utils import timezone
 
 from jobs.models import Post
 
@@ -33,7 +34,7 @@ class Harvester(object):
                     logger.info("Reddit harvester got duplication post id %s in subreddit %s, assuming everything new is harvested.", submission.id, subr)
                     break
                 else:
-                    created_time = datetime.datetime.utcfromtimestamp(submission.created_utc)
+                    created_time = timezone.make_aware(datetime.datetime.utcfromtimestamp(submission.created_utc))
                     logger.debug('Reddit harvester got datetime %s from %s', created_time, submission.created_utc)
                     post = Post(url=submission.url, source=self.source, title=submission.title[:255], description=submission.selftext, unique=submission.id, subarea=submission.subreddit, created=created_time)
                     self.status_info['count-%s' % (subr,)] += 1

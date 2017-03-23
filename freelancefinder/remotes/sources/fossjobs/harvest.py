@@ -7,6 +7,8 @@ from collections import defaultdict
 import bleach
 import feedparser
 
+from django.utils import timezone
+
 from jobs.models import Post
 
 ADDITIONAL_TAGS = ['p', 'br']
@@ -32,7 +34,7 @@ class Harvester(object):
             if Post.objects.filter(source=self.source, unique=job_info.id).exists():
                 logger.debug('Alread processed this item %s, skipping the rest.', job_info.id)
                 break
-            created = datetime.datetime(*job_info.updated_parsed[0:6])
+            created = timezone.make_aware(datetime.datetime(*job_info.updated_parsed[0:6]))
             post = Post(url=job_info.link, source=self.source, title=job_info.title, description=bleach.clean(job_info.description, tags=bleach.ALLOWED_TAGS + ADDITIONAL_TAGS, strip=True), unique=job_info.id, created=created, subarea='all', is_job_posting=True)
             self.status_info['count-rss'] += 1
             self.status_info['total'] += 1
