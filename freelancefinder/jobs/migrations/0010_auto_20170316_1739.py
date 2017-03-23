@@ -26,6 +26,7 @@ TAGS = {
     'MongoDB': ['mongo'],
     'MySQL': [],
     'Node.js': ['node'],
+    'NSFW': ['nsfwforhire'],
     'PHP': [],
     'Part Time': ['part-time', 'parttime'],
     'PostgreSQL': [],
