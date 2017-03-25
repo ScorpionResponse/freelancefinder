@@ -35,7 +35,7 @@
 - name: Prepare control env
   hosts: all
   roles:
-    - paul-env
+    - ScorpionResponse.personal_dev
   tasks:
     - name: Checkout django repo
       git: repo=git@github.com:ScorpionResponse/freelancefinder.git dest=/home/ubuntu/freelancefinder accept_hostkey=True
@@ -49,6 +49,7 @@
         - ansible-gunicorn
         - ansible-nginx
         - ansible-pip
+        - ansible-personal_dev
         - ansible-supervisord
 
     - name: Update bashrc

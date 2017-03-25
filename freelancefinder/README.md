@@ -24,3 +24,5 @@ Add Behance API:
 - http://pythonjobs.github.io/ (lower priority)
 
 - https://www.experfy.com/projects/category
+
+- Bitcoin: https://www.xbtfreelancer.com/
