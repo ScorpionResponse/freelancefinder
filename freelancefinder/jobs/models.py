@@ -8,6 +8,7 @@ from django.db import models
 
 from utils.text import generate_fingerprint
 
+
 class PostManager(models.Manager):
     """Manager for Posts."""
 
@@ -63,11 +64,18 @@ class Job(TimeStampedModel):
 
     title = models.CharField(max_length=255)
     description = models.TextField()
+    fingerprint = models.CharField(max_length=255)
     tags = TaggableManager()
 
     def __str__(self):
         """Representation for a Job."""
         return u"<Job ID:{}; Title:{}>".format(self.pk, self.title)
+
+    def save(self, *args, **kwargs):
+        """Add fingerprint and save."""
+        if not self.pk:
+            self.fingerprint = generate_fingerprint(self.description)
+        super(Job, self).save(*args, **kwargs)
 
 
 @python_2_unicode_compatible
@@ -76,11 +84,18 @@ class Freelancer(TimeStampedModel):
 
     title = models.CharField(max_length=255)
     description = models.TextField()
+    fingerprint = models.CharField(max_length=255)
     tags = TaggableManager()
 
     def __str__(self):
         """Representation for a Freelancer."""
         return u"<Freelancer ID:{}; Title:{}>".format(self.pk, self.title)
+
+    def save(self, *args, **kwargs):
+        """Add fingerprint and save."""
+        if not self.pk:
+            self.fingerprint = generate_fingerprint(self.description)
+        super(Freelancer, self).save(*args, **kwargs)
 
 
 @python_2_unicode_compatible

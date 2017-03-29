@@ -21,4 +21,4 @@ nltk==3.2.2
 praw==4.4.0
 psycopg2==2.7.1
 python-json-logger==0.1.7
-pytzdata==2017.1
+pytzdata==2017.2
