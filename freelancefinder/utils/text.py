@@ -17,7 +17,7 @@ def generate_fingerprint(text):
     count_tokens = Counter(filtered_tokens)
     common_tokens = count_tokens.most_common(15)
     fingerprint = sorted([x for x, y in common_tokens])
-    return '-'.join(fingerprint)
+    return '-'.join(fingerprint)[:255]
 
 
 def tokenize(text):
