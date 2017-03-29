@@ -3,6 +3,7 @@
 - src: ScorpionResponse.django
 - src: ScorpionResponse.gunicorn
 - src: ScorpionResponse.nginx
+- src: ScorpionResponse.nltk
 - src: ScorpionResponse.supervisord
 - src: ANXS.postgresql
 - src: geerlingguy.redis
