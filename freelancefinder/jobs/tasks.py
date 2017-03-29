@@ -33,7 +33,7 @@ def create_jobs():
 
     for post in Post.objects.pending_freelance_jobs():
         logger.debug("Creating job from post: %s", post)
-        job = Job.objects.create(title=post.title, description=post.description)
+        job = Job.objects.create(title=post.title, description=post.description, created=post.created)
         post.job = job
         post.save()
 
@@ -45,7 +45,7 @@ def create_freelancers():
 
     for post in Post.objects.pending_freelancers():
         logger.debug("Creating freelancer from post: %s", post)
-        freelancer = Freelancer.objects.create(title=post.title, description=post.description)
+        freelancer = Freelancer.objects.create(title=post.title, description=post.description, created=post.created)
         post.freelancer = freelancer
         post.save()
 

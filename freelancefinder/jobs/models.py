@@ -6,6 +6,7 @@ from taggit.managers import TaggableManager
 
 from django.db import models
 
+from utils.text import generate_fingerprint
 
 class PostManager(models.Manager):
     """Manager for Posts."""
