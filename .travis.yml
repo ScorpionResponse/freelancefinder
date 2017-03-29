@@ -21,8 +21,8 @@ script:
   - >
     NUM=`wc -l ${reqs} | cut -f1 -d" "`; 
     # [ $NUM -eq 0 ] 
-    # Allow one requirement to be outdated before failure
-    [ $NUM -lt 4 ] 
+    # Allow two requirements to be outdated before failure
+    [ $NUM -lt 5 ] 
     && (echo "Requirements test: pass" && exit 0) 
     || (echo "Requirements test: fail" && exit 1)
 
