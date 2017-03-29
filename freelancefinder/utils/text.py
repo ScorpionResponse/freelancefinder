@@ -19,7 +19,7 @@ def generate_fingerprint(text):
     filtered_tokens = [word for word in text_tokens if word not in stopwords.words('english')]
     count_tokens = Counter(filtered_tokens)
     common_tokens = count_tokens.most_common(15)
-    fingerprint = sorted([x for x, y in common_tokens])
+    fingerprint = sorted([x for x, y in common_tokens])  # pylint: disable=unused-variable
     return '-'.join(fingerprint)[:255]
 
 
