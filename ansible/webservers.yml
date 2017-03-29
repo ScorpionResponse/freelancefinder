@@ -8,6 +8,7 @@
     - ScorpionResponse.django
     - ScorpionResponse.gunicorn
     - ScorpionResponse.nginx
+    - ScorpionResponse.nltk
     - ScorpionResponse.supervisord
     - geerlingguy.redis
   tasks:

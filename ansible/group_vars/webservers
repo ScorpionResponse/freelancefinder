@@ -39,3 +39,10 @@ celery_project_dir: "/srv/freelancefinder/freelancefinder"
 celery_bin_dir: "/srv/venv/bin/"
 
 celery_user_name: 'django'
+
+# NLTK
+NLTK_DATA_DIR: '/usr/share/nltk_data'
+
+NLTK_DATA_PACKAGE_IDS:
+  - punkt
+  - stopwords
