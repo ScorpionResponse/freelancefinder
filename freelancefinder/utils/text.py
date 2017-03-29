@@ -6,6 +6,12 @@ import string
 from nltk.corpus import stopwords
 import nltk
 
+try:
+    nltk.word_tokenize('test phrase')
+except LookupError:
+    nltk.download('punkt')
+    nltk.download('stopwords')
+
 
 def generate_fingerprint(text):
     """Generate a fingerprint to be used for comparison to other texts."""
@@ -19,8 +25,6 @@ def generate_fingerprint(text):
 
 def tokenize(text):
     """Split text into words."""
-    # translator = str.maketrans('', '', string.punctuation)
-    # no_punctuation = text.lower().translate(None, string.punctuation)
     exclude = set(string.punctuation)
     no_punctuation = ''.join(char.lower() for char in text if char not in exclude)
     return nltk.word_tokenize(no_punctuation)
