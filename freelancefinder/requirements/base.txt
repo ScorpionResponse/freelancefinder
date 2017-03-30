@@ -14,7 +14,7 @@ django_logtail==0.3.0
 feedparser==5.2.1
 future==0.16.0
 gunicorn==19.7.1
-haxor==0.3.1
+-e git://github.com/ScorpionResponse/haxor.git#egg=haxor
 markdown==2.6.8
 maya==0.1.8
 nltk==3.2.2
