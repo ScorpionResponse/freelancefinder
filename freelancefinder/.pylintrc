@@ -16,7 +16,7 @@ disable-msg=C0301,R0901,locally-disabled
 
 [BASIC]
 # Don't ever report these as bad names
-good-names=logger,default_app_config,celery_app
+good-names=logger,default_app_config,celery_app,rf
 
 [SIMILARITIES]
 # Ignore imports when computing similarities.
