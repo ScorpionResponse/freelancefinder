@@ -48,6 +48,7 @@ if DEBUG:
     ]
 
 PROJECT_APPS = [
+    'freelancefinder',
     'jobs',
     'remotes',
     'users',
