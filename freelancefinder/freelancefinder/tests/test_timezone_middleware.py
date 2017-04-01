@@ -5,7 +5,7 @@ import pytz
 from django.contrib.auth.models import AnonymousUser
 from django.utils.timezone import get_current_timezone
 
-from freelancefinder.middleware.timezone import user_timezone
+from ..middleware.timezone import user_timezone
 
 
 def get_response_method(thing):
