@@ -3,12 +3,18 @@
 from django.test import TestCase, Client
 
 from remotes.models import Source
-from .models import Job, Post
+from .models import Job, Post, Freelancer
 
 
 def test_job_list(client):
     """Simple test for the jobs list page."""
     response = client.get('/jobs/job-list/')
+    assert response.status_code == 200
+
+
+def test_freelancer_list(client):
+    """Simple test for the freelancer list page."""
+    response = client.get('/jobs/freelancer-list/')
     assert response.status_code == 200
 
 
@@ -35,6 +41,25 @@ class JobTests(TestCase):
 
     def tearDown(self):
         self.job.delete()
+
+
+class FreelancerTests(TestCase):
+    """Tests related to handling freelancers."""
+
+    def setUp(self):
+        self.freelancer = Freelancer.objects.create(title='A New Job', description="Some Description")
+        self.client = Client()
+
+    def test_get_freelancers(self):
+        num_freelancers = Freelancer.objects.all().count()
+        assert num_freelancers != 0
+
+    def test_get_freelancers_list(self):
+        response = self.client.get('/jobs/freelancer-list/')
+        assert response.status_code == 200
+
+    def tearDown(self):
+        self.freelancer.delete()
 
 
 class PostTests(TestCase):
