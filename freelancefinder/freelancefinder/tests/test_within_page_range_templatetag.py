@@ -1,4 +1,4 @@
-"""Test the within_page_range function."""
+"""Test the within_page_range filter."""
 
 from ..templatetags.within_page_range import within_filter
 
