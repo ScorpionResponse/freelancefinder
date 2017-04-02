@@ -1,5 +1,7 @@
 """Tests related to jobs functionality."""
 
+import pytest
+
 from django.test import TestCase, Client
 
 from remotes.models import Source
@@ -12,15 +14,52 @@ def test_job_list(client):
     assert response.status_code == 200
 
 
+def test_job_list_filter_search(client):
+    """Test filtering job list by search field."""
+    response = client.get('/jobs/job-list/?search=test')
+    assert response.status_code == 200
+
+
+def test_job_list_filter_tag(client):
+    """Test filtering job list by tag."""
+    response = client.get('/jobs/job-list/?tag=django')
+    assert response.status_code == 200
+
+
 def test_freelancer_list(client):
     """Simple test for the freelancer list page."""
     response = client.get('/jobs/freelancer-list/')
     assert response.status_code == 200
 
 
+def test_freelancer_list_filter_search(client):
+    """Test filtering freelancer list by search field."""
+    response = client.get('/jobs/freelancer-list/?search=test')
+    assert response.status_code == 200
+
+
+def test_freelancer_list_filter_tag(client):
+    """Test filtering freelancer list by tag."""
+    response = client.get('/jobs/freelancer-list/?tag=django')
+    assert response.status_code == 200
+
+
 def test_post_list(client):
     """Simple test for the posts list page."""
     response = client.get('/jobs/post-list/')
+    assert response.status_code == 200
+
+
+def test_post_list_filter_title(client):
+    """Test filtering freelancer list by title field."""
+    response = client.get('/jobs/freelancer-list/?title=test')
+    assert response.status_code == 200
+
+
+@pytest.mark.parametrize("field", ['is_job_posting', 'is_freelance', 'is_freelancer', 'is_not_classified'])
+def test_post_list_filter_booleans(client, field):
+    """Test filtering freelancer list by title field."""
+    response = client.get('/jobs/freelancer-list/?{}=on'.format(field))
     assert response.status_code == 200
 
 
