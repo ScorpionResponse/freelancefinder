@@ -14,6 +14,7 @@ def is_in_group(user, groups):
     Usage: {% if request.user|in_group:"Group Name" %}
     """
     logger.debug('Checking whether user (%s) is in groups (%s)', user, groups)
+    # TODO: User must be a User object and not just a username or id, fix that.
     groups = groups.split('|')
     groups = [g.strip() for g in groups]
     cache_key = 'in_group_{}_{}'.format(user, ''.join(groups).replace(' ', ''))
