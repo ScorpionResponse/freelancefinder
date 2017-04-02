@@ -83,12 +83,12 @@ class PostTests(TestCase):
         self.source = Source.objects.create(code='test_source', name='Test Source', url='http://test.example.com/')
         self.job = Job.objects.create(title='A New Job', description="Some Description")
         self.post = Post.objects.create(job=self.job, url='http://www.google.com/', source=self.source,
-                                        title='A New Job', description="Some Description")
+                                        title='A New Job', description="Some Description", unique='a')
         self.client = Client()
 
     def test_create_post(self):
         post = Post.objects.create(job=self.job, url='http://test.example.com/', source=self.source,
-                                   title='A New Post', description="Some Silly Description")
+                                   title='A New Post', description="Some Silly Description", unique='b')
         num_posts = Post.objects.all().count()
         assert num_posts != 0
         assert post is not None
