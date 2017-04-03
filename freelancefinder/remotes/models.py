@@ -8,8 +8,10 @@ import wrapt
 from django.db import models
 
 
-def periodically(source, period='daily', check_name='last_processed'):
+def periodically(source_code, period='daily', check_name='last_processed'):
     """Ensure that the wrapped function only runs once per period."""
+
+    source = Source.objects.get(code=source_code)
 
     timecheck = None
 

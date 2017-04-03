@@ -8,6 +8,7 @@ import feedparser
 from django.utils import timezone
 
 from jobs.models import Post
+from remotes.models import Source
 
 ADDITIONAL_TAGS = ['p', 'br']
 
@@ -16,9 +17,9 @@ class FossJobs(object):
     """Wrapper for the FossJobs source."""
 
     all_rss_address = 'https://www.fossjobs.net/rss/all/'
+    source = Source.objects.get(code='fossjobs')
 
-    def __init__(self, source):
-        self.source = source
+    def __init__(self):
         self.rss_feed = feedparser.parse(self.all_rss_address)
 
     def jobs(self):
