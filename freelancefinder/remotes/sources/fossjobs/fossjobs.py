@@ -8,7 +8,6 @@ import feedparser
 from django.utils import timezone
 
 from jobs.models import Post
-from remotes.models import Source
 
 ADDITIONAL_TAGS = ['p', 'br']
 
@@ -17,14 +16,14 @@ class FossJobs(object):
     """Wrapper for the FossJobs source."""
 
     all_rss_address = 'https://www.fossjobs.net/rss/all/'
-    source = None
 
-    def __init__(self, rss_source_feed=None):
+    def __init__(self, source, rss_source_feed=None):
+        """Parse the feed or accept the incoming one (for testing)."""
         if rss_source_feed is not None:
             self.rss_feed = rss_source_feed
         else:
             self.rss_feed = feedparser.parse(self.all_rss_address)
-        self.source = Source.objects.get(code='fossjobs')
+        self.source = source
 
     def jobs(self):
         """Iterate through all available jobs."""

@@ -11,7 +11,6 @@ from hackernews import HackerNews, InvalidItemID
 from django.utils import timezone
 
 from jobs.models import Post
-from remotes.models import Source
 
 logger = logging.getLogger(__name__)
 
@@ -19,10 +18,9 @@ logger = logging.getLogger(__name__)
 class Harvester(object):
     """Simple Harvester to gather hackernews posts."""
 
-    source = Source.objects.get(code='hackernews')
-
-    def __init__(self):
+    def __init__(self, source):
         """Init the hackernews harvester."""
+        self.source = source
         self.client = HackerNews()
         self.status_info = defaultdict(int)
 

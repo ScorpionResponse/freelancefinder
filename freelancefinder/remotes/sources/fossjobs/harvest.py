@@ -3,7 +3,7 @@
 import logging
 from collections import defaultdict
 
-from remotes.models import periodically
+from remotes.decorators import periodically
 from .fossjobs import FossJobs
 
 logger = logging.getLogger(__name__)
@@ -12,14 +12,15 @@ logger = logging.getLogger(__name__)
 class Harvester(object):
     """Simple Harvester to gather FossJobs posts."""
 
-    def __init__(self):
+    def __init__(self, source):
         """Init the fossjobs harvester."""
         self.status_info = defaultdict(int)
+        self.source = source
 
-    @periodically(source_code='fossjobs', period='hourly')
+    @periodically(period='hourly')
     def harvest(self):
         """Gather some Posts from hackernews."""
-        fossjobs = FossJobs()
+        fossjobs = FossJobs(self.source)
         for post in fossjobs.jobs():
             if post.exists():
                 logger.debug('Alread processed this item %s, skipping the rest.', post)
