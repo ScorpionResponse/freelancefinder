@@ -51,7 +51,7 @@ class Source(models.Model):
         elif self.code == 'fossjobs':
             from .sources.fossjobs.harvest import Harvester
 
-        source_harvester = Harvester(self)
+        source_harvester = Harvester()
         return source_harvester
 
 

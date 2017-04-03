@@ -1,6 +1,6 @@
 """Tests for the remotes app."""
 
-from .models import Source
+from ..models import Source
 
 
 def test_source_list(client):

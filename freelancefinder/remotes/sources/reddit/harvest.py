@@ -10,6 +10,7 @@ from django.conf import settings
 from django.utils import timezone
 
 from jobs.models import Post
+from remotes.models import Source
 
 logger = logging.getLogger(__name__)
 
@@ -17,9 +18,10 @@ logger = logging.getLogger(__name__)
 class Harvester(object):
     """Simple Harvester to gather reddit posts."""
 
-    def __init__(self, source):
+    source = Source.objects.get(code='reddit')
+
+    def __init__(self):
         """Init the harvester with basic info."""
-        self.source = source
         self.status_info = defaultdict(int)
         self.client = praw.Reddit(client_id=settings.REDDIT_CLIENT_ID,
                                   client_secret=settings.REDDIT_CLIENT_SECRET,
