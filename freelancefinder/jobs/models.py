@@ -59,7 +59,7 @@ class Post(TimeStampedModel):
 
     def exists(self):
         """Determine if the post already exists in the database."""
-        return self.pk is not None or self.objects.filter(source=self.source, unique=self.unique).exists()
+        return self.pk is not None or Post.objects.filter(source=self.source, unique=self.unique).exists()
 
 
 @python_2_unicode_compatible
