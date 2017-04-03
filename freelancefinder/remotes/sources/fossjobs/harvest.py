@@ -12,7 +12,7 @@ logger = logging.getLogger(__name__)
 class Harvester(object):
     """Simple Harvester to gather FossJobs posts."""
 
-    source = Source.objects.get(code='fossjobs').first()
+    source = Source.objects.get(code='fossjobs')
 
     def __init__(self):
         """Init the fossjobs harvester."""
