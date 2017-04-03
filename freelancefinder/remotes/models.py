@@ -1,8 +1,32 @@
 """Models for remotes app."""
 
+import datetime
+
 from future.utils import python_2_unicode_compatible
+import wrapt
 
 from django.db import models
+
+
+def periodically(source, period='daily', check_name='last_processed'):
+    """Ensure that the wrapped function only runs once per period."""
+
+    timecheck = None
+
+    if period == 'daily':
+        timecheck = datetime.datetime.today().strftime("%Y-%m-%d")
+    elif period == 'hourly':
+        timecheck = datetime.datetime.today().strftime("%Y-%m-%d-%H")
+
+    if source.config.filter(config_key=check_name, config_value=timecheck).exists():
+        return None
+    source.config.update_or_create(config_key=check_name, defaults={'config_value': timecheck})
+
+    @wrapt.decorator
+    def wrapper(wrapped, instance, args, kwargs):
+        """Wrap function to enfore period."""
+        return wrapped(*args, **kwargs)
+    return wrapper
 
 
 @python_2_unicode_compatible

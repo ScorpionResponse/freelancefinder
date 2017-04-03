@@ -22,3 +22,4 @@ praw==4.4.0
 psycopg2==2.7.1
 python-json-logger==0.1.7
 pytzdata==2017.2
+wrapt==1.10.10
