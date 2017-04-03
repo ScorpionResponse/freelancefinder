@@ -17,10 +17,14 @@ class FossJobs(object):
     """Wrapper for the FossJobs source."""
 
     all_rss_address = 'https://www.fossjobs.net/rss/all/'
-    source = Source.objects.get(code='fossjobs')
+    source = None
 
-    def __init__(self):
-        self.rss_feed = feedparser.parse(self.all_rss_address)
+    def __init__(self, rss_source_feed=None):
+        if rss_source_feed is not None:
+            self.rss_feed = rss_source_feed
+        else:
+            self.rss_feed = feedparser.parse(self.all_rss_address)
+        self.source = Source.objects.get(code='fossjobs')
 
     def jobs(self):
         """Iterate through all available jobs."""
