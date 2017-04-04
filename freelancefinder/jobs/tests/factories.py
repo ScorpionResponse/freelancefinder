@@ -36,6 +36,10 @@ class JobFactory(factory.django.DjangoModelFactory):
         if not create:
             return
         tags = ['job', 'django', 'soup']
+        if extracted:
+            tags = extracted
+        if kwargs:
+            tags = kwargs.keys()
         for tag in tags:
             self.tags.add(tag)
 
@@ -57,6 +61,10 @@ class FreelancerFactory(factory.django.DjangoModelFactory):
         if not create:
             return
         tags = ['freelancer', 'django', 'soup']
+        if extracted:
+            tags = extracted
+        if kwargs:
+            tags = kwargs.keys()
         for tag in tags:
             self.tags.add(tag)
 
