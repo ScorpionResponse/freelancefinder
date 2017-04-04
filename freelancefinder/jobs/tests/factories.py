@@ -55,6 +55,7 @@ class PostFactory(factory.django.DjangoModelFactory):
     source = factory.SubFactory(SourceFactory)
     subarea = factory.Sequence(lambda n: 'subarea-%d' % n)
     job = factory.SubFactory(JobFactory)
+    freelancer = factory.SubFactory(FreelancerFactory)
 
     class Meta(object):
         """Config for PostFactory."""

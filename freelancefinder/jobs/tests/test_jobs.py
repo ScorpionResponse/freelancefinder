@@ -3,7 +3,7 @@
 from ..models import Job
 
 
-def test_job_list(client, job):
+def test_job_list(client, job, post):
     """Simple test for the jobs list page."""
     response = client.get('/jobs/job-list/')
     assert response.status_code == 200

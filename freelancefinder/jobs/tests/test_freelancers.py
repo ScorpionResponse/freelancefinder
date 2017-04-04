@@ -3,7 +3,7 @@
 from ..models import Freelancer
 
 
-def test_freelancer_list(client, freelancer):
+def test_freelancer_list(client, freelancer, post):
     """Simple test for the freelancer list page."""
     response = client.get('/jobs/freelancer-list/')
     assert response.status_code == 200
