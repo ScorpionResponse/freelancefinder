@@ -9,6 +9,14 @@ def test_freelancer_list(client, freelancer):
     assert response.status_code == 200
 
 
+def test_freelancer_list_with_100(client, freelancer_factory):
+    """Simple test for the freelancer list page."""
+    for i in range(100):
+        new_freelancer = freelancer_factory()
+    response = client.get('/jobs/freelancer-list/')
+    assert response.status_code == 200
+
+
 def test_freelancer_list_search(client, freelancer):
     """Test filtering freelancer list by search field."""
     response = client.get('/jobs/freelancer-list/?search=test')

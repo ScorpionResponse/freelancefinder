@@ -9,6 +9,14 @@ def test_job_list(client, job):
     assert response.status_code == 200
 
 
+def test_job_list_100(client, job_factory):
+    """Simple test for the jobs list page with 100 jobs."""
+    for i in range(100):
+        new_job = job_factory()
+    response = client.get('/jobs/job-list/')
+    assert response.status_code == 200
+
+
 def test_job_list_filter_search(client, job):
     """Test filtering job list by search field."""
     response = client.get('/jobs/job-list/?search=test')

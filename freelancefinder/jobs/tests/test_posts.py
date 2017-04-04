@@ -12,6 +12,14 @@ def test_post_list(client, post):
     assert response.status_code == 200
 
 
+def test_post_list_with_100(client, post_factory):
+    """Simple test for the posts list page."""
+    for i in range(100):
+        new_post = post_factory()
+    response = client.get('/jobs/post-list/')
+    assert response.status_code == 200
+
+
 def test_post_list_filter_title(client, post):
     """Test filtering post list by title field."""
     response = client.get('/jobs/post-list/?title=test')
