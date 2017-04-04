@@ -5,6 +5,8 @@ from faker import Factory as FakerFactory
 
 FAKER = FakerFactory.create()
 
+# pylint: disable=too-few-public-methods
+
 
 class JobFactory(factory.django.DjangoModelFactory):
     """Job factory."""
@@ -13,6 +15,8 @@ class JobFactory(factory.django.DjangoModelFactory):
     description = factory.LazyAttribute(lambda x: FAKER.text(max_nb_chars=500))
 
     class Meta:
+        """Config for JobFactory."""
+
         model = 'jobs.Job'
 
 
@@ -23,6 +27,8 @@ class FreelancerFactory(factory.django.DjangoModelFactory):
     description = factory.LazyAttribute(lambda x: FAKER.text(max_nb_chars=500))
 
     class Meta:
+        """Config for FreelancerFactory."""
+
         model = 'jobs.Freelancer'
 
 
@@ -34,6 +40,8 @@ class SourceFactory(factory.django.DjangoModelFactory):
     url = factory.LazyAttribute(lambda x: FAKER.url())
 
     class Meta:
+        """Config for SourceFactory."""
+
         model = 'remotes.Source'
 
 
@@ -49,4 +57,6 @@ class PostFactory(factory.django.DjangoModelFactory):
     job = factory.SubFactory(JobFactory)
 
     class Meta:
+        """Config for PostFactory."""
+
         model = 'jobs.Post'
