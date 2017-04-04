@@ -26,7 +26,7 @@ class FreelancerFactory(factory.django.DjangoModelFactory):
     title = factory.LazyAttribute(lambda x: FAKER.name())
     description = factory.LazyAttribute(lambda x: FAKER.text(max_nb_chars=500))
 
-    class Meta:
+    class Meta(object):
         """Config for FreelancerFactory."""
 
         model = 'jobs.Freelancer'
@@ -39,7 +39,7 @@ class SourceFactory(factory.django.DjangoModelFactory):
     name = factory.LazyAttribute(lambda x: FAKER.name())
     url = factory.LazyAttribute(lambda x: FAKER.url())
 
-    class Meta:
+    class Meta(object):
         """Config for SourceFactory."""
 
         model = 'remotes.Source'
@@ -56,7 +56,7 @@ class PostFactory(factory.django.DjangoModelFactory):
     subarea = factory.Sequence(lambda n: 'subarea-%d' % n)
     job = factory.SubFactory(JobFactory)
 
-    class Meta:
+    class Meta(object):
         """Config for PostFactory."""
 
         model = 'jobs.Post'
