@@ -12,7 +12,7 @@ def enable_db_access_for_all_tests(db):
     pass
 
 
-@pytest.fixture
+@pytest.fixture(scope='function')
 def fossjobs_rss_feed():
     """Generate a fake rss feed like the fossjobs feed."""
     fake = Faker()
