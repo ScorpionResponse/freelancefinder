@@ -24,12 +24,20 @@ class JobFactory(factory.django.DjangoModelFactory):
 
     title = factory.LazyAttribute(lambda x: FAKER.job())
     description = factory.LazyAttribute(lambda x: FAKER.text(max_nb_chars=500))
-    tags = factory.List([], list_factory=TagFactory)
 
     class Meta(object):
         """Config for JobFactory."""
 
         model = 'jobs.Job'
+
+    @factory.post_generation
+    def create_tags(self, create, extracted, **kwargs):
+        """Generate tags."""
+        if not create:
+            return
+        tags = ['job', 'django', 'soup']
+        for tag in tags:
+            self.tags.add(tag)
 
 
 class FreelancerFactory(factory.django.DjangoModelFactory):
@@ -42,6 +50,15 @@ class FreelancerFactory(factory.django.DjangoModelFactory):
         """Config for FreelancerFactory."""
 
         model = 'jobs.Freelancer'
+
+    @factory.post_generation
+    def create_tags(self, create, extracted, **kwargs):
+        """Generate tags."""
+        if not create:
+            return
+        tags = ['freelancer', 'django', 'soup']
+        for tag in tags:
+            self.tags.add(tag)
 
 
 class SourceFactory(factory.django.DjangoModelFactory):
@@ -66,6 +83,10 @@ class PostFactory(factory.django.DjangoModelFactory):
     unique = factory.Sequence(lambda n: 'unique-%d' % n)
     source = factory.SubFactory(SourceFactory)
     subarea = factory.Sequence(lambda n: 'subarea-%d' % n)
+    is_job_posting = factory.LazyAttribute(lambda x: FAKER.pybool())
+    is_freelance = factory.LazyAttribute(lambda x: FAKER.pybool())
+    is_freelancer = factory.LazyAttribute(lambda x: FAKER.pybool())
+    processed = factory.LazyAttribute(lambda x: FAKER.pybool())
     job = factory.SubFactory(JobFactory)
     freelancer = factory.SubFactory(FreelancerFactory)
 
