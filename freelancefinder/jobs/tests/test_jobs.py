@@ -3,19 +3,19 @@
 from ..models import Job
 
 
-def test_job_list(client):
+def test_job_list(client, job):
     """Simple test for the jobs list page."""
     response = client.get('/jobs/job-list/')
     assert response.status_code == 200
 
 
-def test_job_list_filter_search(client):
+def test_job_list_filter_search(client, job):
     """Test filtering job list by search field."""
     response = client.get('/jobs/job-list/?search=test')
     assert response.status_code == 200
 
 
-def test_job_list_filter_tag(client):
+def test_job_list_filter_tag(client, job):
     """Test filtering job list by tag."""
     response = client.get('/jobs/job-list/?tag=django')
     assert response.status_code == 200
@@ -31,8 +31,7 @@ def test_create_job():
     assert num_jobs != 0
 
 
-def test_get_jobs():
+def test_get_jobs(job):
     """Ensure jobs are stored."""
-    Job.objects.create(title='New Job', description="Some Description")
     num_jobs = Job.objects.all().count()
     assert num_jobs != 0
