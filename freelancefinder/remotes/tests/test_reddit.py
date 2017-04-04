@@ -19,6 +19,9 @@ class PrawMock(object):
     def __init__(self):
         pass
 
+    def __call__(self, *args, **kwargs):
+        return self
+
     def Reddit(self, *args, **kwargs):
         return self
 
@@ -40,8 +43,9 @@ class PrawMock(object):
 
 
 def test_harvester(mocker):
-    mocker.patch('praw.Reddit', spec=PrawMock)
+    mocker.patch('praw.Reddit', new_callable=PrawMock)
     source = Source.objects.get(code='reddit')
     harvester = Harvester(source)
     jobs = harvester.harvest()
     assert jobs is not None
+    assert len(list(jobs)) >= 100
