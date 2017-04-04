@@ -8,11 +8,23 @@ FAKER = FakerFactory.create()
 # pylint: disable=too-few-public-methods
 
 
+class TagFactory(factory.django.DjangoModelFactory):
+    """Tag factory."""
+
+    name = factory.LazyAttribute(lambda x: FAKER.name() + FAKER.uuid4())
+
+    class Meta(object):
+        """Config for TagFactory."""
+
+        model = 'taggit.Tag'
+
+
 class JobFactory(factory.django.DjangoModelFactory):
     """Job factory."""
 
     title = factory.LazyAttribute(lambda x: FAKER.job())
     description = factory.LazyAttribute(lambda x: FAKER.text(max_nb_chars=500))
+    tags = factory.SubFactory(TagFactory)
 
     class Meta(object):
         """Config for JobFactory."""

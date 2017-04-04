@@ -16,15 +16,12 @@ def test_job_list_100(client, job_factory):
     response = client.get('/jobs/job-list/')
     assert response.status_code == 200
 
-    response = client.get('/jobs/job-list/?page=15')
-    assert response.status_code == 200
-
 
 def test_job_list_paging(client, job_factory):
     """Simple test for the jobs list page with 600 jobs."""
     for i in range(600):
         new_job = job_factory()
-    response = client.get('/jobs/job-list/?page=first')
+    response = client.get('/jobs/job-list/')
     assert response.status_code == 200
 
     response = client.get('/jobs/job-list/?page=15')

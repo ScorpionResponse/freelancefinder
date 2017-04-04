@@ -2,9 +2,10 @@
 
 from pytest_factoryboy import register
 
-from .factories import JobFactory, PostFactory, FreelancerFactory, SourceFactory
+from .factories import JobFactory, PostFactory, FreelancerFactory, SourceFactory, TagFactory
 
 
+register(TagFactory)
 register(JobFactory)
 register(PostFactory)
 register(FreelancerFactory)
