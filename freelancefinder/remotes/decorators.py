@@ -18,6 +18,8 @@ def periodically(period='daily', check_name='last_processed'):
             timecheck = datetime.datetime.today().strftime("%Y-%m-%d")
         elif period == 'hourly':
             timecheck = datetime.datetime.today().strftime("%Y-%m-%d-%H")
+        elif period == 'minutely':
+            timecheck = datetime.datetime.today().strftime("%Y-%m-%d-%H-%M")
 
         if source.config.filter(config_key=check_name, config_value=timecheck).exists():
             return None

@@ -1,15 +1,10 @@
 """Harvest process for the Reddit Source."""
 
 from collections import defaultdict
-import datetime
 import logging
 
-import praw
-
-from django.conf import settings
-from django.utils import timezone
-
-from jobs.models import Post
+from remotes.decorators import periodically
+from .reddit import Reddit
 
 logger = logging.getLogger(__name__)
 
@@ -21,25 +16,20 @@ class Harvester(object):
         """Init the harvester with basic info."""
         self.source = source
         self.status_info = defaultdict(int)
-        self.client = praw.Reddit(client_id=settings.REDDIT_CLIENT_ID,
-                                  client_secret=settings.REDDIT_CLIENT_SECRET,
-                                  user_agent=settings.REDDIT_USER_AGENT)
 
+    @periodically(period="minutely")
     def harvest(self):
         """Gather some Posts from reddit."""
-        subreddits_to_monitor = self.source.config.filter(config_key='subreddits').first().config_value.split('|')
-        for subr in subreddits_to_monitor:
-            for submission in self.client.subreddit(subr).new(limit=100):
-                if Post.objects.filter(source=self.source, unique=submission.id).exists():
-                    logger.info("Reddit harvester got duplication post id %s in subreddit %s, assuming everything new is harvested.", submission.id, subr)
+        reddit = Reddit(self.source)
+        for section in reddit.sections():
+            for post in reddit.jobs(section):
+                if post.exists():
+                    logger.info("Reddit harvester got duplication post id %s in subreddit %s, assuming everything new is harvested.", post, section)
                     break
-                else:
-                    created_time = timezone.make_aware(datetime.datetime.utcfromtimestamp(submission.created_utc))
-                    logger.debug('Reddit harvester got datetime %s from %s', created_time, submission.created_utc)
-                    post = Post(url=submission.url, source=self.source, title=submission.title[:255], description=submission.selftext, unique=submission.id, subarea=submission.subreddit, created=created_time)
-                    self.status_info['count-%s' % (subr,)] += 1
-                    self.status_info['total'] += 1
-                    yield post
+                self.status_info['count-%s' % (section,)] += 1
+                self.status_info['total'] += 1
+                yield post
+
         logger.info("Reddit harvester status: %s", dict(self.status_info))
 
     def status(self):
