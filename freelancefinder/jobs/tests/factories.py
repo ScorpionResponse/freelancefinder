@@ -14,7 +14,7 @@ class JobFactory(factory.django.DjangoModelFactory):
     title = factory.LazyAttribute(lambda x: FAKER.job())
     description = factory.LazyAttribute(lambda x: FAKER.text(max_nb_chars=500))
 
-    class Meta:
+    class Meta(object):
         """Config for JobFactory."""
 
         model = 'jobs.Job'
