@@ -5,6 +5,7 @@ branch = True
 omit =
     freelancefinder/freelancefinder/wsgi.py
     freelancefinder/manage.py
+    */admin.py
     *migrations*
 
 source = .
