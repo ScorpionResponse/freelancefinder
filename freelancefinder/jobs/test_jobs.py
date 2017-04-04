@@ -51,15 +51,15 @@ def test_post_list(client):
 
 
 def test_post_list_filter_title(client):
-    """Test filtering freelancer list by title field."""
-    response = client.get('/jobs/freelancer-list/?title=test')
+    """Test filtering post list by title field."""
+    response = client.get('/jobs/post-list/?title=test')
     assert response.status_code == 200
 
 
 @pytest.mark.parametrize("field", ['is_job_posting', 'is_freelance', 'is_freelancer', 'is_not_classified'])
 def test_post_list_filter_booleans(client, field):
-    """Test filtering freelancer list by title field."""
-    response = client.get('/jobs/freelancer-list/?{}=on'.format(field))
+    """Test filtering post list by title field."""
+    response = client.get('/jobs/post-list/?{}=on'.format(field))
     assert response.status_code == 200
 
 
