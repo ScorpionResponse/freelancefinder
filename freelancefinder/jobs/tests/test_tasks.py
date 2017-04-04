@@ -6,7 +6,8 @@ from ..tasks import process_new_posts, create_jobs, create_freelancers, tag_jobs
 
 def test_post_processing(post_factory):
     """Verify that all posts are processed."""
-    post_factory(processed=False)
+    post_factory(title='[for hire] some freelancer posting', processed=False)
+    post_factory(title='[hiring] some job posting', processed=False)
     pre_unprocessed_posts = Post.objects.filter(processed=False).count()
     process_new_posts()
     post_unprocessed_posts = Post.objects.filter(processed=False).count()
