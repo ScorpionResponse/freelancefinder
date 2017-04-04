@@ -23,7 +23,6 @@ class FossJobs(object):
             self.rss_feed = rss_source_feed
         else:
             self.rss_feed = feedparser.parse(self.all_rss_address)
-        print("rss info: {}".format(self.rss_feed))
         self.source = source
 
     def jobs(self):

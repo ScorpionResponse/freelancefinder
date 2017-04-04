@@ -20,3 +20,14 @@ def test_harvester(fossjobs_rss_feed, mocker):
     harvester = Harvester(source)
     jobs = list(harvester.harvest())
     assert len(jobs) > 0
+
+
+def test_status_info(fossjobs_rss_feed, mocker):
+    """Test the fossjobs harvester."""
+    mocker.patch('feedparser.parse', side_effect=lambda x: fossjobs_rss_feed)
+    source = Source.objects.get(code='fossjobs')
+    harvester = Harvester(source)
+    assert harvester.status()['total'] == 0
+    jobs = list(harvester.harvest())
+    assert harvester.status()['total'] > 0
+    assert harvester.status()['total'] == len(jobs)
