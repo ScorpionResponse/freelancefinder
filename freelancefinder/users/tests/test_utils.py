@@ -1,12 +1,13 @@
+"""Tests for the users.utils functions."""
 
-from django.contrib.auth.models import User, Group
+from django.contrib.auth.models import Group
 
 from ..utils import is_in_group
 
 
-def test_user_in_a_group():
+def test_user_in_a_group(django_user_model):
     """Test a user who is in one group returns true."""
-    user = User.objects.create(email='test@example.com')
+    user = django_user_model.objects.create_user(username='test', email='test@example.com')
     group = Group.objects.create(name='Cool Kids')
 
     user.groups.add(group)
@@ -16,9 +17,9 @@ def test_user_in_a_group():
     assert result
 
 
-def test_user_not_in_a_group():
+def test_user_not_in_a_group(django_user_model):
     """Test a user who is not in one group returns false."""
-    user = User.objects.create(email='test@example.com')
+    user = django_user_model.objects.create_user(username='test', email='test@example.com')
     group = Group.objects.create(name='Cool Kids')
 
     user.groups.add(group)
@@ -28,9 +29,9 @@ def test_user_not_in_a_group():
     assert not result
 
 
-def test_user_in_one_of_groups():
+def test_user_in_one_of_groups(django_user_model):
     """Test a user who is in one of a list of groups returns true."""
-    user = User.objects.create(email='test@example.com')
+    user = django_user_model.objects.create_user(username='test', email='test@example.com')
     group = Group.objects.create(name='Cool Kids')
 
     user.groups.add(group)
@@ -40,9 +41,9 @@ def test_user_in_one_of_groups():
     assert result
 
 
-def test_user_in_two_of_groups():
+def test_user_in_two_of_groups(django_user_model):
     """Test a user who is in two of a list of groups returns true."""
-    user = User.objects.create(email='test@example.com')
+    user = django_user_model.objects.create_user(username='test', email='test@example.com')
     group = Group.objects.create(name='Cool Kids')
     group2 = Group.objects.create(name='Bears')
 
@@ -54,9 +55,9 @@ def test_user_in_two_of_groups():
     assert result
 
 
-def test_user_not_in_one_of_groups():
+def test_user_not_in_one_of_groups(django_user_model):
     """Test a user who is not in one of a list of groups returns false."""
-    user = User.objects.create(email='test@example.com')
+    user = django_user_model.objects.create_user(username='test', email='test@example.com')
     group = Group.objects.create(name='Cool Kids')
 
     user.groups.add(group)
@@ -66,9 +67,9 @@ def test_user_not_in_one_of_groups():
     assert not result
 
 
-def test_username_only_returns_false():
+def test_username_only_returns_false(django_user_model):
     """Test that a username string instead of a user returns false."""
-    user = User.objects.create(email='test@example.com')
+    user = django_user_model.objects.create_user(username='test', email='test@example.com')
     group = Group.objects.create(name='Cool Kids')
 
     user.groups.add(group)
@@ -78,9 +79,9 @@ def test_username_only_returns_false():
     assert not result
 
 
-def test_user_id_only_returns_false():
+def test_user_id_only_returns_false(django_user_model):
     """Test that a username string instead of a user returns false."""
-    user = User.objects.create(email='test@example.com')
+    user = django_user_model.objects.create_user(username='test', email='test@example.com')
     group = Group.objects.create(name='Cool Kids')
 
     user.groups.add(group)
