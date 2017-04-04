@@ -1,3 +1,1 @@
 """Test the reddit harvester."""
-
-
