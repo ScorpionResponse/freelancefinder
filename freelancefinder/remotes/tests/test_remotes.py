@@ -1,6 +1,10 @@
 """Tests for the remotes app."""
 
-from ..models import Source
+import pytest
+
+from django.db import IntegrityError
+
+from ..models import Source, SourceConfig
 
 
 def test_source_list(client):
@@ -23,3 +27,20 @@ def test_add_source():
     assert 'New Source' in str(new_source)
     assert new_source is not None
     assert Source.objects.all().count() == 1 + start_count
+
+
+def test_source_config():
+    """Simple source config test."""
+    new_source = Source.objects.create(code='new', name='New Source', url='http://test.example.com/')
+    conf = SourceConfig.objects.create(source=new_source, config_key='bob', config_value='jones')
+    assert conf is not None
+    assert 'bob' in str(conf)
+
+
+def test_source_config_uniqueness():
+    """Source Config should prevent the same keys."""
+    new_source = Source.objects.create(code='new', name='New Source', url='http://test.example.com/')
+    conf = SourceConfig.objects.create(source=new_source, config_key='bob', config_value='jones')
+    assert conf is not None
+    with pytest.raises(IntegrityError):
+        SourceConfig.objects.create(source=new_source, config_key='bob', config_value='stevens')
