@@ -77,7 +77,7 @@ class HackerHarvest(object):
             if comment.text is None:
                 logger.debug("Skipping blank comment: %s", comment)
                 continue
-            post = self.parse_job_to_post(comment, subarea='freelancer')
+            post = self.parse_job_to_post(comment, subarea='freelancer', insert_author=True)
             post.is_freelance = True
             if 'SEEKING WORK' in post.title.upper():
                 post.is_freelancer = True

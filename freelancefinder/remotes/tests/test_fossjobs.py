@@ -42,3 +42,15 @@ def test_post_exists_does_nothing(fossjobs_rss_feed, mocker):
     jobs = list(harvester.harvest())
     assert harvester.status()['total'] == 0
     assert harvester.status()['total'] == len(jobs)
+
+
+def test_harvester_runs_only_once(fossjobs_rss_feed, mocker):
+    """Test the fossjobs harvester has @periodically decorator."""
+    mocker.patch('feedparser.parse', side_effect=lambda x: fossjobs_rss_feed)
+    source = Source.objects.get(code='fossjobs')
+    harvester = Harvester(source)
+    jobs = list(harvester.harvest())
+    assert len(jobs) > 0
+
+    another_jobs = harvester.harvest()
+    assert another_jobs is None
