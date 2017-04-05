@@ -52,5 +52,5 @@ def test_harvester_runs_only_once(fossjobs_rss_feed, mocker):
     jobs = list(harvester.harvest())
     assert len(jobs) > 0
 
-    another_jobs = harvester.harvest()
-    assert another_jobs is None
+    another_jobs = list(harvester.harvest())
+    assert len(another_jobs) == 0

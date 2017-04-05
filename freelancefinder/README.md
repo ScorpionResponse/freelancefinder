@@ -20,6 +20,7 @@ Add Behance API:
 - https://developer.hubstaff.com/docs/api
  
 - https://djangojobs.net/jobs/
+- https://djangogigs.com/
 - https://www.python.org/jobs/
 - http://pythonjobs.github.io/ (lower priority)
 
@@ -30,3 +31,14 @@ Add Behance API:
 - https://remotejobscenter.com/api/job/search?search=%7B%7D&limit=10&skip=0
 
 - https://www.freelancinggig.com/browse-project
+
+
+BEFORE LAUNCH
+=============
+
+* Get to 10 sites aggregated
+* Add landing page
+* Clearly separate free/paid/admin
+* Add a blog or other notification mechanism
+* Verify/sign up for login services
+* Payment processor
