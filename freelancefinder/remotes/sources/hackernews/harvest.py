@@ -49,7 +49,7 @@ class Harvester(object):
         return itertools.chain(
             self._process_who_is_hiring(),
             self._process_who_wants_to_be_hired(),
-            self._process_freelancer()
+            self._process_freelancer(),
         )
 
     @periodically(period='daily', check_name='last_processed-who_is_hiring')

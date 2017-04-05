@@ -5,7 +5,7 @@ import datetime
 import wrapt
 
 
-def periodically(period='daily', check_name='last_processed'):
+def periodically(period='daily', check_name='last_processed', fail_return=[]):
     """Ensure that the wrapped function only runs once per period."""
     @wrapt.decorator
     def wrapper(wrapped, instance, args, kwargs):
@@ -22,7 +22,7 @@ def periodically(period='daily', check_name='last_processed'):
             timecheck = datetime.datetime.today().strftime("%Y-%m-%d-%H-%M")
 
         if source.config.filter(config_key=check_name, config_value=timecheck).exists():
-            return None
+            return fail_return
         source.config.update_or_create(config_key=check_name, defaults={'config_value': timecheck})
 
         return wrapped(*args, **kwargs)

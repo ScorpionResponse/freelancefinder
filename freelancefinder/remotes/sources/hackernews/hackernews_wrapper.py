@@ -24,7 +24,11 @@ class HackerHarvest(object):
     def job_stories(self):
         """Gather job postings and turn them into posts."""
         for story_id in self.client.job_stories(limit=100):
-            story = self.client.get_item(story_id)
+            try:
+                story = self.client.get_item(story_id)
+            except hackernews.InvalidItemID as iiid:
+                logger.warning('Tried to get non-existent job story with ID: %s; ex: %s', story_id, iiid)
+                continue
             post = self.parse_job_to_post(story, subarea='jobs')
             post.is_job_posting = True
             yield post
