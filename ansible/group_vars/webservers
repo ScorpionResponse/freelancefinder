@@ -8,6 +8,7 @@ gunicorn_wsgi_application: freelancefinder.wsgi:application
 gunicorn_install_path: "/srv/venv/bin"
 gunicorn_django_settings: "freelancefinder.settings"
 gunicorn_user_name: "django"
+gunicorn_workers: 4
 
 # nginx
 nginx_server_name: freelancefinder.work
