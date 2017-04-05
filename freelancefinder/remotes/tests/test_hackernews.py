@@ -6,6 +6,7 @@ from faker import Faker
 from hackernews import InvalidItemID
 
 from ..models import Source
+from ..sources.hackernews.hackernews_wrapper import HackerHarvest
 from ..sources.hackernews.harvest import Harvester
 
 
@@ -114,15 +115,13 @@ def test_post_exists_does_nothing(mocker):
 
 
 def test_calling_twice_does_nothing(mocker):
-    """Test the reddit harvester stops on duplicates."""
+    """Test that check_who_is_hiring only runs once."""
     mocker.patch('hackernews.HackerNews', new_callable=HackerNewsMock)
     source = Source.objects.get(code='hackernews')
-    harvester = Harvester(source)
-    jobs = list(harvester.harvest())
-    num_jobs = len(jobs)
-    assert harvester.status()['total'] > 0
-    assert harvester.status()['total'] == num_jobs
-    new_jobs = harvester.harvest()
-    num_new_jobs = len(list(new_jobs))
-    assert num_new_jobs == 0
-    assert harvester.status()['total'] == num_jobs
+    harvester = HackerHarvest(source)
+    harvester.check_who_is_hiring()
+    # Under test this value will be 1
+    source.config.update_or_create(config_key='post_id-who_is_hiring', defaults={'config_value': '1234'})
+    harvester.check_who_is_hiring()
+    hiring_thread = source.config.all().filter(config_key='post_id-who_is_hiring').first().config_value
+    assert hiring_thread == '1234'
