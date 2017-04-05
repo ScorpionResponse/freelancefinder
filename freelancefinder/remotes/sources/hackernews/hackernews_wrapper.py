@@ -4,7 +4,7 @@ import datetime
 import logging
 
 import bleach
-from hackernews import HackerNews, InvalidItemID
+import hackernews
 
 from django.utils import timezone
 
@@ -19,7 +19,7 @@ class HackerHarvest(object):
     def __init__(self, source):
         """Initialize the harvester."""
         self.source = source
-        self.client = HackerNews()
+        self.client = hackernews.HackerNews()
 
     def job_stories(self):
         """Gather job postings and turn them into posts."""
@@ -37,7 +37,7 @@ class HackerHarvest(object):
         for comment_id in hn_item.kids:
             try:
                 comment = self.client.get_item(comment_id)
-            except InvalidItemID as iiid:
+            except hackernews.InvalidItemID as iiid:
                 logger.warning('Tried to get non-existent comment with ID: %s; ex: %s', comment_id, iiid)
                 continue
             if comment.text is None:
@@ -54,7 +54,7 @@ class HackerHarvest(object):
         for comment_id in hn_item.kids:
             try:
                 comment = self.client.get_item(comment_id)
-            except InvalidItemID as iiid:
+            except hackernews.InvalidItemID as iiid:
                 logger.warning('Tried to get non-existent comment with ID: %s; ex: %s', comment_id, iiid)
                 continue
             if comment.text is None:
@@ -71,7 +71,7 @@ class HackerHarvest(object):
         for comment_id in hn_item.kids:
             try:
                 comment = self.client.get_item(comment_id)
-            except InvalidItemID as iiid:
+            except hackernews.InvalidItemID as iiid:
                 logger.warning('Tried to get non-existent comment with ID: %s; ex: %s', comment_id, iiid)
                 continue
             if comment.text is None:
