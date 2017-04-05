@@ -14,6 +14,6 @@ reqcheck:
 	pip list --outdated --format=columns; NUM=$$(pip list --outdated --format=columns | wc -l); [ $$NUM -lt 10 ] && (echo "Requirements test: pass" && exit 0) || (echo "Requirements test: fail" && exit 1)
 
 serve:
-        python manage.py runserver 0.0.0.0:8181
+	python manage.py runserver 0.0.0.0:8181
 
 check: reqcheck doccheck codecheck lintcheck

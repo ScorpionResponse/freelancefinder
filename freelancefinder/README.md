@@ -28,3 +28,5 @@ Add Behance API:
 - Bitcoin: https://www.xbtfreelancer.com/
 
 - https://remotejobscenter.com/api/job/search?search=%7B%7D&limit=10&skip=0
+
+- https://www.freelancinggig.com/browse-project

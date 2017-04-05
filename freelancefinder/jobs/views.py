@@ -35,12 +35,14 @@ class JobListView(ListView, FormGetMixin):
     def get_queryset(self):
         """Queryset should sort by desc created by default."""
         search = self.request.GET.get('search', None)
-        tag = self.request.GET.get('tag', None)
+        tags = self.request.GET.getlist('tag', None)
         querys = Job.objects.all().prefetch_related('posts', 'tags', 'posts__source')
         if search is not None and search != '':
             querys = querys.filter(Q(title__icontains=search) | Q(description__icontains=search))
-        if tag is not None and tag != '':
-            querys = querys.filter(tags__slug__in=[tag]).distinct()
+        if tags is not None and tags != []:
+            querys = querys.filter(tags__slug__in=tags).distinct()
+        logger.debug('Tags: %s', tags)
+        logger.debug('Query: %s', str(querys.query))
         return querys.order_by('-created')
 
     def get_context_data(self, **kwargs):

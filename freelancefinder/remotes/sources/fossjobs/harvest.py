@@ -17,7 +17,7 @@ class Harvester(object):
         self.status_info = defaultdict(int)
         self.source = source
 
-    @periodically(period='hourly')
+    @periodically(period='hourly', fail_return=[])
     def harvest(self):
         """Gather some Posts from hackernews."""
         fossjobs = FossJobs(self.source)
