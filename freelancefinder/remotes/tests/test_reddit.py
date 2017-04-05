@@ -26,10 +26,6 @@ class PrawMock(object):
         """Just return."""
         return self
 
-    def Reddit(self, *args, **kwargs):
-        """Just return."""
-        return self
-
     def subreddit(self, *args, **kwargs):
         """Just return."""
         return self
