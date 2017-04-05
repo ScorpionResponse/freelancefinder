@@ -26,3 +26,5 @@ Add Behance API:
 - https://www.experfy.com/projects/category
 
 - Bitcoin: https://www.xbtfreelancer.com/
+
+- https://remotejobscenter.com/api/job/search?search=%7B%7D&limit=10&skip=0

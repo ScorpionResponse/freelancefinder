@@ -78,7 +78,7 @@ class Job(TimeStampedModel):
     def save(self, *args, **kwargs):
         """Add fingerprint and save."""
         if not self.pk:
-            self.fingerprint = generate_fingerprint(self.description)
+            self.fingerprint = generate_fingerprint(self.title + ' ' + self.description)
         super(Job, self).save(*args, **kwargs)
 
 
@@ -98,7 +98,7 @@ class Freelancer(TimeStampedModel):
     def save(self, *args, **kwargs):
         """Add fingerprint and save."""
         if not self.pk:
-            self.fingerprint = generate_fingerprint(self.description)
+            self.fingerprint = generate_fingerprint(self.title + ' ' + self.description)
         super(Freelancer, self).save(*args, **kwargs)
 
 

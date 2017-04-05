@@ -30,24 +30,40 @@ def process_new_posts():
 def create_jobs():
     """Create a Job from a Post."""
     from .models import Post, Job
+    from utils.text import generate_fingerprint
 
     for post in Post.objects.pending_freelance_jobs():
         logger.debug("Creating job from post: %s", post)
-        job = Job.objects.create(title=post.title, description=post.description, created=post.created)
-        post.job = job
-        post.save()
+        fingerprint = generate_fingerprint(post.title + " " + post.description)
+        potential_matches = Job.objects.filter(fingerprint=fingerprint)
+        if len(potential_matches) == 1:
+            post.job = potential_matches.first()
+            logger.info('Found Existing job to match post to: %s', post.job)
+            post.save()
+        else:
+            job = Job.objects.create(title=post.title, description=post.description, created=post.created)
+            post.job = job
+            post.save()
 
 
 @celery_app.task
 def create_freelancers():
     """Create a Freelancer from a Post."""
     from .models import Post, Freelancer
+    from utils.text import generate_fingerprint
 
     for post in Post.objects.pending_freelancers():
         logger.debug("Creating freelancer from post: %s", post)
-        freelancer = Freelancer.objects.create(title=post.title, description=post.description, created=post.created)
-        post.freelancer = freelancer
-        post.save()
+        fingerprint = generate_fingerprint(post.title + " " + post.description)
+        potential_matches = Freelancer.objects.filter(fingerprint=fingerprint)
+        if len(potential_matches) == 1:
+            post.freelancer = potential_matches.first()
+            logger.info('Found Existing freelancer to match post to: %s', post.freelancer)
+            post.save()
+        else:
+            freelancer = Freelancer.objects.create(title=post.title, description=post.description, created=post.created)
+            post.freelancer = freelancer
+            post.save()
 
 
 @celery_app.task
