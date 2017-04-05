@@ -27,6 +27,19 @@ def test_create_jobs(post_factory):
     assert pre_jobs != post_jobs
 
 
+def test_jobs_detect_dupes(post_factory):
+    """Verify that duplicate detection works."""
+    post_factory(title="Django Python Job", description="Lorem Ipsum Dolor", is_freelance=True, is_job_posting=True, processed=False, job=None)
+    create_jobs()
+    pre_jobs = Job.objects.all().count()
+    post_factory(title="Django Python Job", description="Lorem Ipsum Dolor", is_freelance=True, is_job_posting=True, processed=False, job=None)
+    create_jobs()
+    post_jobs = Job.objects.all().count()
+
+    assert post_jobs != 0
+    assert pre_jobs == post_jobs
+
+
 def test_create_freelancers(post_factory):
     """Verify that freelancers are created."""
     post_factory(is_freelance=True, is_freelancer=True, processed=False, freelancer=None)
@@ -36,6 +49,19 @@ def test_create_freelancers(post_factory):
 
     assert post_freel != 0
     assert pre_freel != post_freel
+
+
+def test_freelancers_detect_dupes(post_factory):
+    """Verify that duplicate detection works."""
+    post_factory(title="Django Python freelancer", description="Lorem Ipsum Dolor", is_freelance=True, is_freelancer=True, processed=False, freelancer=None)
+    create_freelancers()
+    pre_freelancers = Freelancer.objects.all().count()
+    post_factory(title="Django Python freelancer", description="Lorem Ipsum Dolor", is_freelance=True, is_freelancer=True, processed=False, freelancer=None)
+    create_freelancers()
+    post_freelancers = Freelancer.objects.all().count()
+
+    assert post_freelancers != 0
+    assert pre_freelancers == post_freelancers
 
 
 def test_tag_jobs(job_factory, tag_factory):
