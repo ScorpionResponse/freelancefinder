@@ -29,3 +29,14 @@ def test_harvest_sources(fossjobs_rss_feed, mocker):
 
     assert pre_posts != post_posts
     assert post_posts > 0
+
+
+def test_broken_harvest(mocker):
+    """Verify that broken harvest doesn't throw."""
+    mocker.patch('feedparser.parse', side_effect=lambda x: 'broken')
+    Source.objects.all().delete()
+    Source.objects.create(code='fossjobs', name='FossJobs', url='http://test.example.com/')
+
+    harvest_sources()
+    # If that raises, then we've got an issue.
+    assert True
