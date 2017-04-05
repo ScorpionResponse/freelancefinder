@@ -5,7 +5,7 @@ import datetime
 import wrapt
 
 
-def periodically(period='daily', check_name='last_processed', fail_return=[]):
+def periodically(period='daily', check_name='last_processed', fail_return=None):
     """Ensure that the wrapped function only runs once per period."""
     @wrapt.decorator
     def wrapper(wrapped, instance, args, kwargs):

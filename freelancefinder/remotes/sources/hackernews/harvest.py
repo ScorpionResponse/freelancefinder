@@ -27,7 +27,7 @@ class Harvester(object):
             yield post
         logger.info("HackerNews harvester status: %s", dict(self.status_info))
 
-    @periodically(period='daily', check_name='last_processed-job_stories')
+    @periodically(period='daily', check_name='last_processed-job_stories', fail_return=[])
     def _process_job_stories(self):
         """Process the job_stories from hackernews."""
         for post in self.hackernews.job_stories():
@@ -39,7 +39,7 @@ class Harvester(object):
             self.status_info['total'] += 1
             yield post
 
-    @periodically(period='daily', check_name='last_processed-new_threads')
+    @periodically(period='daily', check_name='last_processed-new_threads', fail_return=[])
     def _check_for_new_hiring_threads(self):
         """Find new hiring posts from the whoishiring user."""
         self.hackernews.check_who_is_hiring()
@@ -52,7 +52,7 @@ class Harvester(object):
             self._process_freelancer(),
         )
 
-    @periodically(period='daily', check_name='last_processed-who_is_hiring')
+    @periodically(period='daily', check_name='last_processed-who_is_hiring', fail_return=[])
     def _process_who_is_hiring(self):
         """Process the Who is hiring? thread."""
         logger.info("Processing who is hiring post")
@@ -64,7 +64,7 @@ class Harvester(object):
             self.status_info['total'] += 1
             yield post
 
-    @periodically(period='daily', check_name='last_processed-who_wants_to_be_hired')
+    @periodically(period='daily', check_name='last_processed-who_wants_to_be_hired', fail_return=[])
     def _process_who_wants_to_be_hired(self):
         """Process the Who wants to be hired? thread."""
         logger.info("Processing who wants to be hired post")
@@ -76,7 +76,7 @@ class Harvester(object):
             self.status_info['total'] += 1
             yield post
 
-    @periodically(period='daily', check_name='last_processed-freelancer')
+    @periodically(period='daily', check_name='last_processed-freelancer', fail_return=[])
     def _process_freelancer(self):
         """Process the Freelancer/Seeking freelancer? thread."""
         logger.info("Processing freelancer post")
