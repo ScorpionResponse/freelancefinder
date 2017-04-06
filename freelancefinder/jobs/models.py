@@ -12,6 +12,10 @@ from utils.text import generate_fingerprint
 class PostManager(models.Manager):
     """Manager for Posts."""
 
+    def get_queryset(self):
+        """Remove garbage."""
+        return super(PostManager, self).get_queryset().filter(garbage=False)
+
     def new(self):
         """Get unprocessed Posts."""
         return self.get_queryset().filter(processed=False).order_by('created')
@@ -45,6 +49,7 @@ class Post(TimeStampedModel):
     is_job_posting = models.BooleanField(default=False)
     is_freelance = models.BooleanField(default=False)
     is_freelancer = models.BooleanField(default=False)
+    garbage = models.BooleanField(default=False)
     processed = models.BooleanField(default=False)
     objects = PostManager()
 
