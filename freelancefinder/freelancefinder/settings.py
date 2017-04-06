@@ -88,7 +88,7 @@ SOCIALACCOUNT_PROVIDERS = {
     },
     'reddit': {
         'AUTH_PARAMS': {'duration': 'permanent'},
-        'SCOPE': ['identity', 'submit'],
+        'SCOPE': ['identity'],
         'USER_AGENT': REDDIT_USER_AGENT,
     },
 }
