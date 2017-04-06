@@ -52,6 +52,8 @@ Add Behance API:
 
 - https://worktipper.com/
 
+- https://www.workingnomads.co/jobs/code-challenge-reviewer-java-javascript-php-python-c-ios-or-android-geektastic-6851
+
 BEFORE LAUNCH
 =============
 
