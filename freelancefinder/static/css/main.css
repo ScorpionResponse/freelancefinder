@@ -46,7 +46,9 @@ body {
     position: relative;
     background: #000 url("https://source.unsplash.com/random/1600x800") center center;
     width: 100%;
+    min-height: 50%;
     height: 100%;
+    -webkit-background-size: cover;
     background-size: cover;
     overflow: hidden;
 }

@@ -42,6 +42,11 @@ Add Behance API:
 
 - http://joblance.info/3989019/need-a-top-list-of-the-top-100000-instagram-accounts-with-most-followers-by-wyatt12
 
+- http://workinstartups.com/
+
+- https://www.cybercoders.com/search/?filtertype=contract&searchterms=python&searchlocation=&newsearch=true&originalsearch=true&sorttype=
+
+- https://www.fintechers.io/
 
 BEFORE LAUNCH
 =============
@@ -50,5 +55,5 @@ BEFORE LAUNCH
 * Add landing page
 * Clearly separate free/paid/admin
 * Add a blog or other notification mechanism
-* Verify/sign up for login services
+* Verify/sign up for login services - Get flows working right
 * Payment processor
