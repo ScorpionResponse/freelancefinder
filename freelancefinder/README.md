@@ -32,6 +32,16 @@ Add Behance API:
 
 - https://www.freelancinggig.com/browse-project
 
+- Craigslist (allowed to scrape?)
+
+- http://theymakeapps.com/
+
+- https://www.remotepython.com/latest/jobs/feed/
+
+- http://www.trabajospython.com/jobs/freelance-python-developer-bmat
+
+- http://joblance.info/3989019/need-a-top-list-of-the-top-100000-instagram-accounts-with-most-followers-by-wyatt12
+
 
 BEFORE LAUNCH
 =============

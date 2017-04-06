@@ -2,6 +2,8 @@
 {% load markdown_filter %}
 {% load tz %}
 
+{% block 'title' %}{{ job.title }}{% endblock %}
+
 {% block 'content' %}
 
 <h1>{{ job.title }}</h1>

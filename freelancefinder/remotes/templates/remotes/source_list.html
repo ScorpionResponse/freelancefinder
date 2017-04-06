@@ -1,13 +1,24 @@
 {% extends 'base.html' %}
+
+{% block 'title' %}Freelance Finder - Source List{% endblock %}
+
 {% block 'content' %}
 
 <h1>Source List</h1>
-<ol>
+<div class='sources'>
 {% for source in source_list %}
-    <li>{{ source }}</li>
+    <div id='source-{{ source.id }}'>
+        <h5><a target="_blank" href="{{ source.url }}">{{ source.code }} - {{ source.name }}</a></h5>
+        <dl>
+            {% for config in source.config.all %}
+            <dt>{{ config.config_key }}</dd>
+            <dd>{{ config.config_value }}</dd>
+        </dl>
+    </div>
 {% endfor %}
-</ol>
+</div>
 
+<h4>Debug:</h4>
 <div>{{ request.META }}</div>
 
 {% endblock %}
