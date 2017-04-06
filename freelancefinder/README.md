@@ -54,6 +54,10 @@ Add Behance API:
 
 - https://www.workingnomads.co/jobs/code-challenge-reviewer-java-javascript-php-python-c-ios-or-android-geektastic-6851
 
+- https://www.freelancermap.com/index.php?module=projekt&func=suchergebnisse&pq=python&profisuche=0&pq_sorttype=1&area=newpb&redirect=1
+
+- http://stackoverflow.com/jobs/developer-jobs-using-ansible
+
 BEFORE LAUNCH
 =============
 

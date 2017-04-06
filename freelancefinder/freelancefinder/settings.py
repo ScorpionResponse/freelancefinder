@@ -295,7 +295,7 @@ USE_TZ = True
 
 # Email settings
 EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
-EMAIL_FILE_PATH = root.path('tmp-email-messages')
+EMAIL_FILE_PATH = str(root.path('tmp-email-messages'))
 EMAIL_HOST = ''
 
 public_root = root.path('public/')
