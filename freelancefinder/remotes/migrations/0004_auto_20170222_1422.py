@@ -5,7 +5,7 @@ from __future__ import unicode_literals
 from django.db import migrations
 
 NEW_SOURCE_CONFIG = {
-    'reddit': {'subreddits': ['freelance_forhire', 'forhire', 'python', 'django']},
+    'reddit': {'subreddits': ['freelance_forhire', 'forhire', 'python', 'django', 'nsfwforhire', 'sysadminjobs']},
 }
 
 
