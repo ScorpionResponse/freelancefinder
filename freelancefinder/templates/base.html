@@ -20,8 +20,10 @@
                 <div class="collapse navbar-collapse justify-content-start" id="navbarNav">
                     <div class="navbar-nav">
                         <a class="nav-item nav-link" href="{% url 'index' %}">Home</a>
-                        <a class="nav-item nav-link" href="{% url 'job-list' %}">Jobs</a>
-                        <a class="nav-item nav-link" href="{% url 'freelancer-list' %}">Freelancers</a>
+                        {% if user|in_group:"Paid" %}
+                            <a class="nav-item nav-link" href="{% url 'job-list' %}">Jobs</a>
+                            <a class="nav-item nav-link" href="{% url 'freelancer-list' %}">Freelancers</a>
+                        {% endif %}
                         {% if user|in_group:"Administrators" %}
                             <a class="nav-item nav-link" href="{% url 'post-list' %}">Posts</a>
                         {% endif %}

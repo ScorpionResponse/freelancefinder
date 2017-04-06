@@ -24,11 +24,12 @@ class FormGetMixin(FormMixin):
         return kwargs
 
 
-class JobListView(ListView, FormGetMixin):
+class JobListView(ListView, FormGetMixin, GroupRequiredMixin):
     """List all jobs."""
 
     model = Job
     paginate_by = 20
+    group_required = u'Paid'
     form_class = JobSearchForm
     template_name = "jobs/job_list.html"
 
@@ -54,18 +55,20 @@ class JobListView(ListView, FormGetMixin):
         return context
 
 
-class JobDetailView(DetailView):
+class JobDetailView(DetailView, GroupRequiredMixin):
     """Show a single job."""
 
     model = Job
+    group_required = u'Paid'
     template_name = 'jobs/job_detail.html'
 
 
-class FreelancerListView(ListView, FormGetMixin):
+class FreelancerListView(ListView, FormGetMixin, GroupRequiredMixin):
     """List all freelancers."""
 
     model = Freelancer
     paginate_by = 20
+    group_required = u'Paid'
     form_class = FreelancerSearchForm
     template_name = "jobs/freelancer_list.html"
 
@@ -89,10 +92,11 @@ class FreelancerListView(ListView, FormGetMixin):
         return context
 
 
-class FreelancerDetailView(DetailView):
+class FreelancerDetailView(DetailView, GroupRequiredMixin):
     """Show a single freelancer."""
 
     model = Freelancer
+    group_required = u'Paid'
     template_name = 'jobs/freelancer_detail.html'
 
 

@@ -41,6 +41,11 @@ body {
     float: right;
 }
 
+/* Index */
+.jumbotron {
+    background-image: url("https://source.unsplash.com/random/1600x800");
+}
+
 /* Results List */
 .post h5,.post small,.job h5,.job small {
     color: #FFFFFF;
