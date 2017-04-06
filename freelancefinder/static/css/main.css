@@ -42,7 +42,7 @@ body {
 }
 
 /* Index */
-.jumbotron,.jumbotron h1 {
+.jumbotron {
     position: relative;
     background: #000 url("https://source.unsplash.com/random/1600x800") center center;
     width: 100%;
@@ -51,8 +51,11 @@ body {
     -webkit-background-size: cover;
     background-size: cover;
     overflow: hidden;
+}
+
+.jumbotron h1,.jumbotron h5 {
     color: #FFFFFF;
-    text-shadow: #000000 0px 0px 1px;
+    text-shadow: #000000 0px 0px 2px;
 }
 
 /* Results List */

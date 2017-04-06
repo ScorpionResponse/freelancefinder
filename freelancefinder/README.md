@@ -50,6 +50,8 @@ Add Behance API:
 
 - http://www.pythonjobshq.com/jobs/1404199-senior-software-engineer-python-open-to-multiple-levels-at-the-advisory-board-company
 
+- https://worktipper.com/
+
 BEFORE LAUNCH
 =============
 
