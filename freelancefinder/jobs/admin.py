@@ -23,8 +23,8 @@ class JobAdmin(admin.ModelAdmin):
 
     model = Job
     list_display = ('title', 'tag_list', 'created', 'modified')
-    fields = ('title', 'description', 'tags', 'created', 'modified')
-    readonly_fields = ('created', 'modified')
+    fields = ('title', 'description', 'tags', 'created', 'modified', 'fingerprint')
+    readonly_fields = ('created', 'modified', 'fingerprint')
     actions = [remove_tags]
 
     def get_queryset(self, request):
@@ -42,8 +42,8 @@ class FreelancerAdmin(admin.ModelAdmin):
 
     model = Freelancer
     list_display = ('title', 'tag_list', 'created', 'modified')
-    fields = ('title', 'description', 'tags', 'created', 'modified')
-    readonly_fields = ('created', 'modified')
+    fields = ('title', 'description', 'tags', 'created', 'modified', 'fingerprint')
+    readonly_fields = ('created', 'modified', 'fingerprint')
     actions = [remove_tags]
 
     def get_queryset(self, request):
@@ -60,8 +60,8 @@ class PostAdmin(admin.ModelAdmin):
     """The Post model needs no special admin configuration."""
 
     model = Post
-    list_display = ('title', 'source', 'subarea', 'is_job_posting', 'is_freelancer', 'is_freelance', 'processed', 'created')
-    fields = ('title', 'url', 'source', 'subarea', 'description', 'unique', 'is_job_posting', 'is_freelancer', 'is_freelance', 'processed', 'created', 'modified')
+    list_display = ('title', 'source', 'subarea', 'is_job_posting', 'is_freelancer', 'is_freelance', 'processed', 'garbage', 'created')
+    fields = ('title', 'url', 'source', 'subarea', 'description', 'unique', 'is_job_posting', 'is_freelancer', 'is_freelance', 'processed', 'garbage', 'created', 'modified')
     readonly_fields = ('created', 'modified')
 
 

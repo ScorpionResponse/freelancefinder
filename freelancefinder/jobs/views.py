@@ -24,7 +24,7 @@ class FormGetMixin(FormMixin):
         return kwargs
 
 
-class JobListView(ListView, FormGetMixin, GroupRequiredMixin):
+class JobListView(GroupRequiredMixin, ListView, FormGetMixin):
     """List all jobs."""
 
     model = Job
