@@ -35,7 +35,7 @@ PREREQ_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.github',
-    'allauth.socialaccount.providers.google',
+    # 'allauth.socialaccount.providers.google',
     'allauth.socialaccount.providers.linkedin',
     'allauth.socialaccount.providers.reddit',
     'django_logtail',
@@ -78,10 +78,10 @@ SITE_ID = 2
 SOCIALACCOUNT_QUERY_EMAIL = True
 SOCIALACCOUNT_PROVIDERS = {
     'github': {},
-    'google': {
-        'SCOPE': ['profile', 'email'],
-        'AUTH_PARAMS': {'access_type': 'online'},
-    },
+    # 'google': {
+    #     'SCOPE': ['profile', 'email'],
+    #     'AUTH_PARAMS': {'access_type': 'online'},
+    # },
     'linkedin': {
         'SCOPE': ['r_emailaddress'],
         'PROFILE_FIELDS': ['id', 'first-name', 'last-name', 'email-address',
