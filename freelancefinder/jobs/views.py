@@ -4,6 +4,7 @@ import logging
 
 from braces.views import GroupRequiredMixin
 
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
 from django.views.generic import ListView
 from django.views.generic.detail import DetailView
@@ -24,12 +25,11 @@ class FormGetMixin(FormMixin):
         return kwargs
 
 
-class JobListView(GroupRequiredMixin, ListView, FormGetMixin):
+class JobListView(LoginRequiredMixin, ListView, FormGetMixin):
     """List all jobs."""
 
     model = Job
     paginate_by = 20
-    group_required = u'Paid'
     form_class = JobSearchForm
     template_name = "jobs/job_list.html"
 
@@ -55,20 +55,18 @@ class JobListView(GroupRequiredMixin, ListView, FormGetMixin):
         return context
 
 
-class JobDetailView(DetailView, GroupRequiredMixin):
+class JobDetailView(LoginRequiredMixin, DetailView):
     """Show a single job."""
 
     model = Job
-    group_required = u'Paid'
     template_name = 'jobs/job_detail.html'
 
 
-class FreelancerListView(ListView, FormGetMixin, GroupRequiredMixin):
+class FreelancerListView(LoginRequiredMixin, ListView, FormGetMixin):
     """List all freelancers."""
 
     model = Freelancer
     paginate_by = 20
-    group_required = u'Paid'
     form_class = FreelancerSearchForm
     template_name = "jobs/freelancer_list.html"
 
@@ -92,15 +90,14 @@ class FreelancerListView(ListView, FormGetMixin, GroupRequiredMixin):
         return context
 
 
-class FreelancerDetailView(DetailView, GroupRequiredMixin):
+class FreelancerDetailView(LoginRequiredMixin, DetailView):
     """Show a single freelancer."""
 
     model = Freelancer
-    group_required = u'Paid'
     template_name = 'jobs/freelancer_detail.html'
 
 
-class PostListView(FormMixin, ListView, GroupRequiredMixin):
+class PostListView(GroupRequiredMixin, FormMixin, ListView):
     """List all Posts."""
 
     model = Post

@@ -6,7 +6,7 @@ from django.views.generic import ListView
 from .models import Source
 
 
-class SourceListView(ListView, GroupRequiredMixin):
+class SourceListView(GroupRequiredMixin, ListView):
     """List all Sources."""
 
     model = Source
