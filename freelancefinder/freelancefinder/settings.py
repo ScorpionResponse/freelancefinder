@@ -292,6 +292,11 @@ USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
+# Email settings
+EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+EMAIL_FILE_PATH = root.path('tmp-email-messages')
+EMAIL_HOST = ''
+
 public_root = root.path('public/')
 
 MEDIA_ROOT = public_root('media')
