@@ -58,6 +58,11 @@ body {
     text-shadow: #000000 0px 0px 2px;
 }
 
+.index-copy {
+    font-size: 1.5em;
+    line-height: 1.5;
+}
+
 /* Results List */
 .post h5,.post small,.job h5,.job small {
     color: #FFFFFF;
