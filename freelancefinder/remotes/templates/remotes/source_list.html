@@ -13,6 +13,7 @@
             {% for config in source.config.all %}
             <dt>{{ config.config_key }}</dd>
             <dd>{{ config.config_value }}</dd>
+            {% endfor %}
         </dl>
     </div>
 {% endfor %}
