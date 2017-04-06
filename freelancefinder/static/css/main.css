@@ -51,6 +51,8 @@ body {
     -webkit-background-size: cover;
     background-size: cover;
     overflow: hidden;
+    color: #FFFFFF;
+    text-shadow: #000000 4px 4px 1px;
 }
 
 /* Results List */
