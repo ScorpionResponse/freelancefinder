@@ -34,6 +34,9 @@
                 <a href="{{ post.url }}" target="_blank">{{ post.source.name }} &gt; {{ post.subarea }}</a>
             {% endfor %}
         </span>
+        <span class="control-button p-2">
+            <button type="button" class="btn btn-danger btn-circle btn-lg"><i class="glyphicon glyphicon-remove"></i></button>
+        </span>
         <span class="tag-list p-2 ml-auto">
             {% for tag in job.tags.all %}
                 {% if tag.name != 'job' %}
