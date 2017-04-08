@@ -40,7 +40,7 @@ class JobListView(LoginRequiredMixin, ListView, FormGetMixin):
         querys = Job.objects.all().prefetch_related('posts', 'tags', 'posts__source')
         if search is not None and search != '':
             querys = querys.filter(Q(title__icontains=search) | Q(description__icontains=search))
-        if tags is not None and len(tags) > 0:
+        if tags is not None and len(tags) > 0 and tags != ['']:
             querys = querys.filter(tags__slug__in=tags).distinct()
         logger.debug('Tags: %s', tags)
         logger.debug('Query: %s', str(querys.query))
