@@ -7,9 +7,9 @@ from django.db import IntegrityError
 from ..models import Source, SourceConfig
 
 
-def test_source_list(client):
+def test_source_list(debug_group_client):
     """Test source list page returns 200."""
-    response = client.get('/remotes/source-list/')
+    response = debug_group_client.get('/remotes/source-list/')
     assert response.status_code == 200
 
 

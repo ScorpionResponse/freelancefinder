@@ -3,29 +3,29 @@
 from ..models import Freelancer
 
 
-def test_freelancer_list(client, freelancer, post):
+def test_freelancer_list(admin_group_client, freelancer, post):
     """Simple test for the freelancer list page."""
-    response = client.get('/jobs/freelancer-list/')
+    response = admin_group_client.get('/jobs/freelancer-list/')
     assert response.status_code == 200
 
 
-def test_freelancer_list_with_100(client, freelancer_factory):
+def test_freelancer_list_with_100(admin_group_client, freelancer_factory):
     """Simple test for the freelancer list page."""
     for i in range(100):
         new_freelancer = freelancer_factory()
-    response = client.get('/jobs/freelancer-list/')
+    response = admin_group_client.get('/jobs/freelancer-list/')
     assert response.status_code == 200
 
 
-def test_freelancer_list_search(client, freelancer):
+def test_freelancer_list_search(admin_group_client, freelancer):
     """Test filtering freelancer list by search field."""
-    response = client.get('/jobs/freelancer-list/?search=test')
+    response = admin_group_client.get('/jobs/freelancer-list/?search=test')
     assert response.status_code == 200
 
 
-def test_freelancer_list_filter_tag(client, freelancer):
+def test_freelancer_list_filter_tag(admin_group_client, freelancer):
     """Test filtering freelancer list by tag."""
-    response = client.get('/jobs/freelancer-list/?tag=django')
+    response = admin_group_client.get('/jobs/freelancer-list/?tag=django')
     assert response.status_code == 200
 
 

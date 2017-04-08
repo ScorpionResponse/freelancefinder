@@ -5,6 +5,8 @@ from faker import Faker
 import feedparser
 import pytest
 
+from django.contrib.auth.models import Group
+
 
 @pytest.fixture(scope='function')
 def fossjobs_rss_feed():
@@ -45,3 +47,15 @@ def fossjobs_rss_feed():
             """.format(seq, fake.text(max_nb_chars=500), fake.url(), job_type, fake.job(), fake.iso8601(tzinfo=None))
     raw_rss += "</rdf:RDF>"
     return feedparser.parse(raw_rss)
+
+
+@pytest.fixture(scope="function")
+def debug_group_client(client, django_user_model):
+    """Get a client in the Debuggers group."""
+    new_user = django_user_model.objects.create_user(username='debug_user', email='debug@example.com')
+    group, created = Group.objects.get_or_create(name='Debuggers')
+    new_user.groups.add(group)
+    new_user.save()
+
+    client.force_login(new_user)
+    return client

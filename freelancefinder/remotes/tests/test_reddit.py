@@ -36,6 +36,7 @@ class PrawMock(object):
         for times in range(limit):
             subm = {
                 'url': fake.url(),
+                'permalink': fake.url(),
                 'title': "{} {}".format(random.choice(['[HIRING]', '[FOR HIRE]', '']), fake.job()),
                 'selftext': fake.text(max_nb_chars=500),
                 'id': fake.uuid4(),

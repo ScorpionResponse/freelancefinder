@@ -6,30 +6,30 @@ from remotes.models import Source
 from ..models import Job, Post
 
 
-def test_post_list(client, post):
+def test_post_list(admin_group_client, post):
     """Simple test for the posts list page."""
-    response = client.get('/jobs/post-list/')
+    response = admin_group_client.get('/jobs/post-list/')
     assert response.status_code == 200
 
 
-def test_post_list_with_100(client, post_factory):
+def test_post_list_with_100(admin_group_client, post_factory):
     """Simple test for the posts list page."""
     for i in range(100):
         new_post = post_factory()
-    response = client.get('/jobs/post-list/')
+    response = admin_group_client.get('/jobs/post-list/')
     assert response.status_code == 200
 
 
-def test_post_list_filter_title(client, post):
+def test_post_list_filter_title(admin_group_client, post):
     """Test filtering post list by title field."""
-    response = client.get('/jobs/post-list/?title=test')
+    response = admin_group_client.get('/jobs/post-list/?title=test')
     assert response.status_code == 200
 
 
 @pytest.mark.parametrize("field", ['is_job_posting', 'is_freelance', 'is_freelancer', 'is_not_classified'])
-def test_post_list_filter_booleans(client, field, post):
+def test_post_list_filter_booleans(admin_group_client, field, post):
     """Test filtering post list by title field."""
-    response = client.get('/jobs/post-list/?{}=on'.format(field))
+    response = admin_group_client.get('/jobs/post-list/?{}=on'.format(field))
     assert response.status_code == 200
 
 

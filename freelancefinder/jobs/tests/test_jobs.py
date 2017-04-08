@@ -3,43 +3,43 @@
 from ..models import Job
 
 
-def test_job_list(client, job, post):
+def test_job_list(authed_client, job, post):
     """Simple test for the jobs list page."""
-    response = client.get('/jobs/job-list/')
+    response = authed_client.get('/jobs/job-list/')
     assert response.status_code == 200
 
 
-def test_job_list_100(client, job_factory):
+def test_job_list_100(authed_client, job_factory):
     """Simple test for the jobs list page with 100 jobs."""
     for i in range(100):
         new_job = job_factory()
-    response = client.get('/jobs/job-list/')
+    response = authed_client.get('/jobs/job-list/')
     assert response.status_code == 200
 
 
-def test_job_list_paging(client, job_factory):
+def test_job_list_paging(authed_client, job_factory):
     """Simple test for the jobs list page with 600 jobs."""
     for i in range(600):
         new_job = job_factory()
-    response = client.get('/jobs/job-list/')
+    response = authed_client.get('/jobs/job-list/')
     assert response.status_code == 200
 
-    response = client.get('/jobs/job-list/?page=15')
+    response = authed_client.get('/jobs/job-list/?page=15')
     assert response.status_code == 200
 
-    response = client.get('/jobs/job-list/?page=last')
+    response = authed_client.get('/jobs/job-list/?page=last')
     assert response.status_code == 200
 
 
-def test_job_list_filter_search(client, job):
+def test_job_list_filter_search(authed_client, job):
     """Test filtering job list by search field."""
-    response = client.get('/jobs/job-list/?search=test')
+    response = authed_client.get('/jobs/job-list/?search=test')
     assert response.status_code == 200
 
 
-def test_job_list_filter_tag(client, job):
+def test_job_list_filter_tag(authed_client, job):
     """Test filtering job list by tag."""
-    response = client.get('/jobs/job-list/?tag=django')
+    response = authed_client.get('/jobs/job-list/?tag=django')
     assert response.status_code == 200
 
 

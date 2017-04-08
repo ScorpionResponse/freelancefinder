@@ -1,6 +1,7 @@
 """Text processing utilities."""
 
 from collections import Counter
+import operator
 import string
 
 from nltk.corpus import stopwords
@@ -18,8 +19,8 @@ def generate_fingerprint(text):
     text_tokens = tokenize(text)
     filtered_tokens = [word for word in text_tokens if word not in stopwords.words('english')]
     count_tokens = Counter(filtered_tokens)
-    common_tokens = count_tokens.most_common(15)
-    fingerprint = sorted([x for x, y in common_tokens])  # pylint: disable=unused-variable
+    common_tokens = sorted(count_tokens.most_common(), key=operator.itemgetter(1, 0), reverse=True)
+    fingerprint = [x for x, y in common_tokens[:15]]  # pylint: disable=unused-variable
     return '-'.join(fingerprint)[:255]
 
 
