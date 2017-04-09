@@ -34,7 +34,7 @@ class Reddit(object):
 
     def parse_job_to_post(self, job_info):
         """Convert reddit api response to a Post."""
-        created_time = timezone.make_aware(datetime.datetime.utcfromtimestamp(job_info.created_utc))
+        created_time = timezone.make_aware(datetime.datetime.utcfromtimestamp(job_info.created_utc), is_dst=False)
         url = "https://www.reddit.com{}".format(job_info.permalink)
         post = Post(url=url, source=self.source, title=job_info.title[:255], description=job_info.selftext, unique=job_info.id, subarea=job_info.subreddit, created=created_time)
         return post

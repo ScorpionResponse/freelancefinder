@@ -126,6 +126,6 @@ class HackerHarvest(object):
         url = job_info.url
         if not url:
             url = "https://news.ycombinator.com/item?id={}".format(job_info.item_id)
-        created = timezone.make_aware(job_info.submission_time)
+        created = timezone.make_aware(job_info.submission_time, is_dst=False)
         post = Post(url=url, source=self.source, title=title_cleaned, description=desc, unique=job_info.item_id, created=created, subarea=subarea)
         return post

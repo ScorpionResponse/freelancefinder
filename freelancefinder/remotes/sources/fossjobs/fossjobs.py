@@ -33,7 +33,7 @@ class FossJobs(object):
 
     def parse_job_to_post(self, job_info):
         """Convert from the rss feed format to a Post."""
-        created = timezone.make_aware(datetime.datetime(*job_info.updated_parsed[0:6]))
+        created = timezone.make_aware(datetime.datetime(*job_info.updated_parsed[0:6]), is_dst=False)
         post = Post(
             url=job_info.link,
             source=self.source,
