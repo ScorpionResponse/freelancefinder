@@ -4,7 +4,7 @@ load-plugins=pylint_django
 
 disable=C0301,R0901,locally-disabled
 
-ignore=lib,static,templates,migrations,wsgi.py,settings.py,db.sqlite
+ignore=lib,static,tests,templates,migrations,wsgi.py,settings.py,db.sqlite
 ignore-patterns=test_*
 
 [MESSAGES CONTROL]
