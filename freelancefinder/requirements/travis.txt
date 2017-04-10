@@ -5,4 +5,4 @@ numpy==1.12.1
 pbr==2.0.0
 py==1.4.33
 pytest==3.0.7
-setuptools==34.3.3
+setuptools==34.4.0
