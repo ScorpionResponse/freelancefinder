@@ -15,35 +15,39 @@
 <ul class="list-group">
 {% for job in job_list %}
 <li id="job-{{ job.id }}" class="d-flex list-group-item flex-column align-items-start job">
-    {% if job.description %}
-    <a href="#" data-toggle="collapse" data-target="#jobdesc-{{ job.id }}" class="list-group-item-action">
-    {% endif %}
-        <div class="d-flex flex-row w-100 justify-content-between">
-            <h5>{{ job.title }}</h5>
-            <small>{{ job.created|localtime }}</small>
-        </div>
-    {% if job.description %}
-    </a>
-    {% endif %}
-    <div class="d-flex flex-row w-100 justify-content-start">
-        <span class="p-2">
-            <a href="{% url 'job-detail' job.id %}">Detail</a>
-        </span>
-        <span class="source-info p-2">
-            {% for post in job.posts.all %}
-                <a href="{{ post.url }}" target="_blank">{{ post.source.name }} &gt; {{ post.subarea }}</a>
-            {% endfor %}
-        </span>
-        <span class="control-button p-2 ml-auto">
+    <div class="d-flex flex-row">
+        <div class="d-flex control-button">
             <button type="button" class="btn btn-danger btn-circle btn-lg"><i class="fa fa-times"></i></button>
-        </span>
-        <span class="tag-list p-2 ml-auto">
-            {% for tag in job.tags.all %}
-                {% if tag.name != 'job' %}
-                    <span class="tag badge badge-default">{{ tag.name }}</span>
-                {% endif %}
-            {% endfor %}
-        </span>
+        </div>
+        <div class="d-flex control-button">
+            {% if job.description %}
+            <a href="#" data-toggle="collapse" data-target="#jobdesc-{{ job.id }}" class="list-group-item-action">
+            {% endif %}
+                <div class="d-flex flex-row w-100 justify-content-between">
+                    <h5>{{ job.title }}</h5>
+                    <small>{{ job.created|localtime }}</small>
+                </div>
+            {% if job.description %}
+            </a>
+            {% endif %}
+            <div class="d-flex flex-row w-100 justify-content-start">
+                <span class="p-2">
+                    <a href="{% url 'job-detail' job.id %}">Detail</a>
+                </span>
+                <span class="source-info p-2">
+                    {% for post in job.posts.all %}
+                        <a href="{{ post.url }}" target="_blank">{{ post.source.name }} &gt; {{ post.subarea }}</a>
+                    {% endfor %}
+                </span>
+                <span class="tag-list p-2 ml-auto">
+                    {% for tag in job.tags.all %}
+                        {% if tag.name != 'job' %}
+                            <span class="tag badge badge-default">{{ tag.name }}</span>
+                        {% endif %}
+                    {% endfor %}
+                </span>
+            </div>
+        </div>
     </div>
     {% if job.description %}
     <div class="d-flex flex-row w-100">
