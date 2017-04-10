@@ -20,16 +20,16 @@
             <button type="button" class="btn btn-danger btn-circle btn-lg"><i class="fa fa-times"></i></button>
         </div>
         <div class="d-flex w-100 flex-column">
-            <div class="d-flex flex-row w-100 justify-content-between">
-                {% if job.description %}
-                    <a href="#" data-toggle="collapse" data-target="#jobdesc-{{ job.id }}" class="list-group-item-action">
-                {% endif %}
-                        <h5>{{ job.title }}</h5>
-                        <small>{{ job.created|localtime }}</small>
-                {% if job.description %}
-                    </a>
-                {% endif %}
-            </div>
+            {% if job.description %}
+                <a href="#" data-toggle="collapse" data-target="#jobdesc-{{ job.id }}" class="list-group-item-action">
+            {% endif %}
+                <div class="d-flex flex-row w-100 justify-content-between">
+                    <h5>{{ job.title }}</h5>
+                    <small>{{ job.created|localtime }}</small>
+                </div>
+            {% if job.description %}
+                </a>
+            {% endif %}
             <div class="d-flex flex-row w-100 justify-content-start">
                 <span class="p-2">
                     <a href="{% url 'job-detail' job.id %}">Detail</a>
