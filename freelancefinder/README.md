@@ -69,3 +69,4 @@ BEFORE LAUNCH
 * Add a blog or other notification mechanism
 * Verify/sign up for login services - Get flows working right
 * Payment processor
+* Android app
