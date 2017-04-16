@@ -18,7 +18,7 @@
         <div class="d-flex flex-row w-100 justify-content-start">
             <div class="d-flex align-items-center pr-2 control-button">
                 <form action="{% url 'post-action' %}" method="POST">
-                    {{ csrf_token }}
+                    {% csrf_token %}
                     <input type="hidden" name="post_id" value="{{ post.id }}">
                     <button type="button" class="btn btn-success btn-circle btn-lg row-accept" data-dismiss="alert" data-target="#post-{{ post.id }}" name="accept"><i class="fa fa-check"></i></button>
                     <button type="button" class="btn btn-danger btn-circle btn-lg row-dismiss" data-dismiss="alert" data-target="#post-{{ post.id }}" name="dismiss"><i class="fa fa-times"></i></button>
