@@ -1,18 +1,23 @@
-"""Fixtures to create models in jobs app."""
+"""Useful cross-app fixtures."""
 
 import pytest
 from pytest_factoryboy import register
 
 from django.contrib.auth.models import Group
 
-from .factories import JobFactory, PostFactory, FreelancerFactory, SourceFactory, TagFactory
+from jobs.tests.factories import JobFactory, PostFactory, FreelancerFactory, SourceFactory, TagFactory
 
 
-register(TagFactory)
-register(JobFactory)
-register(PostFactory)
-register(FreelancerFactory)
-register(SourceFactory)
+@pytest.fixture(scope="function")
+def debug_group_client(client, django_user_model):
+    """Get a client in the Debuggers group."""
+    new_user = django_user_model.objects.create_user(username='debug_user', email='debug@example.com')
+    group, created = Group.objects.get_or_create(name='Debuggers')
+    new_user.groups.add(group)
+    new_user.save()
+
+    client.force_login(new_user)
+    return client
 
 
 @pytest.fixture(scope="function")
@@ -46,3 +51,10 @@ def authed_client(client, django_user_model):
 
     client.force_login(new_user)
     return client
+
+
+register(TagFactory)
+register(JobFactory)
+register(PostFactory)
+register(FreelancerFactory)
+register(SourceFactory)
