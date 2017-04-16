@@ -5,7 +5,7 @@ from pytest_factoryboy import register
 
 from django.contrib.auth.models import Group
 
-from jobs.tests.factories import JobFactory, PostFactory, FreelancerFactory, SourceFactory, TagFactory
+from jobs.tests.factories import JobFactory, PostFactory, SourceFactory, TagFactory
 
 
 @pytest.fixture
@@ -76,5 +76,4 @@ def authed_client(client, authed_user):
 register(TagFactory)
 register(JobFactory)
 register(PostFactory)
-register(FreelancerFactory)
 register(SourceFactory)

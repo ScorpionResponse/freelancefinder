@@ -24,7 +24,6 @@
                             <a class="nav-item nav-link" href="{% url 'job-list' %}">Jobs</a>
                         {% endif %}
                         {% if user|in_group:"Administrators" %}
-                            <a class="nav-item nav-link" href="{% url 'freelancer-list' %}">Freelancers</a>
                             <a class="nav-item nav-link" href="{% url 'post-list' %}">Posts</a>
                         {% endif %}
                         {% if user|in_group:"Debuggers" %}

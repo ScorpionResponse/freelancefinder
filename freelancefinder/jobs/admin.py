@@ -3,7 +3,7 @@ import logging
 
 from django.contrib import admin
 
-from .models import Post, Job, TagVariant, Freelancer
+from .models import Post, Job, TagVariant
 
 logger = logging.getLogger(__name__)
 
@@ -37,31 +37,12 @@ class JobAdmin(admin.ModelAdmin):
         return u", ".join(o.name for o in obj.tags.all())
 
 
-class FreelancerAdmin(admin.ModelAdmin):
-    """The Freelancer model has special tag handling."""
-
-    model = Freelancer
-    list_display = ('title', 'tag_list', 'created', 'modified')
-    fields = ('title', 'description', 'tags', 'created', 'modified', 'fingerprint')
-    readonly_fields = ('created', 'modified', 'fingerprint')
-    actions = [remove_tags]
-
-    def get_queryset(self, request):
-        """Prefetch the tags data to make this more efficient."""
-        return super(FreelancerAdmin, self).get_queryset(request).prefetch_related('tags')
-
-    def tag_list(self, obj):
-        """Concatenate all tags for each freelancer."""
-        logger.debug('Called Tag_list in admin: %s', self)
-        return u", ".join(o.name for o in obj.tags.all())
-
-
 class PostAdmin(admin.ModelAdmin):
     """The Post model needs no special admin configuration."""
 
     model = Post
-    list_display = ('title', 'source', 'subarea', 'is_job_posting', 'is_freelancer', 'is_freelance', 'processed', 'garbage', 'created')
-    fields = ('title', 'url', 'source', 'subarea', 'description', 'unique', 'is_job_posting', 'is_freelancer', 'is_freelance', 'processed', 'garbage', 'created', 'modified')
+    list_display = ('title', 'source', 'subarea', 'is_job_posting', 'is_freelance', 'processed', 'garbage', 'created')
+    fields = ('title', 'url', 'source', 'subarea', 'description', 'unique', 'is_job_posting', 'is_freelance', 'processed', 'garbage', 'created', 'modified')
     readonly_fields = ('created', 'modified')
 
 
@@ -75,5 +56,4 @@ class TagVariantAdmin(admin.ModelAdmin):
 
 admin.site.register(Job, JobAdmin)
 admin.site.register(Post, PostAdmin)
-admin.site.register(Freelancer, FreelancerAdmin)
 admin.site.register(TagVariant, TagVariantAdmin)

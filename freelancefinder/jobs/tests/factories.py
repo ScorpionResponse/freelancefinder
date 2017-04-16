@@ -42,29 +42,6 @@ class JobFactory(factory.django.DjangoModelFactory):
             self.tags.add(tag)
 
 
-class FreelancerFactory(factory.django.DjangoModelFactory):
-    """Freelancer factory."""
-
-    title = factory.LazyAttribute(lambda x: FAKER.name())
-    description = factory.LazyAttribute(lambda x: FAKER.text(max_nb_chars=500))
-
-    class Meta(object):
-        """Config for FreelancerFactory."""
-
-        model = 'jobs.Freelancer'
-
-    @factory.post_generation
-    def create_tags(self, create, extracted):
-        """Generate tags."""
-        if not create:
-            return
-        tags = ['freelancer', 'django', 'soup']
-        if extracted:
-            tags = extracted
-        for tag in tags:
-            self.tags.add(tag)
-
-
 class SourceFactory(factory.django.DjangoModelFactory):
     """Source Factory."""
 
@@ -89,10 +66,8 @@ class PostFactory(factory.django.DjangoModelFactory):
     subarea = factory.Sequence(lambda n: 'subarea-%d' % n)
     is_job_posting = factory.LazyAttribute(lambda x: FAKER.pybool())
     is_freelance = factory.LazyAttribute(lambda x: FAKER.pybool())
-    is_freelancer = factory.LazyAttribute(lambda x: FAKER.pybool())
     processed = factory.LazyAttribute(lambda x: FAKER.pybool())
     job = factory.SubFactory(JobFactory)
-    freelancer = factory.SubFactory(FreelancerFactory)
 
     class Meta(object):
         """Config for PostFactory."""
