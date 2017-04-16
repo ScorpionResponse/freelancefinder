@@ -6,6 +6,9 @@ from braces.views import GroupRequiredMixin
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
+from django.http import HttpResponseRedirect
+from django.urls import reverse
+from django.views import View
 from django.views.generic import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import FormMixin
@@ -101,6 +104,7 @@ class PostListView(GroupRequiredMixin, FormMixin, ListView):
     """List all Posts."""
 
     model = Post
+    context_object_name = 'post_list'
     paginate_by = 20
     group_required = u'Administrators'
     form_class = PostFilterForm
@@ -139,3 +143,22 @@ class PostListView(GroupRequiredMixin, FormMixin, ListView):
         context['form'] = self.get_form()
 
         return context
+
+
+class PostActionView(GroupRequiredMixin, View):
+    """Accept button actions and return to post list."""
+
+    def post(self, request):
+        """Take the action then redirect to list."""
+        post_id = request.POST.get('post_id', None)
+        action = 'break'
+        if 'accept' in request.POST:
+            action = 'accept'
+        elif 'dismiss' in request.POST:
+            action = 'dismiss'
+
+        if post_id is None or action == 'break':
+            raise Exception('No action specified.')
+
+        logger.info('Post ID %s taking action %s', post_id, action)
+        return HttpResponseRedirect(reverse('post-list'))
