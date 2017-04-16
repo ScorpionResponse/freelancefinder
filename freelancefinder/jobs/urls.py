@@ -14,5 +14,5 @@ urlpatterns = [
     url(r'^freelancer-list/$', FreelancerListView.as_view(), name="freelancer-list"),
     url(r'^freelancer/(?P<pk>\d+)/$', FreelancerDetailView.as_view(), name="freelancer-detail"),
     url(r'^post-list/$', PostListView.as_view(), name="post-list"),
-    url(r'^post-list/$', PostActionView.as_view(), name="post-action"),
+    url(r'^post-action/$', PostActionView.as_view(), name="post-action"),
 ]
