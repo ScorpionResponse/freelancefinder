@@ -16,14 +16,14 @@
 {% for post in post_list %}
     <li id="post-{{ post.id }}" class="d-flex list-group-item flex-column align-items-start post">
         <div class="d-flex flex-row w-100 justify-content-start">
-            <div class="d-flex align-items-center pr-2 control-button">
-                <form action="{% url 'post-action' %}" method="POST">
+            <form action="{% url 'post-action' %}" method="POST">
+                <div class="d-flex align-items-center pr-2 control-button">
                     {% csrf_token %}
                     <input type="hidden" name="post_id" value="{{ post.id }}">
-                    <button type="button" class="btn btn-success btn-circle btn-lg row-accept" data-dismiss="alert" data-target="#post-{{ post.id }}" name="accept"><i class="fa fa-check"></i></button>
-                    <button type="button" class="btn btn-danger btn-circle btn-lg row-dismiss" data-dismiss="alert" data-target="#post-{{ post.id }}" name="dismiss"><i class="fa fa-times"></i></button>
-                </form>
-            </div>
+                    <button type="button" class="btn btn-success btn-circle btn-lg row-accept" name="accept"><i class="fa fa-check"></i></button>
+                    <button type="button" class="btn btn-danger btn-circle btn-lg row-dismiss" name="dismiss"><i class="fa fa-times"></i></button>
+                </div>
+            </form>
             <div class="d-flex w-100 flex-column">
                 {% if post.description %}
                 <a href="#" data-toggle="collapse" data-target="#postdesc-{{ post.id }}" class="list-group-item-action" id="postinfo-{{ post.id }}">
