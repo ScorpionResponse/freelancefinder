@@ -126,4 +126,9 @@ class PostActionView(GroupRequiredMixin, View):
             raise Exception('No action specified.')
 
         logger.info('Post ID %s taking action %s', post_id, action)
+        action_post = Post.objects.get_or_404(pk=post_id)
+        if action == 'dismiss':
+            action_post.garbage = True
+
+        action_post.save()
         return HttpResponseRedirect(reverse('post-list'))
