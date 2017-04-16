@@ -148,6 +148,8 @@ class PostListView(GroupRequiredMixin, FormMixin, ListView):
 class PostActionView(GroupRequiredMixin, View):
     """Accept button actions and return to post list."""
 
+    group_required = u'Administrators'
+
     def post(self, request):
         """Take the action then redirect to list."""
         post_id = request.POST.get('post_id', None)
