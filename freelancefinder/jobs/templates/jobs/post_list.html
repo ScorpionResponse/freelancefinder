@@ -20,8 +20,8 @@
                 <div class="d-flex align-items-center pr-2 control-button">
                     {% csrf_token %}
                     <input type="hidden" name="post_id" value="{{ post.id }}">
-                    <button type="button" class="btn btn-success btn-circle btn-lg row-accept" name="accept"><i class="fa fa-check"></i></button>
-                    <button type="button" class="btn btn-danger btn-circle btn-lg row-dismiss" name="dismiss"><i class="fa fa-times"></i></button>
+                    <button type="submit" class="btn btn-success btn-circle btn-lg row-accept" name="accept"><i class="fa fa-check"></i></button>
+                    <button type="submit" class="btn btn-danger btn-circle btn-lg row-dismiss" name="dismiss"><i class="fa fa-times"></i></button>
                 </div>
             </form>
             <div class="d-flex w-100 flex-column">
