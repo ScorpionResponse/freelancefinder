@@ -1,46 +1,27 @@
 """Tests related to users and accounts."""
 
-from django.contrib.auth.models import Group
 
-
-def test_login_changes(client, admin_user):
-    """Test that the page changes on login."""
-    client.force_login(admin_user)
-    response = client.get('/')
+def test_login_changes(authed_client):
+    """Test that the page changes when logged in."""
+    response = authed_client.get('/')
     assert 'AUTH:YES' in response.content.decode('utf-8')
 
 
-def test_no_group(client, django_user_model):
+def test_no_group(authed_client):
     """Test that page changes based on Group affiliation - no group."""
-    new_user = django_user_model.objects.create_user(username='joe', email='joe@example.com')
-    client.force_login(new_user)
-    response = client.get('/')
+    response = authed_client.get('/')
     assert '>Jobs<' in response.content.decode('utf-8')
 
 
-def test_admin_group(client, django_user_model):
+def test_admin_group(admin_group_client):
     """Test that page changes based on Group affiliation - Administrators group."""
-    new_user = django_user_model.objects.create_user(username='admin_user', email='admin@example.com')
-    group, created = Group.objects.get_or_create(name='Administrators')
-    new_user.groups.add(group)
-    new_user.save()
-    assert not created
-
-    client.force_login(new_user)
-    response = client.get('/')
+    response = admin_group_client.get('/')
     assert '>Posts<' in response.content.decode('utf-8')
 
 
-def test_debug_group(client, django_user_model):
+def test_debug_group(debug_group_client):
     """Test that page changes based on Group affiliation - Debuggers group."""
-    new_user = django_user_model.objects.create_user(username='debug_user', email='debug@example.com')
-    group, created = Group.objects.get_or_create(name='Debuggers')
-    new_user.groups.add(group)
-    new_user.save()
-    assert not created
-
-    client.force_login(new_user)
-    response = client.get('/')
+    response = debug_group_client.get('/')
     assert '>Sources<' in response.content.decode('utf-8')
 
 
