@@ -7,6 +7,8 @@ from django.contrib.auth.models import Group
 
 from jobs.tests.factories import JobFactory, PostFactory, SourceFactory, TagFactory
 
+# pylint: disable=redefined-outer-name,unused-variable
+
 
 @pytest.fixture
 def debug_user(django_user_model):
