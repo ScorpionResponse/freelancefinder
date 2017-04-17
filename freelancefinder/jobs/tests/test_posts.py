@@ -62,7 +62,7 @@ def test_get_posts(post):
     assert num_posts != 0
 
 
-def test_post_action(admin_group_client, post):
+def test_post_action_dismiss(admin_group_client, post):
     """Test that post action dismiss sets as garbage."""
     postdata = {
         'post_id': post.id,
@@ -78,3 +78,22 @@ def test_post_action(admin_group_client, post):
     # But still present
     for db_post in Post.objects.raw('SELECT id, garbage from jobs_post where id=%s' % post.id):
         assert db_post.garbage
+
+
+def test_post_action_accept(admin_group_client, post):
+    """Test that post action accept sets as freelance job."""
+    postdata = {
+        'post_id': post.id,
+        'accept': True,
+    }
+    response = admin_group_client.post('/jobs/post-action/', postdata)
+    assert response.status_code == 302
+
+    # Object is *not* hidden
+    assert Post.objects.all().count() != 0
+    assert Post.objects.filter(pk=post.id).exists()
+
+    # But has fields set
+    db_post = Post.objects.get(pk=post.id)
+    assert db_post.is_job_posting
+    assert db_post.is_freelance

@@ -117,6 +117,7 @@ class PostActionView(GroupRequiredMixin, View):
     def post(self, request):
         """Take the action then redirect to list."""
         post_id = request.POST.get('post_id', None)
+        redirect_to = request.POST.get('next', reverse('post-list'))
         action = 'break'
         if 'accept' in request.POST:
             action = 'accept'
@@ -130,6 +131,9 @@ class PostActionView(GroupRequiredMixin, View):
         action_post = get_object_or_404(Post, pk=post_id)
         if action == 'dismiss':
             action_post.garbage = True
+        elif action == 'accept':
+            action_post.is_job_posting = True
+            action_post.is_freelance = True
 
         action_post.save()
-        return HttpResponseRedirect(reverse('post-list'))
+        return HttpResponseRedirect(redirect_to)
