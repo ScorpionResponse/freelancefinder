@@ -7,6 +7,7 @@ from braces.views import GroupRequiredMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
 from django.http import HttpResponseRedirect
+from django.shortcuts import get_object_or_404
 from django.urls import reverse
 from django.views import View
 from django.views.generic import ListView
@@ -126,7 +127,7 @@ class PostActionView(GroupRequiredMixin, View):
             raise Exception('No action specified.')
 
         logger.info('Post ID %s taking action %s', post_id, action)
-        action_post = Post.objects.get_or_404(pk=post_id)
+        action_post = get_object_or_404(Post, pk=post_id)
         if action == 'dismiss':
             action_post.garbage = True
 

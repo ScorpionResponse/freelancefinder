@@ -60,3 +60,21 @@ def test_get_posts(post):
     """Test that getting all posts works."""
     num_posts = Post.objects.all().count()
     assert num_posts != 0
+
+
+def test_post_action(admin_group_client, post):
+    """Test that post action dismiss sets as garbage."""
+    postdata = {
+        'post_id': post.id,
+        'dismiss': True,
+    }
+    response = admin_group_client.post('/jobs/post-action/', postdata)
+    assert response.status_code == 302
+
+    # Object is effectively hidden
+    assert Post.objects.all().count() == 0
+    assert not Post.objects.filter(pk=post.id).exists()
+
+    # But still present
+    for db_post in Post.objects.raw('SELECT id, garbage from jobs_post where id=%s' % post.id):
+        assert db_post.garbage
