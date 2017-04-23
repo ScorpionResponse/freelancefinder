@@ -3,6 +3,7 @@
 import logging
 from future.utils import python_2_unicode_compatible
 
+from timezone_utils.fields import TimeZoneField
 from timezone_utils.choices import PRETTY_ALL_TIMEZONES_CHOICES as TIMEZONE_CHOICES
 
 from django.contrib.auth.models import User
@@ -18,7 +19,7 @@ class Profile(models.Model):
     """Hold user profile options not in default user model."""
 
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")
-    custom_timezone = models.CharField(choices=TIMEZONE_CHOICES, max_length=100, default='America/New_York')
+    custom_timezone = TimeZoneField(choices=TIMEZONE_CHOICES, default='America/New_York')
 
     def __str__(self):
         """Representation of a profile."""

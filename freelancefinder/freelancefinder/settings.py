@@ -77,7 +77,9 @@ SITE_ID = 2
 
 SOCIALACCOUNT_QUERY_EMAIL = True
 SOCIALACCOUNT_PROVIDERS = {
-    'github': {},
+    'github': {
+        'SCOPE': ['user:email'],
+    },
     # 'google': {
     #     'SCOPE': ['profile', 'email'],
     #     'AUTH_PARAMS': {'access_type': 'online'},

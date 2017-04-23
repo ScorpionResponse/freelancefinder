@@ -46,29 +46,35 @@ def create_jobs():
 
 
 @celery_app.task
+def tag_posts():
+    """Add tags for posts."""
+    from .models import Post, TagVariant
+
+    all_tags = TagVariant.objects.all_tags()
+
+    for post in Post.objects.filter(tags__isnull=True):
+        taggable_words = post.taggable_words
+        logger.info('Post: %s - All Taggable Words: %s', post, taggable_words)
+        for word in set(taggable_words):
+            if word in all_tags:
+                logger.info('Add tag %s to post %s', all_tags[word], post)
+                post.tags.add(all_tags[word])
+        post.tags.add('post')
+        post.save()
+
+
+@celery_app.task
 def tag_jobs():
     """Add tags for jobs."""
-    from nltk import bigrams
-    from taggit.models import Tag
     from .models import Job, TagVariant
 
-    all_tags = list(Tag.objects.all().values_list('name', flat=True))
-    all_tags = {x.lower(): x for x in all_tags}
-    variant_tags = {variant: tag for variant, tag in TagVariant.objects.all().values_list('variant', 'tag__name')}
-    all_tags.update(variant_tags)
-    logger.info('Got all tags list: %s', all_tags)
+    all_tags = TagVariant.objects.all_tags()
 
     for job in Job.objects.filter(tags__isnull=True):
-        title_words = job.title.replace(',', '').replace('/', ' ').split(' ')
-        description_words = job.description.replace(', ', '').replace('/', ' ').split(' ')
-        joined_words = [' '.join(x) for x in list(bigrams(description_words))]
-        areas = list(job.posts.all().values_list('subarea', flat=True))
-
-        taggable_words = title_words + description_words + joined_words + areas
-        taggable_words = [x.lower() for x in taggable_words if x is not None]
+        taggable_words = job.taggable_words
         logger.info('Job: %s - All Taggable Words: %s', job, taggable_words)
         for word in set(taggable_words):
-            if word in all_tags and word != 'freelancer':
+            if word in all_tags:
                 logger.info('Add tag %s to job %s', all_tags[word], job)
                 job.tags.add(all_tags[word])
         job.tags.add('job')
