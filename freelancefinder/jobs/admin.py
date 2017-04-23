@@ -41,9 +41,18 @@ class PostAdmin(admin.ModelAdmin):
     """The Post model needs no special admin configuration."""
 
     model = Post
-    list_display = ('title', 'source', 'subarea', 'is_freelance', 'processed', 'garbage', 'created')
-    fields = ('title', 'url', 'source', 'subarea', 'description', 'unique', 'is_freelance', 'processed', 'garbage', 'created', 'modified')
+    list_display = ('title', 'source', 'subarea', 'tag_list', 'is_freelance', 'processed', 'garbage', 'created')
+    fields = ('title', 'url', 'source', 'subarea', 'description', 'unique', 'tags', 'is_freelance', 'processed', 'garbage', 'created', 'modified')
     readonly_fields = ('created', 'modified')
+    actions = [remove_tags]
+
+    def get_queryset(self, request):
+        """Prefetch the tags data to make this more efficient."""
+        return super(PostAdmin, self).get_queryset(request).prefetch_related('tags')
+
+    def tag_list(self, obj):
+        """Concatenate all tags for each post."""
+        return u", ".join(o.name for o in obj.tags.all())
 
 
 class TagVariantAdmin(admin.ModelAdmin):
