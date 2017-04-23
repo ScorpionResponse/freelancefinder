@@ -30,7 +30,7 @@ class HackerHarvest(object):
                 logger.warning('Tried to get non-existent job story with ID: %s; ex: %s', story_id, iiid)
                 continue
             post = self.parse_job_to_post(story, subarea='jobs')
-            post.is_job_posting = True
+            post.tags.add('Hiring')
             yield post
 
     def hiring_jobs(self):
@@ -48,7 +48,7 @@ class HackerHarvest(object):
                 logger.debug("Skipping blank comment: %s", comment)
                 continue
             post = self.parse_job_to_post(comment, subarea='who_is_hiring')
-            post.is_job_posting = True
+            post.tags.add('Hiring')
             yield post
 
     def who_wants_jobs(self):
@@ -65,7 +65,7 @@ class HackerHarvest(object):
                 logger.debug("Skipping blank comment: %s", comment)
                 continue
             post = self.parse_job_to_post(comment, subarea='who_wants_to_be_hired', insert_author=True)
-            post.is_freelancer = True
+            post.tags.add('For Hire')
             yield post
 
     def freelancer_jobs(self):
@@ -84,9 +84,9 @@ class HackerHarvest(object):
             post = self.parse_job_to_post(comment, subarea='freelancer', insert_author=True)
             post.is_freelance = True
             if 'SEEKING WORK' in post.title.upper():
-                post.is_freelancer = True
+                post.tags.add('For Hire')
             elif 'SEEKING FREELANCER' in post.title.upper():
-                post.is_job_posting = True
+                post.tags.add('Freelance')
             yield post
 
     def check_who_is_hiring(self):

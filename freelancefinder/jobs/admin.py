@@ -41,8 +41,8 @@ class PostAdmin(admin.ModelAdmin):
     """The Post model needs no special admin configuration."""
 
     model = Post
-    list_display = ('title', 'source', 'subarea', 'is_job_posting', 'is_freelance', 'processed', 'garbage', 'created')
-    fields = ('title', 'url', 'source', 'subarea', 'description', 'unique', 'is_job_posting', 'is_freelance', 'processed', 'garbage', 'created', 'modified')
+    list_display = ('title', 'source', 'subarea', 'is_freelance', 'processed', 'garbage', 'created')
+    fields = ('title', 'url', 'source', 'subarea', 'description', 'unique', 'is_freelance', 'processed', 'garbage', 'created', 'modified')
     readonly_fields = ('created', 'modified')
 
 

@@ -26,7 +26,7 @@ def test_post_list_filter_title(admin_group_client, post):
     assert response.status_code == 200
 
 
-@pytest.mark.parametrize("field", ['is_job_posting', 'is_freelance', 'is_freelancer', 'is_not_classified'])
+@pytest.mark.parametrize("field", ['is_freelance', 'is_not_classified'])
 def test_post_list_filter_booleans(admin_group_client, field, post):
     """Test filtering post list by title field."""
     response = admin_group_client.get('/jobs/post-list/?{}=on'.format(field))
@@ -95,5 +95,4 @@ def test_post_action_accept(admin_group_client, post):
 
     # But has fields set
     db_post = Post.objects.get(pk=post.id)
-    assert db_post.is_job_posting
     assert db_post.is_freelance

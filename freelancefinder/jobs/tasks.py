@@ -16,11 +16,16 @@ def process_new_posts():
     for post in Post.objects.new():
         logger.debug("Processing post: %s", post)
         post.processed = True
-        title_match_phrases = ['[hiring]', '[part-time]', '[freelance]']
-        if any(word in post.title.lower() for word in title_match_phrases):
-            post.is_job_posting = True
-            post.is_freelance = True
-        if '[for hire]' in post.title.lower():
+        current_tags = post.tags.names()
+        if 'Full Time' in current_tags:
+            logger.info('Marking Full Time job post as garbage: %s', post)
+            post.garbage = True
+        if 'For Hire' in current_tags:
+            logger.info('Marking For Hire job post as garbage: %s', post)
+            post.garbage = True
+
+        freelance_tags = ['Hiring', 'Part Time', 'Freelance']
+        if any(tag in current_tags for tag in freelance_tags):
             post.is_freelance = True
         post.save()
 

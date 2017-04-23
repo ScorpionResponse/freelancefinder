@@ -64,7 +64,6 @@ class PostFactory(factory.django.DjangoModelFactory):
     unique = factory.Sequence(lambda n: 'unique-%d' % n)
     source = factory.SubFactory(SourceFactory)
     subarea = factory.Sequence(lambda n: 'subarea-%d' % n)
-    is_job_posting = factory.LazyAttribute(lambda x: FAKER.pybool())
     is_freelance = factory.LazyAttribute(lambda x: FAKER.pybool())
     processed = factory.LazyAttribute(lambda x: FAKER.pybool())
     job = factory.SubFactory(JobFactory)

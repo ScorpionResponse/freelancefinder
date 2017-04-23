@@ -42,6 +42,5 @@ class FossJobs(object):
             unique=job_info.id,
             created=created,
             subarea='all',
-            is_job_posting=True
         )
         return post

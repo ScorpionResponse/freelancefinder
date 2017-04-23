@@ -85,15 +85,12 @@ class PostListView(GroupRequiredMixin, FormMixin, ListView):
     def get_queryset(self):
         """Queryset should sort by desc created by default."""
         title = self.request.GET.get('title', None)
-        is_job_posting = self.request.GET.get('is_job_posting', False)
         is_freelance = self.request.GET.get('is_freelance', False)
         is_not_classified = self.request.GET.get('is_not_classified', False)
         querys = Post.objects.all().select_related('source')
         if is_not_classified:
-            querys = querys.filter(is_job_posting=False, is_freelance=False)
+            querys = querys.filter(is_freelance=False)
         else:
-            if is_job_posting:
-                querys = querys.filter(is_job_posting=True)
             if is_freelance:
                 querys = querys.filter(is_freelance=True)
         if title is not None:
@@ -132,7 +129,6 @@ class PostActionView(GroupRequiredMixin, View):
         if action == 'dismiss':
             action_post.garbage = True
         elif action == 'accept':
-            action_post.is_job_posting = True
             action_post.is_freelance = True
 
         action_post.save()

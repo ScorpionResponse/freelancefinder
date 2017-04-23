@@ -24,7 +24,7 @@ class PostManager(models.Manager):
 
     def pending_freelance_jobs(self):
         """Get only freelance job posts which are not linked."""
-        return self.get_queryset().filter(is_freelance=True, is_job_posting=True, job__isnull=True).order_by('created')
+        return self.get_queryset().filter(is_freelance=True, job__isnull=True).order_by('created')
 
 
 @python_2_unicode_compatible
@@ -43,7 +43,6 @@ class Post(TimeStampedModel):
     title = models.CharField(max_length=255)
     description = models.TextField()
     unique = models.CharField(max_length=255)
-    is_job_posting = models.BooleanField(default=False)
     is_freelance = models.BooleanField(default=False)
     garbage = models.BooleanField(default=False)
     processed = models.BooleanField(default=False)

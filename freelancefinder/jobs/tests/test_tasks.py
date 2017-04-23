@@ -18,7 +18,7 @@ def test_post_processing(post_factory):
 
 def test_create_jobs(post_factory):
     """Verify that jobs are created."""
-    post_factory(is_freelance=True, is_job_posting=True, processed=False, job=None)
+    post_factory(is_freelance=True, processed=False, job=None)
     pre_jobs = Job.objects.all().count()
     create_jobs()
     post_jobs = Job.objects.all().count()
@@ -29,10 +29,10 @@ def test_create_jobs(post_factory):
 
 def test_jobs_detect_dupes(post_factory):
     """Verify that duplicate detection works."""
-    post_factory(title="Django Python Job", description="Lorem Ipsum Dolor", is_freelance=True, is_job_posting=True, processed=False, job=None)
+    post_factory(title="Django Python Job", description="Lorem Ipsum Dolor", is_freelance=True, processed=False, job=None)
     create_jobs()
     pre_jobs = Job.objects.all().count()
-    post_factory(title="Django Python Job", description="Lorem Ipsum Dolor", is_freelance=True, is_job_posting=True, processed=False, job=None)
+    post_factory(title="Django Python Job", description="Lorem Ipsum Dolor", is_freelance=True, processed=False, job=None)
     create_jobs()
     post_jobs = Job.objects.all().count()
 
