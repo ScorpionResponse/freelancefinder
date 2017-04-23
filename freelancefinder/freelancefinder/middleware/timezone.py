@@ -1,7 +1,5 @@
 """Timezone setting middleware."""
 
-import pytz
-
 from django.utils import timezone
 
 
@@ -16,7 +14,7 @@ def user_timezone(get_response):
         # TODO(Paul): Guess Timezone
 
         if tzone:
-            timezone.activate(pytz.timezone(tzone))
+            timezone.activate(tzone)
         else:
             timezone.deactivate()
 
