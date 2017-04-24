@@ -97,11 +97,10 @@ class Job(TimeStampedModel):
     @property
     def taggable_words(self):
         """Get all taggable words for this job."""
-        # TODO(Paul): Make this the same as the Post version
-        title_words = self.title.replace(',', '').replace('/', ' ').split(' ')
-        description_words = self.description.replace(', ', '').replace('/', ' ').split(' ')
-        joined_words = [' '.join(x) for x in list(bigrams(description_words))]
-        areas = list(self.posts.all().values_list('subarea', flat=True))
+        title_words = remove_punctuation(self.title).split(' ')
+        description_words = remove_punctuation(self.description).split(' ')
+        joined_words = [' '.join(x) for x in list(bigrams(description_words))] + [' '.join(x) for x in list(bigrams(title_words))]
+        areas = [self.subarea]
 
         tag_words = title_words + description_words + joined_words + areas
         tag_words = [x.lower() for x in tag_words if x is not None]
