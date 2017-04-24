@@ -48,6 +48,7 @@
         - ansible-git
         - ansible-gunicorn
         - ansible-nginx
+        - ansible-nltk
         - ansible-pip
         - ansible-personal_dev
         - ansible-supervisord
