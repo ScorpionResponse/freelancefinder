@@ -112,7 +112,7 @@ class TagVariantManager(models.Manager):
 
     def get_queryset(self):
         """Remove job."""
-        return super(TagVariantManager, self).get_queryset().filter(variant='job')
+        return super(TagVariantManager, self).get_queryset().exclude(variant='job')
 
     def all_tags(self):
         """Return a dict of lower case tag: Tag Name."""
