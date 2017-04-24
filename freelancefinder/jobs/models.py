@@ -8,7 +8,7 @@ from taggit.models import Tag
 
 from django.db import models
 
-from utils.text import generate_fingerprint
+from utils.text import generate_fingerprint, remove_punctuation
 
 
 class PostManager(models.Manager):
@@ -65,9 +65,9 @@ class Post(TimeStampedModel):
     @property
     def taggable_words(self):
         """Get all taggable words for this post."""
-        title_words = self.title.replace(',', '').replace('/', ' ').split(' ')
-        description_words = self.description.replace(', ', '').replace('/', ' ').split(' ')
-        joined_words = [' '.join(x) for x in list(bigrams(description_words))]
+        title_words = remove_punctuation(self.title).split(' ')
+        description_words = remove_punctuation(self.description).split(' ')
+        joined_words = [' '.join(x) for x in list(bigrams(description_words))] + [' '.join(x) for x in list(bigrams(title_words))]
         areas = [self.subarea]
 
         tag_words = title_words + description_words + joined_words + areas
@@ -97,6 +97,7 @@ class Job(TimeStampedModel):
     @property
     def taggable_words(self):
         """Get all taggable words for this job."""
+        # TODO(Paul): Make this the same as the Post version
         title_words = self.title.replace(',', '').replace('/', ' ').split(' ')
         description_words = self.description.replace(', ', '').replace('/', ' ').split(' ')
         joined_words = [' '.join(x) for x in list(bigrams(description_words))]

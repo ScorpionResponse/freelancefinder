@@ -26,6 +26,10 @@ def generate_fingerprint(text):
 
 def tokenize(text):
     """Split text into words."""
+    return nltk.word_tokenize(remove_punctuation(text))
+
+
+def remove_punctuation(text):
+    """Remove all punctuation from a string."""
     exclude = set(string.punctuation)
-    no_punctuation = ''.join(char.lower() for char in text if char not in exclude)
-    return nltk.word_tokenize(no_punctuation)
+    return ''.join(char.lower() for char in text if char not in exclude)
