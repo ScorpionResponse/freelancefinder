@@ -127,7 +127,7 @@ class TagVariantManager(models.Manager):
 class TagVariant(models.Model):
     """A TagVariant will map several versions of a tag to one normalized Tag."""
 
-    variant = models.CharField(max_length=255)
+    variant = models.CharField(max_length=255, primary_key=True)
     tag = models.ForeignKey("taggit.Tag", on_delete=models.CASCADE)
     objects = TagVariantManager()
 
