@@ -31,6 +31,10 @@ django_secret_key: "abc123"
 django_db_url: "psql://freelancefinder:abc123-freelancefinder@192.168.2.4:5432/freelancefinder"
 django_settings:
   REDIS_CELERY_URL: 'redis://localhost:6379/0'
+  GITHUB_CLIENT_ID: "{{ _GITHUB_CLIENT_ID }}"
+  GITHUB_CLIENT_SECRET: "{{ _GITHUB_CLIENT_SECRET }}"
+  LINKEDIN_CLIENT_ID: "{{ _LINKEDIN_CLIENT_ID }}"
+  LINKEDIN_CLIENT_SECRET: "{{ _LINKEDIN_CLIENT_SECRET }}"
   REDDIT_CLIENT_ID: "{{ _REDDIT_CLIENT_ID }}"
   REDDIT_CLIENT_SECRET: "{{ _REDDIT_CLIENT_SECRET }}"
 
