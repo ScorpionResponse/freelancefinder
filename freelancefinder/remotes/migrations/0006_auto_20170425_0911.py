@@ -10,7 +10,7 @@ def ensure_site(apps):
     """Configure Sites correctly."""
 
     Site = apps.get_model('sites', 'Site')
-    site = Site.objects.update_or_create(id=settings.SITE_ID, defaults={'domain': 'freelancefinder.work', 'name': 'FreelanceFinder'})
+    site, created = Site.objects.update_or_create(id=settings.SITE_ID, defaults={'domain': 'freelancefinder.work', 'name': 'FreelanceFinder'})
     return site
 
 
@@ -19,18 +19,20 @@ def create_social_app_settings(apps, schema_editor):
     site = ensure_site(apps)
 
     SocialApp = apps.get_model('socialaccount', 'SocialApp')
-    app, created = SocialApp.objects.get_or_create(provider='github', name='GitHub', defaults={
+    gh_app, created = SocialApp.objects.get_or_create(provider='github', name='GitHub', defaults={
         'client_id': settings.GITHUB_CLIENT_ID, 'secret': settings.GITHUB_CLIENT_SECRET
     })
-    app.sites.add(site)
-    app, created = SocialApp.objects.get_or_create(provider='linkedin', name='LinkedIn', defaults={
+    gh_app.sites.add(site)
+
+    li_app, created = SocialApp.objects.get_or_create(provider='linkedin', name='LinkedIn', defaults={
         'client_id': settings.LINKEDIN_CLIENT_ID, 'secret': settings.LINKEDIN_CLIENT_SECRET
     })
-    app.sites.add(site)
-    app, created = SocialApp.objects.get_or_create(provider='reddit', name='Reddit', defaults={
+    li_app.sites.add(site)
+
+    re_app, created = SocialApp.objects.get_or_create(provider='reddit', name='Reddit', defaults={
         'client_id': settings.REDDIT_CLIENT_ID, 'secret': settings.REDDIT_CLIENT_SECRET
     })
-    app.sites.add(site)
+    re_app.sites.add(site)
 
 
 def delete_social_app_settings(apps, schema_editor):
