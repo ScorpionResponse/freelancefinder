@@ -20,15 +20,15 @@ def create_social_app_settings(apps, schema_editor):
 
     SocialApp = apps.get_model('socialaccount', 'SocialApp')
     app, created = SocialApp.objects.get_or_create(provider='github', name='GitHub', defaults={
-        'client_id': settings.GITHUB_CLIENT_ID, 'secret': settings.GITHUB_SECRET_KEY
+        'client_id': settings.GITHUB_CLIENT_ID, 'secret': settings.GITHUB_CLIENT_SECRET
     })
     app.sites.add(site)
     app, created = SocialApp.objects.get_or_create(provider='linkedin', name='LinkedIn', defaults={
-        'client_id': settings.LINKEDIN_CLIENT_ID, 'secret': settings.LINKEDIN_SECRET_KEY
+        'client_id': settings.LINKEDIN_CLIENT_ID, 'secret': settings.LINKEDIN_CLIENT_SECRET
     })
     app.sites.add(site)
     app, created = SocialApp.objects.get_or_create(provider='reddit', name='Reddit', defaults={
-        'client_id': settings.REDDIT_CLIENT_ID, 'secret': settings.REDDIT_SECRET_KEY
+        'client_id': settings.REDDIT_CLIENT_ID, 'secret': settings.REDDIT_CLIENT_SECRET
     })
     app.sites.add(site)
 

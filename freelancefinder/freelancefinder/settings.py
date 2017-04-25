@@ -63,8 +63,6 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 REDDIT_USER_AGENT = 'django:work.freelancefinder:{} (by /u/phile19_81)'.format(VERSION)
-REDDIT_CLIENT_ID = env('REDDIT_CLIENT_ID')
-REDDIT_CLIENT_SECRET = env('REDDIT_CLIENT_SECRET')
 
 # Configure allauth, no username
 LOGIN_REDIRECT_URL = "/"
@@ -98,11 +96,11 @@ SOCIALACCOUNT_PROVIDERS = {
 
 # SECRETS (SHH!)
 GITHUB_CLIENT_ID = env('GITHUB_CLIENT_ID', default='')
-GITHUB_SECRET_KEY = env('GITHUB_SECRET_KEY', default='')
+GITHUB_CLIENT_SECRET = env('GITHUB_CLIENT_SECRET', default='')
 LINKEDIN_CLIENT_ID = env('LINKEDIN_CLIENT_ID', default='')
-LINKEDIN_SECRET_KEY = env('LINKEDIN_SECRET_KEY', default='')
+LINKEDIN_CLIENT_SECRET = env('LINKEDIN_CLIENT_SECRET', default='')
 REDDIT_CLIENT_ID = env('REDDIT_CLIENT_ID', default='')
-REDDIT_SECRET_KEY = env('REDDIT_SECRET_KEY', default='')
+REDDIT_CLIENT_SECRET = env('REDDIT_CLIENT_SECRET', default='')
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
