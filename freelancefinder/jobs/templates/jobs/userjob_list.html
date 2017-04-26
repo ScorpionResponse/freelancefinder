@@ -16,9 +16,14 @@
 {% for userjob in userjob_list %}
 <li id="job-{{ userjob.id }}" class="d-flex list-group-item flex-column align-items-start job">
     <div class="d-flex flex-row w-100 justify-content-start">
-        <div class="d-flex align-items-center pr-2 control-button">
-            <button type="button" class="btn btn-danger btn-circle btn-lg row-dismiss" data-dismiss="alert" data-target="#job-{{ userjob.id }}"><i class="fa fa-times"></i></button>
-        </div>
+        <form action="{% url 'userjob-action' %}" method="POST">
+            <div class="d-flex align-items-center pr-2 control-button">
+                {% csrf_token %}
+                <input type="hidden" name="userjob_id" value="{{ userjob.id }}">
+                <input type="hidden" name="next" value="{% url 'userjob-list' %}?{% querystring request %}" />
+                <button type="submit" class="btn btn-danger btn-circle btn-lg row-dismiss" name="dismiss"><i class="fa fa-times"></i></button>
+            </div>
+        </form>
         <div class="d-flex w-100 flex-column">
             {% if userjob.job.description %}
                 <a href="#" data-toggle="collapse" data-target="#jobdesc-{{ userjob.id }}" class="list-group-item-action">

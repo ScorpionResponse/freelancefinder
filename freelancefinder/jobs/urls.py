@@ -5,10 +5,12 @@ The default base for these urls is /jobs/
 """
 from django.conf.urls import url
 
-from .views import (JobListView, JobDetailView, PostListView, PostActionView, UserJobListView)
+from .views import (JobListView, JobDetailView, PostListView, PostActionView,
+                    UserJobListView, UserJobActionView)
 
 urlpatterns = [
     url(r'^my-opportunities/$', UserJobListView.as_view(), name="userjob-list"),
+    url(r'^my-opportunities/action/$', UserJobActionView.as_view(), name="userjob-action"),
     url(r'^job-list/$', JobListView.as_view(), name="job-list"),
     url(r'^job/(?P<pk>\d+)/$', JobDetailView.as_view(), name="job-detail"),
     url(r'^post-list/$', PostListView.as_view(), name="post-list"),

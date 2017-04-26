@@ -56,6 +56,29 @@ class UserJobListView(LoginRequiredMixin, ListView, FormGetMixin):
         return context
 
 
+class UserJobActionView(LoginRequiredMixin, View):
+    """Accept button actions and return to post list."""
+
+    def post(self, request):
+        """Take the action then redirect to list."""
+        userjob_id = request.POST.get('userjob_id', None)
+        redirect_to = request.POST.get('next', reverse('userjob-list'))
+        action = 'break'
+        if 'dismiss' in request.POST:
+            action = 'dismiss'
+
+        if userjob_id is None or action == 'break':
+            raise Exception('No action specified.')
+
+        logger.info('UserJob ID %s taking action %s', userjob_id, action)
+        action_userjob = get_object_or_404(UserJob, pk=userjob_id)
+        if action == 'dismiss':
+            action_userjob.delete()
+
+        action_userjob.save()
+        return HttpResponseRedirect(redirect_to)
+
+
 class JobListView(LoginRequiredMixin, ListView, FormGetMixin):
     """List all jobs."""
 
