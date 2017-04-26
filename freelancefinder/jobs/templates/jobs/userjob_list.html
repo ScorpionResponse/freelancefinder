@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load markdown_filter %}
+{% load tz %}
+
+{% block 'title' %}Freelance Finder - My Opportunities{% endblock %}
+
+{% block 'content' %}
+
+<h1>My Opportunities</h1>
+<div class='searchform'>
+    {% crispy form %}
+</div>
+{% include 'helpers/pagination.html' %}
+<ul class="list-group">
+{% for userjob in userjob_list %}
+<li id="job-{{ userjob.id }}" class="d-flex list-group-item flex-column align-items-start job">
+    <div class="d-flex flex-row w-100 justify-content-start">
+        <div class="d-flex align-items-center pr-2 control-button">
+            <button type="button" class="btn btn-danger btn-circle btn-lg row-dismiss" data-dismiss="alert" data-target="#job-{{ userjob.id }}"><i class="fa fa-times"></i></button>
+        </div>
+        <div class="d-flex w-100 flex-column">
+            {% if userjob.job.description %}
+                <a href="#" data-toggle="collapse" data-target="#jobdesc-{{ userjob.id }}" class="list-group-item-action">
+            {% endif %}
+                <div class="d-flex flex-row w-100 justify-content-between">
+                    <h5>{{ userjob.job.title }}</h5>
+                    <small>{{ userjob.job.created|localtime }}</small>
+                </div>
+            {% if userjob.job.description %}
+                </a>
+            {% endif %}
+            <div class="d-flex flex-row w-100 justify-content-start">
+                <span class="p-2">
+                    <a href="{% url 'job-detail' userjob.job.id %}">Detail</a>
+                </span>
+                <span class="source-info p-2">
+                    {% for post in userjob.job.posts.all %}
+                        <a href="{{ post.url }}" target="_blank">{{ post.source.name }} &gt; {{ post.subarea }}</a>
+                    {% endfor %}
+                </span>
+                <span class="tag-list p-2 ml-auto">
+                    {% for tag in userjob.job.tags.all %}
+                        {% if tag.name != 'job' %}
+                            <span class="tag badge badge-default">{{ tag.name }}</span>
+                        {% endif %}
+                    {% endfor %}
+                </span>
+            </div>
+        </div>
+    </div>
+    {% if userjob.job.description %}
+    <div class="d-flex flex-row w-100">
+        <div class="collapse jobdesc rounded p-2" id="jobdesc-{{ userjob.id }}">
+            {{ userjob.job.description|markdown }}
+        </div>
+    </div>
+    {% endif %}
+</li>
+{% endfor %}
+</ul>
+{% include 'helpers/pagination.html' %}
+
+{% endblock %}
