@@ -47,6 +47,9 @@ def setup_periodic_tasks(sender, **kwargs):
     pertask, created = PeriodicTask.objects.get_or_create(interval=schedule_4_minutes, name="Tag Jobs", task='jobs.tasks.tag_jobs')
     logger.debug("PeriodicTask: %s; Created: %s", pertask, created)
 
+    pertask, created = PeriodicTask.objects.get_or_create(interval=schedule_4_minutes, name="Create UserJobs", task='jobs.tasks.create_userjobs')
+    logger.debug("PeriodicTask: %s; Created: %s", pertask, created)
+
     pertask, created = PeriodicTask.objects.get_or_create(interval=schedule_10_minutes, name='Harvest Remotes', task='remotes.tasks.harvest_sources')
     logger.debug("PeriodicTask: %s; Created: %s", pertask, created)
 

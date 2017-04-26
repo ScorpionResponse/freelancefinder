@@ -14,8 +14,8 @@ from django.views.generic import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import FormMixin
 
-from .forms import PostFilterForm, JobSearchForm
-from .models import Job, Post
+from .forms import PostFilterForm, JobSearchForm, UserJobSearchForm
+from .models import Job, Post, UserJob
 
 logger = logging.getLogger(__name__)
 
@@ -27,6 +27,33 @@ class FormGetMixin(FormMixin):
         """Pull field values from GET data."""
         kwargs = {'initial': self.get_initial(), 'data': self.request.GET}
         return kwargs
+
+
+class UserJobListView(LoginRequiredMixin, ListView, FormGetMixin):
+    """List just this user's jobs."""
+
+    model = UserJob
+    paginate_by = 20
+    form_class = UserJobSearchForm
+    context_object_name = "userjob_list"
+    template_name = "jobs/userjob_list.html"
+
+    def get_queryset(self):
+        querys = UserJob.objects.filter(user=self.request.user)
+
+        search = self.request.GET.get('search', None)
+        tags = self.request.GET.getlist('tag', None)
+        if search is not None and search != '':
+            querys = querys.filter(Q(job__title__icontains=search) | Q(job__description__icontains=search))
+        if tags is not None and len(tags) > 0 and tags != ['']:
+            querys = querys.filter(job__tags__slug__in=tags).distinct()
+        return querys.order_by('-created')
+
+    def get_context_data(self, **kwargs):
+        """Include search/filter form."""
+        context = super(UserJobListView, self).get_context_data(**kwargs)
+        context['form'] = self.get_form()
+        return context
 
 
 class JobListView(LoginRequiredMixin, ListView, FormGetMixin):

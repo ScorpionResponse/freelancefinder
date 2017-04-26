@@ -51,6 +51,20 @@ def create_jobs():
 
 
 @celery_app.task
+def create_userjobs():
+    """Link Users and Jobs."""
+    from .models import Job, UserJob
+    from django.contrib.auth.models import User
+
+    for job in Job.objects.all().order_by('-created'):
+        if job.userjobs.count() > 0:
+            logger.debug("Found already processed job: %s, stopping", job)
+            break
+        for user in User.objects.all():
+            UserJob.objects.create(job=job, user=user)
+
+
+@celery_app.task
 def tag_posts():
     """Add tags for posts."""
     from .models import Post, TagVariant

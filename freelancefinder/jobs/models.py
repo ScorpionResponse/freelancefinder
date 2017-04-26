@@ -1,12 +1,14 @@
 """Simple models to track information related to a particular job/posting."""
 
 from future.utils import python_2_unicode_compatible
-from model_utils.models import TimeStampedModel
+from model_utils.models import TimeStampedModel, SoftDeletableModel
+from model_utils.managers import SoftDeletableManager
 from nltk import bigrams
 from taggit.managers import TaggableManager
 from taggit.models import Tag
 
 from django.db import models
+from django.contrib.auth.models import User
 
 from utils.text import generate_fingerprint, remove_punctuation
 
@@ -105,6 +107,30 @@ class Job(TimeStampedModel):
         tag_words = title_words + description_words + joined_words + areas
         tag_words = [x.lower() for x in tag_words if x is not None]
         return tag_words
+
+
+class UserJobsManager(SoftDeletableManager):
+    """Control both the SoftDeletion and the related tables."""
+
+    def get_queryset(self):
+        """Make sure we select the related tables."""
+        return super(UserJobsManager, self).get_queryset().select_related('job__posts', 'job__tags')
+
+    def delete_all(self):
+        """Delete everything."""
+        self.get_queryset().all().delete()
+
+
+@python_2_unicode_compatible
+class UserJob(TimeStampedModel, SoftDeletableModel):
+    """Combo table matching jobs to users."""
+
+    job = models.ForeignKey(Job, on_delete=models.CASCADE, related_name="userjobs")
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="userjobs")
+    objects = UserJobsManager()
+
+    def __str__(self):
+        return u"{} - {}".format(self.job, self.user)
 
 
 class TagVariantManager(models.Manager):
