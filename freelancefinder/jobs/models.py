@@ -114,7 +114,7 @@ class UserJobsManager(SoftDeletableManager):
 
     def get_queryset(self):
         """Make sure we select the related tables."""
-        return super(UserJobsManager, self).get_queryset().select_related('job__posts', 'job__tags')
+        return super(UserJobsManager, self).get_queryset().select_related('job')
 
     def delete_all(self):
         """Delete everything."""
