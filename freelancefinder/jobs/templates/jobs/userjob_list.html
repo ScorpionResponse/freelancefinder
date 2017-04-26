@@ -79,7 +79,7 @@
                 $form.append('<input type="hidden" name="dismiss" value="true" />');
                 var $form_fields = $form.serialize();
                 var $userjob_id = $("input[name='userjob_id']", $form).val();
-                $("#job-" + $userjob_id).hide();
+                $("#job-" + $userjob_id).remove();
                 $.ajax({
                     url: $form.attr("action"),
                     type: "POST",
