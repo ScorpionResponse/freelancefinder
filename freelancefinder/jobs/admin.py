@@ -3,7 +3,7 @@ import logging
 
 from django.contrib import admin
 
-from .models import Post, Job, TagVariant
+from .models import Post, Job, TagVariant, UserJob
 
 logger = logging.getLogger(__name__)
 
@@ -37,6 +37,15 @@ class JobAdmin(admin.ModelAdmin):
         return u", ".join(o.name for o in obj.tags.all())
 
 
+class UserJobAdmin(admin.ModelAdmin):
+    """The UserJob model admin."""
+
+    model = UserJob
+    list_display = ('job', 'user', 'is_removed', 'created', 'modified')
+    fields = ('job', 'user', 'is_removed', 'created', 'modified')
+    readonly_fields = ('created', 'modified')
+
+
 class PostAdmin(admin.ModelAdmin):
     """The Post model needs no special admin configuration."""
 
@@ -66,3 +75,4 @@ class TagVariantAdmin(admin.ModelAdmin):
 admin.site.register(Job, JobAdmin)
 admin.site.register(Post, PostAdmin)
 admin.site.register(TagVariant, TagVariantAdmin)
+admin.site.register(UserJob, UserJobAdmin)
