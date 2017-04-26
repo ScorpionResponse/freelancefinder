@@ -46,6 +46,8 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('remotes', '0005_auto_20170319_1547'),
+        ('socialaccount', '0003_extra_data_default_dict'),
+        ('sites', '0002_alter_domain_unique'),
     ]
 
     operations = [
