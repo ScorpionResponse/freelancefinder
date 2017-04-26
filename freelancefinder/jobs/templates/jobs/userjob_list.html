@@ -75,6 +75,8 @@
             $('.row-dismiss-form').on('submit', function(e) {
                 e.preventDefault();
                 var $form = $(e.target);
+                // Add the 'dismiss' field from the button
+                $form.append('<input type="hidden" name="dismiss" value="true" />');
                 var $form_fields = $form.serialize();
                 var $userjob_id = $("input[name='userjob_id']", $form).val();
                 $("#job-" + $userjob_id).hide();
