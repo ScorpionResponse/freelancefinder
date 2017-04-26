@@ -4,6 +4,7 @@ import logging
 
 from braces.views import GroupRequiredMixin
 
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
 from django.http import HttpResponseRedirect
@@ -74,6 +75,7 @@ class UserJobActionView(LoginRequiredMixin, View):
         action_userjob = get_object_or_404(UserJob, pk=userjob_id)
         if action == 'dismiss':
             action_userjob.delete()
+            messages.success(request, "Opportunity {} dismissed.".format(action_userjob))
 
         action_userjob.save()
         return HttpResponseRedirect(redirect_to)
