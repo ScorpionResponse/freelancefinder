@@ -17,7 +17,7 @@
 {% for userjob in userjob_list %}
 <li id="job-{{ userjob.id }}" class="d-flex list-group-item flex-column align-items-start job">
     <div class="d-flex flex-row w-100 justify-content-start">
-        <form action="{% url 'userjob-action' %}" method="POST">
+        <form class="row-dismiss-form" action="{% url 'userjob-action' %}" method="POST">
             <div class="d-flex align-items-center pr-2 control-button">
                 {% csrf_token %}
                 <input type="hidden" name="userjob_id" value="{{ userjob.id }}">
@@ -68,3 +68,26 @@
 {% include 'helpers/pagination.html' %}
 
 {% endblock %}
+
+{% block 'scripts' %}
+    <script>
+        $(document).ready(function(){
+            $('.row-dismiss-form').on('submit', function(e) {
+                e.preventDefault();
+                var $form = $(e.target);
+                var $form_fields = $form.serialize();
+                var $userjob_id = $("input[name='userjob_id']", $form).val();
+                $("#job-" + $userjob_id).hide();
+                $.ajax({
+                    url: $form.attr("action"),
+                    type: "POST",
+                    data: $form_fields,
+                    success: function(result) {
+                        alert("Successfully submitted: " + $form_fields);
+                    }
+                });
+            });
+        }); 
+    </script>
+{% endblock %}
+
