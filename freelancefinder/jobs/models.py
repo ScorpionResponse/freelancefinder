@@ -10,7 +10,7 @@ from taggit.models import Tag
 from django.db import models
 from django.contrib.auth.models import User
 
-from utils.text import generate_fingerprint, remove_punctuation
+from utils.text import generate_fingerprint, tokenize
 
 
 class PostManager(models.Manager):
@@ -67,8 +67,8 @@ class Post(TimeStampedModel):
     @property
     def taggable_words(self):
         """Get all taggable words for this post."""
-        title_words = remove_punctuation(self.title).split(' ')
-        description_words = remove_punctuation(self.description).split(' ')
+        title_words = tokenize(self.title)
+        description_words = tokenize(self.description)
         joined_words = [' '.join(x) for x in list(bigrams(description_words))] + [' '.join(x) for x in list(bigrams(title_words))]
         areas = [self.subarea]
 
@@ -99,8 +99,8 @@ class Job(TimeStampedModel):
     @property
     def taggable_words(self):
         """Get all taggable words for this job."""
-        title_words = remove_punctuation(self.title).split(' ')
-        description_words = remove_punctuation(self.description).split(' ')
+        title_words = tokenize(self.title)
+        description_words = tokenize(self.description)
         joined_words = [' '.join(x) for x in list(bigrams(description_words))] + [' '.join(x) for x in list(bigrams(title_words))]
         areas = [self.subarea]
 

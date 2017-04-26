@@ -32,4 +32,5 @@ def tokenize(text):
 def remove_punctuation(text):
     """Remove all punctuation from a string."""
     exclude = set(string.punctuation)
-    return ''.join(char.lower() for char in text if char not in exclude)
+    # return ''.join(char.lower() for char in text if char not in exclude)
+    return ''.join(char.lower() if char not in exclude else ' ' for char in text)
