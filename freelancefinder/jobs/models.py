@@ -90,11 +90,11 @@ class Job(TimeStampedModel):
         """Representation for a Job."""
         return u"<Job ID:{}; Title:{}>".format(self.pk, self.title)
 
-    def save(self, *args, **kwargs):
+    def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
         """Add fingerprint and save."""
         if not self.pk:
             self.fingerprint = generate_fingerprint(self.title + ' ' + self.description)
-        super(Job, self).save(*args, **kwargs)
+        super(Job, self).save(force_insert, force_update, using, update_fields)
 
     @property
     def taggable_words(self):

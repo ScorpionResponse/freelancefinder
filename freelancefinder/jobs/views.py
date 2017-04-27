@@ -47,7 +47,7 @@ class UserJobListView(LoginRequiredMixin, ListView, FormGetMixin):
         tags = self.request.GET.getlist('tag', None)
         if search is not None and search != '':
             querys = querys.filter(Q(job__title__icontains=search) | Q(job__description__icontains=search))
-        if tags is not None and len(tags) > 0 and tags != ['']:
+        if tags and tags != ['']:
             querys = querys.filter(job__tags__slug__in=tags).distinct()
         return querys.order_by('job__created').reverse()
 
@@ -98,7 +98,7 @@ class JobListView(LoginRequiredMixin, ListView, FormGetMixin):
         querys = Job.objects.all().prefetch_related('posts', 'tags', 'posts__source')
         if search is not None and search != '':
             querys = querys.filter(Q(title__icontains=search) | Q(description__icontains=search))
-        if tags is not None and len(tags) > 0 and tags != ['']:
+        if tags and tags != ['']:
             querys = querys.filter(tags__slug__in=tags).distinct()
         logger.debug('Tags: %s', tags)
         logger.debug('Query: %s', str(querys.query))
