@@ -42,6 +42,7 @@ class UserJobAdmin(admin.ModelAdmin):
 
     model = UserJob
     list_display = ('job', 'user', 'is_removed', 'created', 'modified')
+    list_filter = ('user__username', 'is_removed')
     fields = ('job', 'user', 'is_removed', 'created', 'modified')
     readonly_fields = ('created', 'modified')
 
