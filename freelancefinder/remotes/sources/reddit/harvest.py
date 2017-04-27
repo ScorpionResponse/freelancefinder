@@ -22,6 +22,7 @@ class Harvester(object):
         """Gather some Posts from reddit."""
         reddit = Reddit(self.source)
         for section in reddit.sections():
+            logger.info("Reddit harvester retrieving subsection: %s", section)
             for post in reddit.jobs(section):
                 if post.exists():
                     logger.info("Reddit harvester got duplication post id %s in subreddit %s, assuming everything new is harvested.", post, section)

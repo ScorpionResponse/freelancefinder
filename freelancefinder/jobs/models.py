@@ -1,5 +1,7 @@
 """Simple models to track information related to a particular job/posting."""
 
+import logging
+
 from future.utils import python_2_unicode_compatible
 from model_utils.models import TimeStampedModel, SoftDeletableModel
 from model_utils.managers import SoftDeletableManager
@@ -11,6 +13,8 @@ from django.db import models
 from django.contrib.auth.models import User
 
 from utils.text import generate_fingerprint, tokenize
+
+logger = logging.getLogger(__name__)
 
 
 class PostManager(models.Manager):
@@ -62,6 +66,7 @@ class Post(TimeStampedModel):
 
     def exists(self):
         """Determine if the post already exists in the database."""
+        logger.debug("Checking for existence of source: %s; unique: %s; pk: %s", self.source, self.unique, self.pk)
         return self.pk is not None or Post.objects.filter(source=self.source, unique=self.unique).exists()
 
     @property
