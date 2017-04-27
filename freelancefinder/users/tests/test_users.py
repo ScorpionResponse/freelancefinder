@@ -10,7 +10,7 @@ def test_login_changes(authed_client):
 def test_no_group(authed_client):
     """Test that page changes based on Group affiliation - no group."""
     response = authed_client.get('/')
-    assert '>Jobs<' in response.content.decode('utf-8')
+    assert '>My Opportunities<' in response.content.decode('utf-8')
 
 
 def test_admin_group(admin_group_client):
