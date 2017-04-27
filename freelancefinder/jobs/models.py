@@ -53,6 +53,7 @@ class Post(TimeStampedModel):
     garbage = models.BooleanField(default=False)
     processed = models.BooleanField(default=False)
     objects = PostManager()
+    all_objects = models.Manager()
     tags = TaggableManager()
 
     class Meta:
@@ -66,8 +67,7 @@ class Post(TimeStampedModel):
 
     def exists(self):
         """Determine if the post already exists in the database."""
-        logger.info("Checking for existence of source: %s; unique: %s; pk: %s", self.source, self.unique, self.pk)
-        return self.pk is not None or Post.objects.filter(source=self.source, unique=self.unique).exists()
+        return self.pk is not None or Post.all_objects.filter(source=self.source, unique=self.unique).exists()  # pylint: disable=no-member
 
     @property
     def taggable_words(self):
