@@ -130,6 +130,7 @@ class UserJob(TimeStampedModel, SoftDeletableModel):
     objects = UserJobsManager()
 
     def __str__(self):
+        """Representation of a UserJob."""
         return u"{} - {}".format(self.job, self.user)
 
 

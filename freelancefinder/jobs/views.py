@@ -40,6 +40,7 @@ class UserJobListView(LoginRequiredMixin, ListView, FormGetMixin):
     template_name = "jobs/userjob_list.html"
 
     def get_queryset(self):
+        """Perform filtering and sorting."""
         querys = UserJob.objects.filter(user=self.request.user)
 
         search = self.request.GET.get('search', None)
