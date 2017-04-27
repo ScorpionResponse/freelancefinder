@@ -102,7 +102,7 @@ class Job(TimeStampedModel):
         title_words = tokenize(self.title)
         description_words = tokenize(self.description)
         joined_words = [' '.join(x) for x in list(bigrams(description_words))] + [' '.join(x) for x in list(bigrams(title_words))]
-        areas = [self.subarea]
+        areas = [post.subarea for post in self.posts.all()]
 
         tag_words = title_words + description_words + joined_words + areas
         tag_words = [x.lower() for x in tag_words if x is not None]
