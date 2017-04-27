@@ -128,6 +128,7 @@ class UserJob(TimeStampedModel, SoftDeletableModel):
     job = models.ForeignKey(Job, on_delete=models.CASCADE, related_name="userjobs")
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="userjobs")
     objects = UserJobsManager()
+    all_objects = models.Manager()
 
     def __str__(self):
         """Representation of a UserJob."""

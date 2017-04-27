@@ -45,6 +45,14 @@ class UserJobAdmin(admin.ModelAdmin):
     fields = ('job', 'user', 'is_removed', 'created', 'modified')
     readonly_fields = ('created', 'modified')
 
+    def get_queryset(self, request):
+        """Don't use the default manager."""
+        querys = self.model.all_objects.get_queryset()
+        ordering = self.get_ordering(request)
+        if ordering:
+            querys = querys.order_by(*ordering)
+        return querys
+
 
 class PostAdmin(admin.ModelAdmin):
     """The Post model needs no special admin configuration."""
