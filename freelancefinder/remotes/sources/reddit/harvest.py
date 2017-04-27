@@ -25,7 +25,7 @@ class Harvester(object):
             logger.info("Reddit harvester retrieving subsection: %s", section)
             for post in reddit.jobs(section):
                 if post.exists():
-                    logger.info("Reddit harvester got duplication post id %s in subreddit %s, assuming everything new is harvested.", post, section)
+                    logger.info("Reddit harvester got duplicate post id %s in subreddit %s, assuming everything new is harvested.", post, section)
                     break
                 self.status_info['count-%s' % (section,)] += 1
                 self.status_info['total'] += 1

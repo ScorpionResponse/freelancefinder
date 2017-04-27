@@ -66,7 +66,7 @@ class Post(TimeStampedModel):
 
     def exists(self):
         """Determine if the post already exists in the database."""
-        logger.debug("Checking for existence of source: %s; unique: %s; pk: %s", self.source, self.unique, self.pk)
+        logger.info("Checking for existence of source: %s; unique: %s; pk: %s", self.source, self.unique, self.pk)
         return self.pk is not None or Post.objects.filter(source=self.source, unique=self.unique).exists()
 
     @property
