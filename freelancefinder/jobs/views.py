@@ -51,7 +51,7 @@ class UserJobListView(LoginRequiredMixin, ListView, FormGetMixin):
         if tags and tags != ['']:
             querys = querys.filter(job__tags__slug__in=tags).distinct()
         if source:
-            querys = querys.filter(job__post__source__code=source)
+            querys = querys.filter(job__posts__source__code=source)
         return querys.order_by('job__created').reverse()
 
     def get_source_facets(self):
