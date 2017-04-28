@@ -13,11 +13,16 @@
     {% crispy form %}
 </div>
 <div class='facets'>
-    <ul>
     {% for facet in source_facets %}
-        <li>{{ facet }}</li>
+    <a href="?{% querystring request source=job__posts__source__code %}">
+        <span class="tag tag-info">
+            {{ job__posts__source__name }}
+            <span class="badge badge-default">
+                {{ count }}
+            </span>
+        </span>
+    </a>
     {% endfor %}
-    </ul>
 </div>
 {% include 'helpers/pagination.html' %}
 <ul class="list-group">
