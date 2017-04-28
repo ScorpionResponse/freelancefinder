@@ -26,7 +26,7 @@ class JobAdmin(admin.ModelAdmin):
 
     # List fields
     list_display = ('title', 'tag_list', 'created', 'modified')
-    search_fields = ('title', 'tag_list')
+    search_fields = ('title',)
 
     # Detail screen fields
     fields = ('title', 'description', 'tags', 'created', 'modified', 'fingerprint')
@@ -73,7 +73,7 @@ class PostAdmin(admin.ModelAdmin):
 
     # List fields
     list_display = ('title', 'source', 'subarea', 'tag_list', 'is_freelance', 'processed', 'garbage', 'created')
-    search_fields = ('title', 'tag_list')
+    search_fields = ('title',)
     list_filter = ('source__name', 'garbage')
 
     # Detail screen fields
