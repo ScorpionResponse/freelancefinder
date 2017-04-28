@@ -22,10 +22,15 @@ class JobAdmin(admin.ModelAdmin):
     """The Job model admin has some special tag handling."""
 
     model = Job
+    actions = [remove_tags]
+
+    # List fields
     list_display = ('title', 'tag_list', 'created', 'modified')
+    search_fields = ('title', 'tag_list')
+
+    # Detail screen fields
     fields = ('title', 'description', 'tags', 'created', 'modified', 'fingerprint')
     readonly_fields = ('created', 'modified', 'fingerprint')
-    actions = [remove_tags]
 
     def get_queryset(self, request):
         """Prefetch the tags data to make this more efficient."""
@@ -41,8 +46,13 @@ class UserJobAdmin(admin.ModelAdmin):
     """The UserJob model admin."""
 
     model = UserJob
+
+    # List fields
     list_display = ('job', 'user', 'is_removed', 'created', 'modified')
+    search_fields = ('job__title', 'user__username')
     list_filter = ('user__username', 'is_removed')
+
+    # Detail screen fields
     fields = ('job', 'user', 'is_removed', 'created', 'modified')
     readonly_fields = ('created', 'modified')
 
@@ -59,14 +69,24 @@ class PostAdmin(admin.ModelAdmin):
     """The Post model needs no special admin configuration."""
 
     model = Post
+    actions = [remove_tags]
+
+    # List fields
     list_display = ('title', 'source', 'subarea', 'tag_list', 'is_freelance', 'processed', 'garbage', 'created')
+    search_fields = ('title', 'tag_list')
+    list_filter = ('source__name', 'garbage')
+
+    # Detail screen fields
     fields = ('title', 'url', 'source', 'subarea', 'description', 'unique', 'tags', 'is_freelance', 'processed', 'garbage', 'created', 'modified')
     readonly_fields = ('created', 'modified')
-    actions = [remove_tags]
 
     def get_queryset(self, request):
         """Prefetch the tags data to make this more efficient."""
-        return super(PostAdmin, self).get_queryset(request).prefetch_related('tags')
+        querys = self.model.all_objects.get_queryset()
+        ordering = self.get_ordering(request)
+        if ordering:
+            querys = querys.order_by(*ordering)
+        return querys.prefetch_related('tags')
 
     def tag_list(self, obj):  # pylint: disable=no-self-use
         """Concatenate all tags for each post."""
@@ -78,6 +98,7 @@ class TagVariantAdmin(admin.ModelAdmin):
 
     model = TagVariant
     list_display = ('variant', 'tag')
+    search_fields = ('variant', 'tag')
     fields = ('variant', 'tag')
 
 
