@@ -14,11 +14,11 @@
 </div>
 <div class='facets'>
     {% for facet in source_facets %}
-    <a href="?{% querystring request source=job__posts__source__code %}">
+    <a href="?{% querystring request source=facet.job__posts__source__code %}">
         <span class="tag tag-info">
-            {{ job__posts__source__name }}
+            {{ facet.job__posts__source__name }}
             <span class="badge badge-default">
-                {{ count }}
+                {{ facet.count }}
             </span>
         </span>
     </a>
