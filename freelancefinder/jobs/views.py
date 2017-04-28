@@ -6,7 +6,7 @@ from braces.views import GroupRequiredMixin
 
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.db.models import Q
+from django.db.models import Q, Count
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
@@ -45,16 +45,26 @@ class UserJobListView(LoginRequiredMixin, ListView, FormGetMixin):
 
         search = self.request.GET.get('search', None)
         tags = self.request.GET.getlist('tag', None)
+        source = self.request.GET.get('source', None)
         if search is not None and search != '':
             querys = querys.filter(Q(job__title__icontains=search) | Q(job__description__icontains=search))
         if tags and tags != ['']:
             querys = querys.filter(job__tags__slug__in=tags).distinct()
+        if source:
+            querys = querys.filter(job__post__source__code=source)
         return querys.order_by('job__created').reverse()
+
+    def get_source_facets(self):
+        """Get Results faceted by Source."""
+        querys = self.get_queryset()
+        querys = querys.values('job__posts__source__name', 'job__posts__source__code').annotate(total=Count('job__posts__source')).order_by('job__posts__source__name')
+        return querys
 
     def get_context_data(self, **kwargs):
         """Include search/filter form."""
         context = super(UserJobListView, self).get_context_data(**kwargs)
         context['form'] = self.get_form()
+        context['source_facets'] = self.get_source_facets()
         return context
 
 

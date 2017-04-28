@@ -12,6 +12,9 @@
 <div class='searchform'>
     {% crispy form %}
 </div>
+<div class='facets'>
+    {{ source_facets }}
+</div>
 {% include 'helpers/pagination.html' %}
 <ul class="list-group">
 {% for userjob in userjob_list %}
