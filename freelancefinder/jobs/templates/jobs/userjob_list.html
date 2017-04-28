@@ -13,17 +13,21 @@
     {% crispy form %}
 </div>
 {% if source_facets %}
-    <div class='facets panel panel-default rounded'>
-        <div class="panel-header">Sources</div>
-        <div class="panel-body">
-            {% for facet in source_facets %}
-            <a href="?{% querystring request source=facet.job__posts__source__code %}" class="btn btn-outline-info {% if request.GET.source == facet.job__posts__source__code %}active{% endif %}">
-                {{ facet.job__posts__source__name }}
-                <span class="badge badge-default">
-                    {{ facet.total }}
-                </span>
-            </a>
-            {% endfor %}
+    <div class="row">
+        <div class="col-sm-6 col-md-4 col-lg-3">
+            <div class='facets card card-outline-default rounded'>
+                <div class="card-header">Sources</div>
+                <div class="card-block">
+                    {% for facet in source_facets %}
+                    <a href="?{% querystring request source=facet.job__posts__source__code %}" class="btn btn-outline-info {% if request.GET.source == facet.job__posts__source__code %}active{% endif %}">
+                        {{ facet.job__posts__source__name }}
+                        <span class="badge badge-default">
+                            {{ facet.total }}
+                        </span>
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
         </div>
     </div>
 {% endif %}
