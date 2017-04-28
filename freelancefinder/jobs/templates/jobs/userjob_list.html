@@ -13,7 +13,11 @@
     {% crispy form %}
 </div>
 <div class='facets'>
-    {{ source_facets }}
+    <ul>
+    {% for facet in source_facets %}
+        <li>{{ facet }}</li>
+    {% endfor %}
+    </ul>
 </div>
 {% include 'helpers/pagination.html' %}
 <ul class="list-group">
