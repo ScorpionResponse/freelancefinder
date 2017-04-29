@@ -314,3 +314,21 @@ MEDIA_URL = 'media/'
 STATIC_ROOT = public_root('static')
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [root('static')]
+STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.CachedStaticFilesStorage'
+
+# Cache settings
+# TODO(Paul): Convert to django-environ env.cache()
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'default',
+        'TIMEOUT': 3600 * 24 * 8,
+        'MAX_ENTRIES': 1000,
+    },
+    'staticfiles': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'staticfiles',
+        'TIMEOUT': 3600 * 24 * 8,
+        'MAX_ENTRIES': 1000,
+    }
+}
