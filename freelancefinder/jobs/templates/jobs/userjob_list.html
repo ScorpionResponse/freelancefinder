@@ -13,6 +13,7 @@
     {% crispy form %}
 </div>
 {% if source_facets %}
+<div class="facets">
     Sources:
     {% for facet in source_facets %}
     <a href="?{% querystring request source=facet.job__posts__source__code %}" class="btn btn-outline-info {% if request.GET.source == facet.job__posts__source__code %}active{% endif %}">
@@ -22,6 +23,7 @@
         </span>
     </a>
     {% endfor %}
+</div>
 {% endif %}
 
 {% include 'helpers/pagination.html' %}
