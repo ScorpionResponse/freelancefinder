@@ -13,6 +13,7 @@ gunicorn_workers: 4
 # nginx
 nginx_server_name: freelancefinder.work
 nginx_application_dir: /srv/freelancefinder/freelancefinder/public
+nginx_hashed_static_files: True
 
 # django
 django_base_dir: /srv
