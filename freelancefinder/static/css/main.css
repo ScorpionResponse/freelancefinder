@@ -72,6 +72,10 @@ body {
     background-color: #CCCCCC;
 }
 
+.form-inline .form-control-label {
+    margin-right: 1.0em;
+}
+
 /* Buttons */
 .btn-circle {
   width: 30px;

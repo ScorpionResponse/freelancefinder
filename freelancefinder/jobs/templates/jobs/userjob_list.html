@@ -8,12 +8,12 @@
 
 {% block 'content' %}
 
-<h1>My Opportunities</h1>
+<h1 class="text-center">My Opportunities</h1>
 <div class='searchform'>
     {% crispy form %}
 </div>
 {% if source_facets %}
-<div class="facets">
+<div class="facets p-2">
     Sources:
     {% for facet in source_facets %}
     <a href="?{% querystring request source=facet.job__posts__source__code %}" class="btn btn-outline-info {% if request.GET.source == facet.job__posts__source__code %}active{% endif %}">
