@@ -36,7 +36,7 @@ class WorkInStartups(object):
         post = Post(
             url=job_url,
             source=self.source,
-            title=job_info['type_name'] + " - " + job_info['title'],
+            title=job_info['type_name'] + " - " + bleach.clean(job_info['title'], strip=True),
             description=bleach.clean(job_info['description'], tags=bleach.ALLOWED_TAGS + ADDITIONAL_TAGS, strip=True),
             unique=job_info['id'],
             created=created,
