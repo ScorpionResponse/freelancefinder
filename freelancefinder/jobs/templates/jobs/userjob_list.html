@@ -22,6 +22,14 @@
             {{ facet.total }}
         </span>
     </a>
+    {% if request.GET.source == facet.job__posts__source__code %}
+    {% endif %}
+        <a href="?{% querystring request source='' %}" class="btn btn-outline-info">
+            Full Results
+            <span class="badge badge-default">
+                <i class="fa fa-times"></i>
+            </span>
+        </a>
     {% endfor %}
 </div>
 {% endif %}
