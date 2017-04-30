@@ -26,6 +26,8 @@ class Source(models.Model):
             from .sources.hackernews.harvest import Harvester
         elif self.code == 'fossjobs':
             from .sources.fossjobs.harvest import Harvester
+        elif self.code == 'trabajospython':
+            from .sources.trabajospython.harvest import Harvester
 
         source_harvester = Harvester(self)
         return source_harvester

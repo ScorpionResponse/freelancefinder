@@ -4,6 +4,7 @@ import random
 from faker import Faker
 import feedparser
 import pytest
+import pytz
 
 
 @pytest.fixture(scope='function')
@@ -44,4 +45,33 @@ def fossjobs_rss_feed():
             </item>
             """.format(seq, fake.text(max_nb_chars=500), fake.url(), job_type, fake.job(), fake.iso8601(tzinfo=None))
     raw_rss += "</rdf:RDF>"
+    return feedparser.parse(raw_rss)
+
+
+@pytest.fixture(scope='function')
+def trabajospython_rss_feed():
+    """Generate a fake rss feed like the trabajospython feed."""
+    fake = Faker()
+    raw_rss = """<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml-stylesheet type="text/xsl" media="screen" href="/~d/styles/rss2full.xsl"?><?xml-stylesheet type="text/css" media="screen" href="http://feeds.feedburner.com/~d/styles/itemcontent.css"?><rss version="2.0">
+  <channel>
+    <title>TrabajosPython</title>
+    <description>Software-Development</description>
+    <link>http://www.trabajospython.com/</link>
+    <language>es</language>
+    <atom10:link xmlns:atom10="http://www.w3.org/2005/Atom" rel="self" type="application/rss+xml" href="http://feeds.feedburner.com/trabajos_python" /><feedburner:info xmlns:feedburner="http://rssnamespace.org/feedburner/ext/1.0" uri="trabajos_python" /><atom10:link xmlns:atom10="http://www.w3.org/2005/Atom" rel="hub" href="http://pubsubhubbub.appspot.com/" />
+   """
+    for seq in range(1, 11):
+        raw_rss += """
+            <item>
+                <pubDate>{}</pubDate>
+                <title>{}</title>
+                <link>{}</link>
+                <description>{}</description>
+            </item>
+            """.format(fake.date_time_this_year(before_now=True, tzinfo=pytz.timezone('UTC')).strftime('%a, %e %b %Y %H:%M:%S %z'), fake.job(), fake.url(), fake.text(max_nb_chars=500))
+    raw_rss += """</channel>
+    </rss>
+    """
+
     return feedparser.parse(raw_rss)
