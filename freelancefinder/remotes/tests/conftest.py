@@ -80,7 +80,6 @@ def trabajospython_rss_feed():
 @pytest.fixture(scope='function')
 def workinstartups_api_response():
     """Generate a workinstartups format response."""
-
     class WIS(object):
 
         def __call__(self):
