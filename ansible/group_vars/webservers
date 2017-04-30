@@ -22,6 +22,7 @@ django_subdirectory: "freelancefinder/"
 django_git_repo: "https://github.com/ScorpionResponse/freelancefinder.git"
 django_environment: development
 
+django_settings_module: 'freelancefinder.settings'
 django_superuser_name: 'admin'
 django_superuser_email: 'admin@example.com'
 django_superuser_password: 'abc123abc'
