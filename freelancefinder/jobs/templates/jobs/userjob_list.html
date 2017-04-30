@@ -23,13 +23,13 @@
         </span>
     </a>
     {% if request.GET.source == facet.job__posts__source__code %}
-    {% endif %}
-        <a href="?{% querystring request source='' %}" class="btn btn-outline-info">
+        <a href="?{% querystring request source='' %}" class="btn btn-outline-danger">
             Full Results
             <span class="badge badge-default">
                 <i class="fa fa-times"></i>
             </span>
         </a>
+    {% endif %}
     {% endfor %}
 </div>
 {% endif %}
