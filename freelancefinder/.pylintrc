@@ -22,8 +22,8 @@ good-names=logger,default_app_config,celery_app,rf
 # Ignore imports when computing similarities.
 ignore-imports=yes
 
-# Only report this if blatant
-min-similarity-lines=10
+# Only report this if really blatant
+min-similarity-lines=40
 
 [MISCELLANEOUS]
 # Don't show TODOs
