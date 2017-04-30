@@ -18,7 +18,7 @@
     {% for facet in source_facets %}
     <a href="?{% querystring request source=facet.job__posts__source__code %}" class="btn btn-outline-info {% if request.GET.source == facet.job__posts__source__code %}active{% endif %}">
         {{ facet.job__posts__source__name }}
-        <span class="badge badge-default">
+        <span class="badge badge-default" id="facet-{{ facet.job__posts__source__code }}-count">
             {{ facet.total }}
         </span>
     </a>
@@ -66,7 +66,7 @@
                     </span>
                     <span class="source-info p-2">
                         {% for post in userjob.job.posts.all %}
-                            <a href="{{ post.url }}" target="_blank">{{ post.source.name }} &gt; {{ post.subarea }}</a>
+                            <a href="{{ post.url }}" target="_blank" class="sourcelink-{{ post.source.code }}">{{ post.source.name }} &gt; {{ post.subarea }}</a>
                         {% endfor %}
                     </span>
                     <span class="tag-list p-2 ml-auto">
@@ -107,7 +107,14 @@
                 $form.append('<input type="hidden" name="dismiss" value="true" />');
                 var $form_fields = $form.serialize();
                 var $userjob_id = $("input[name='userjob_id']", $form).val();
-                $("#job-" + $userjob_id).remove();
+                var $whole_row = $("#job-" + $userjob_id);
+                $("a[class^='sourcelink-']", $whole_row).each(function(elm) {
+                    var cname = $(this).attr('class');
+                    var source_code = cname.split('-')[1];
+                    var facet = $('#facet-' + source_code + '-count');
+                    facet.html(parseInt(facet.text()) -1);
+                });
+                $whole_row.remove();
                 $.ajax({
                     url: $form.attr("action"),
                     type: "POST",
