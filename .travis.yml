@@ -42,10 +42,9 @@ script:
   # Fail on pylint errors
   - pushd freelancefinder
   - PYLINTFILES=`find . | grep "py$" | grep -v "lib\|public" | cut -f2 -d"/" | uniq | xargs`
-    # Pylint <2.0 doesn't support python 3.6
-    # - pylint ${PYLINTFILES}
-  - if [ "${TRAVIS_PYTHON_VERSION}" != "3.6" ]; then pylint ${PYLINTFILES}; fi
+  - pylint ${PYLINTFILES}
+    #- if [ "${TRAVIS_PYTHON_VERSION}" != "3.6" ]; then pylint ${PYLINTFILES}; fi
   - popd
   
 after_success:
-  - if [ "${TRAVIS_PYTHON_VERSION}" = "3.5" ]; then coveralls; fi
+  - if [ "${TRAVIS_PYTHON_VERSION}" = "3.6" ]; then coveralls; fi
