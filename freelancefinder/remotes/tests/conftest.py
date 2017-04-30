@@ -75,3 +75,62 @@ def trabajospython_rss_feed():
     """
 
     return feedparser.parse(raw_rss)
+
+
+@pytest.fixture(scope='function')
+def workinstartups_api_response():
+    """Generate a workinstartups format response."""
+
+    class WIS(object):
+
+        def __call__(self):
+            return self.fake_response()
+
+        @property
+        def text(self):
+            return self.fake_response()
+
+        def fake_response(self):
+            fake = Faker()
+            raw_response = """var jobs = ["""
+            for seq in range(1, 16):
+                raw_response += """{{
+"id":"{}",
+"type_id":"1",
+"category_id":"15",
+"category_name":"Sales",
+"company":"Smarter Applications",
+"company_id":"189",
+"url":"",
+"title":"{}",
+"url_title":"{}",
+"location":"",
+"location_outside_ro":null,
+"is_location_anywhere":true,
+"description":"{}",
+"created_on":"30-04-2017",
+"created":"30 Apr 2017",
+"closed_on":"2017-05-30 16:16:17",
+"apply":"",
+"views_count":"18",
+"city_id":null,
+"mysql_date":"{}",
+"apply_online":"1",
+"is_active":"1",
+"days_old":"0",
+"is_spotlight":"0",
+"type_name":"Full-time",
+"type_var_name":"fulltime",
+"salary_from":"30000",
+"salary_to":null,
+"salary_currency":"pounds",
+"salary_frequency":"per_year",
+"salary_frequency_label":"per year",
+"expiration_date":"2017-06-30 23:59:59",
+"expiration":"30 Jun 2017"
+}},""".format(seq, fake.job(), fake.slug(), fake.text(max_nb_chars=500), fake.date_time_this_year(before_now=True).strftime("%Y-%m-%d %l:%M:%S")).replace('\n', '')
+
+            raw_response = raw_response.rstrip(',')
+            raw_response += "];"
+            return raw_response
+    return WIS()

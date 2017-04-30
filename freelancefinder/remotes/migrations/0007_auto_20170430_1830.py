@@ -6,6 +6,7 @@ from django.db import migrations
 
 NEW_SOURCES = [
     {'code': 'trabajospython', 'name': 'Trabajos Python', 'url': 'http://www.trabajospython.com/'},
+    {'code': 'workinstartups', 'name': 'Work In Startups', 'url': 'http://workinstartups.com/'},
 ]
 
 

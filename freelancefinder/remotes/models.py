@@ -28,6 +28,8 @@ class Source(models.Model):
             from .sources.fossjobs.harvest import Harvester
         elif self.code == 'trabajospython':
             from .sources.trabajospython.harvest import Harvester
+        elif self.code == 'workinstartups':
+            from .sources.workinstartups.harvest import Harvester
 
         source_harvester = Harvester(self)
         return source_harvester
