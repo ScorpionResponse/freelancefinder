@@ -63,7 +63,7 @@
                 {% endif %}
                 <div class="d-flex flex-row w-100 justify-content-between">
                     <span>
-                        <a target="_blank" href="{{ post.url }}">{{ post.source.name }} > {{ post.subarea }}</a> - {{ post.unique }}
+                        <a target="_blank" href="{{ post.url }}" class="sourcelink-{{ post.source.code }}">{{ post.source.name }} > {{ post.subarea }}</a> - {{ post.unique }}
                     </span>
                     <span class="tag-list p-2 ml-auto">
                         {% for tag in post.tags.all %}
