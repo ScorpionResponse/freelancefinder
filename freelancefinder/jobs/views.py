@@ -160,7 +160,7 @@ class PostListView(GroupRequiredMixin, FormMixin, ListView):
         if title is not None:
             querys = querys.filter(title__icontains=title)
         if source:
-            querys = querys.filter(job__posts__source__code=source)
+            querys = querys.filter(source__code=source)
         return querys.order_by('-created')
 
     def get_source_facets(self):
