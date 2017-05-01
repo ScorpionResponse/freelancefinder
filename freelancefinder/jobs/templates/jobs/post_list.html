@@ -119,15 +119,15 @@
                     var cname = $(this).attr('class');
                     var source_code = cname.split('-')[1];
                     var facet = $('#facet-' + source_code + '-count');
-                    facet.html(parseInt(facet.text()) -1);
+                    facet.html(parseInt(facet.text()) - 1);
                 });
-                $whole_row.remove();
+                $whole_row.hide();
                 $.ajax({
                     url: $form.attr("action"),
                     type: "POST",
                     data: $form_fields,
                     success: function(result) {
-                        // alert("Successfully submitted: " + $form_fields);
+                        $whole_row.remove();
                     }
                 });
             });
