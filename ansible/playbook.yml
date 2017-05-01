@@ -8,6 +8,7 @@
       apt: pkg={{ item }} state=installed update_cache=true
       with_items:
         - build-essential
+        - gettext
         - git
         - libpq-dev
         - python3
