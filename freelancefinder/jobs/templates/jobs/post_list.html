@@ -93,7 +93,9 @@
     <script>
         $(document).ready(function(){
             // Enable infinite scroll
-            $(".jscroll").jscroll();
+            $(".jscroll").jscroll({
+                nextSelector: ".pagination a.next:last",
+            });
             $(".row-dismiss-form button[type=submit]").on("click", function() {
                 // Set the 'break' field to 'accept' or 'dismiss' based on
                 // which button was clicked.
