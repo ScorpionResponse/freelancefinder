@@ -96,7 +96,10 @@
         $(document).ready(function(){
             // Enable infinite scroll
             $(".jscroll").jscroll({
+                padding: 20,
                 nextSelector: ".pagination a.next:last",
+                contentSelector: ".list-group li",
+                pagingSelector: ".pagination",
             });
             $(".row-dismiss-form button[type=submit]").on("click", function() {
                 // Set the 'break' field to 'accept' or 'dismiss' based on
