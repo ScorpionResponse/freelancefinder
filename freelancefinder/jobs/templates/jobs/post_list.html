@@ -34,9 +34,10 @@
 </div>
 {% endif %}
 
+<div class="jscroll">
 {% include 'helpers/pagination.html' %}
 
-<ul class="list-group jscroll">
+<ul class="list-group">
 {% for post in post_list %}
     <li id="post-{{ post.id }}" class="d-flex list-group-item flex-column align-items-start post">
         <div class="d-flex flex-row w-100 justify-content-start">
@@ -86,6 +87,7 @@
 {% endfor %}
 </ul>
 {% include 'helpers/pagination.html' %}
+</div>
 
 {% endblock %}
 
