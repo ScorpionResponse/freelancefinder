@@ -48,7 +48,7 @@ class HackerHarvest(object):
                 logger.debug("Skipping blank comment: %s", comment)
                 continue
             post = self.parse_job_to_post(comment, subarea='who_is_hiring')
-            post.title = 'Hiring - {}'.format(post.title)
+            post.title = 'Full Time - {}'.format(post.title)
             yield post
 
     def who_wants_jobs(self):
