@@ -36,7 +36,7 @@
 
 {% include 'helpers/pagination.html' %}
 
-<ul class="list-group">
+<ul class="list-group jscroll">
 {% for post in post_list %}
     <li id="post-{{ post.id }}" class="d-flex list-group-item flex-column align-items-start post">
         <div class="d-flex flex-row w-100 justify-content-start">
@@ -92,6 +92,8 @@
 {% block 'scripts' %}
     <script>
         $(document).ready(function(){
+            // Enable infinite scroll
+            $(".jscroll").jscroll();
             $(".row-dismiss-form button[type=submit]").on("click", function() {
                 // Set the 'break' field to 'accept' or 'dismiss' based on
                 // which button was clicked.
