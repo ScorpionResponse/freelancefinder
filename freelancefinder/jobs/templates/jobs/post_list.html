@@ -40,10 +40,11 @@
 {% for post in post_list %}
     <li id="post-{{ post.id }}" class="d-flex list-group-item flex-column align-items-start post">
         <div class="d-flex flex-row w-100 justify-content-start">
-            <form action="{% url 'post-action' %}" method="POST">
+            <form class="row-dismiss-form" action="{% url 'post-action' %}" method="POST">
                 <div class="d-flex align-items-center pr-2 control-button">
                     {% csrf_token %}
                     <input type="hidden" name="post_id" value="{{ post.id }}">
+                    <input type="hidden" name="break" value="true">
                     <input type="hidden" name="next" value="{% url 'post-list' %}?{% querystring request %}" />
                     <button type="submit" class="btn btn-success btn-circle btn-lg row-accept" name="accept"><i class="fa fa-check"></i></button>
                     <button type="submit" class="btn btn-danger btn-circle btn-lg row-dismiss" name="dismiss"><i class="fa fa-times"></i></button>
@@ -86,4 +87,38 @@
 </ul>
 {% include 'helpers/pagination.html' %}
 
+{% endblock %}
+
+{% block 'scripts' %}
+    <script>
+        $(document).ready(function(){
+            $("form.row-dismiss-form input[type=submit]").click(function() {
+                // Set the 'break' field to 'accept' or 'dismiss' based on
+                // which button was clicked.
+                $("input[NAME=break]", $(this).parents("form")).attr("name", $(this).attr("name"));
+            });
+            $('.row-dismiss-form').on('submit', function(e) {
+                e.preventDefault();
+                var $form = $(e.target);
+                var $form_fields = $form.serialize();
+                var $post_id = $("input[name='post_id']", $form).val();
+                var $whole_row = $("#job-" + $post_id);
+                $("a[class^='sourcelink-']", $whole_row).each(function(elm) {
+                    var cname = $(this).attr('class');
+                    var source_code = cname.split('-')[1];
+                    var facet = $('#facet-' + source_code + '-count');
+                    facet.html(parseInt(facet.text()) -1);
+                });
+                $whole_row.remove();
+                $.ajax({
+                    url: $form.attr("action"),
+                    type: "POST",
+                    data: $form_fields,
+                    success: function(result) {
+                        // alert("Successfully submitted: " + $form_fields);
+                    }
+                });
+            });
+        }); 
+    </script>
 {% endblock %}
