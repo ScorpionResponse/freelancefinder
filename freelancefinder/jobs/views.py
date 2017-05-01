@@ -148,6 +148,7 @@ class PostListView(GroupRequiredMixin, FormMixin, ListView):
     def get_queryset(self):
         """Queryset should sort by desc created by default."""
         title = self.request.GET.get('title', None)
+        source = self.request.GET.get('source', None)
         is_freelance = self.request.GET.get('is_freelance', False)
         is_not_classified = self.request.GET.get('is_not_classified', False)
         querys = Post.objects.all().select_related('source')
@@ -158,14 +159,21 @@ class PostListView(GroupRequiredMixin, FormMixin, ListView):
                 querys = querys.filter(is_freelance=True)
         if title is not None:
             querys = querys.filter(title__icontains=title)
+        if source:
+            querys = querys.filter(job__posts__source__code=source)
         return querys.order_by('-created')
+
+    def get_source_facets(self):
+        """Get Results faceted by Source."""
+        querys = self.get_queryset()
+        querys = querys.values('source__name', 'source__code').annotate(total=Count('source')).order_by('source__name')
+        return querys
 
     def get_context_data(self, **kwargs):
         """Include search/filter form."""
         context = super(PostListView, self).get_context_data(**kwargs)
-
         context['form'] = self.get_form()
-
+        context['source_facets'] = self.get_source_facets()
         return context
 
 

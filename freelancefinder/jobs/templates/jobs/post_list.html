@@ -12,7 +12,30 @@
 <div class='searchform'>
     {% crispy form %}
 </div>
+{% if source_facets %}
+<div class="facets p-2">
+    Sources:
+    {% for facet in source_facets %}
+    <a href="?{% querystring request source=facet.source__code %}" class="btn btn-outline-info {% if request.GET.source == facet.source__code %}active{% endif %}">
+        {{ facet.source__name }}
+        <span class="badge badge-default" id="facet-{{ facet.source__code }}-count">
+            {{ facet.total }}
+        </span>
+    </a>
+    {% if request.GET.source == facet.source__code %}
+        <a href="?{% querystring request source='' %}" class="btn btn-outline-danger">
+            Full Results
+            <span class="badge badge-default">
+                <i class="fa fa-times"></i>
+            </span>
+        </a>
+    {% endif %}
+    {% endfor %}
+</div>
+{% endif %}
+
 {% include 'helpers/pagination.html' %}
+
 <ul class="list-group">
 {% for post in post_list %}
     <li id="post-{{ post.id }}" class="d-flex list-group-item flex-column align-items-start post">
