@@ -104,7 +104,7 @@
                 var $form = $(e.target);
                 var $form_fields = $form.serialize();
                 var $post_id = $("input[name='post_id']", $form).val();
-                var $whole_row = $("#job-" + $post_id);
+                var $whole_row = $("#post-" + $post_id);
                 $("a[class^='sourcelink-']", $whole_row).each(function(elm) {
                     var cname = $(this).attr('class');
                     var source_code = cname.split('-')[1];
