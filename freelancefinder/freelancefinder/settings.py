@@ -296,15 +296,15 @@ CELERY_IMPORTS = ('remotes.tasks',)
 CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
 
 # Internationalization
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'en'
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 LANGUAGES = (
-    ('en-us', 'English'),
+    ('en', 'English'),
 )
-LOCALE_PATHS = ['locale/']
+LOCALE_PATHS = [str(root.path('locale/'))]
 
 # Email settings
 EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
