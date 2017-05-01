@@ -92,7 +92,7 @@
 {% block 'scripts' %}
     <script>
         $(document).ready(function(){
-            $(".row-dismiss-form input[type=submit]").on("click", function() {
+            $(".row-dismiss-form button[type=submit]").on("click", function() {
                 // Set the 'break' field to 'accept' or 'dismiss' based on
                 // which button was clicked.
                 $("input[NAME=break]", $(this).parents("form")).attr("name", $(this).attr("name"));
