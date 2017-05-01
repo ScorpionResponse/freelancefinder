@@ -18,7 +18,7 @@ gunicorn==19.7.1
 markdown==2.6.8
 maya==0.1.8
 nltk==3.2.2
-praw==4.4.0
+praw==4.5.0
 psycopg2==2.7.1
 python-json-logger==0.1.7
 pytz==2017.2
