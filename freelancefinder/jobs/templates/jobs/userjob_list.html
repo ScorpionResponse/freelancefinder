@@ -37,7 +37,7 @@
 <div class="facets p-2">
     Dates:
     {% for facet in date_facets %}
-    <a href="{% url 'userjob-list' date=facet.job__created|date:"%Y-%m-%d" %}?{% querystring request %}" class="btn btn-outline-warning">
+    <a href="{% url 'userjob-list' date=facet.job__created|date:"Y-m-d" %}?{% querystring request %}" class="btn btn-outline-warning">
         {{ facet.job__created }}
         <span class="badge badge-default" id="facet-{{ facet.job__created }}-count">
             {{ facet.total }}
