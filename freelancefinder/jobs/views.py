@@ -1,5 +1,6 @@
 """Pages relating to the jobs app."""
 
+import datetime
 import logging
 
 from braces.views import GroupRequiredMixin
@@ -7,11 +8,14 @@ from braces.views import GroupRequiredMixin
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q, Count
+from django.db.models.functions import TruncDate
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
+from django.utils import timezone
 from django.views import View
 from django.views.generic import ListView
+from django.views.generic.base import RedirectView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import FormMixin
 
@@ -30,6 +34,21 @@ class FormGetMixin(FormMixin):
         return kwargs
 
 
+class UserJobRedirectView(LoginRequiredMixin, RedirectView):
+    """Get date and redirect."""
+
+    permanent = False
+    pattern_name = 'userjob-list'
+    query_string = True
+
+    def get_redirect_url(self, *args, **kwargs):
+        """Insert a default date and redirect."""
+        now = timezone.now()
+        yesterday = now - datetime.timedelta(days=1)
+        kwargs['date'] = yesterday.strftime("%Y-%m-%d")
+        return super(UserJobRedirectView, self).get_redirect_url(*args, **kwargs)
+
+
 class UserJobListView(LoginRequiredMixin, ListView, FormGetMixin):
     """List just this user's jobs."""
 
@@ -39,9 +58,13 @@ class UserJobListView(LoginRequiredMixin, ListView, FormGetMixin):
     context_object_name = "userjob_list"
     template_name = "jobs/userjob_list.html"
 
-    def get_queryset(self):
-        """Perform filtering and sorting."""
-        querys = UserJob.objects.filter(user=self.request.user)
+    def __base_queryset(self):
+        """Build the base queryset for the view."""
+        return UserJob.objects.filter(user=self.request.user)
+
+    def __form_filtered_queryset(self):
+        """Filter by the form fields."""
+        querys = self.__base_queryset()
 
         search = self.request.GET.get('search', None)
         tags = self.request.GET.getlist('tag', None)
@@ -52,19 +75,34 @@ class UserJobListView(LoginRequiredMixin, ListView, FormGetMixin):
             querys = querys.filter(job__tags__slug__in=tags).distinct()
         if source:
             querys = querys.filter(job__posts__source__code=source)
+        return querys
+
+    def get_queryset(self):
+        """Perform filtering and sorting."""
+        date = self.kwargs['date']
+        querys = self.__form_filtered_queryset()
+        querys = querys.filter(job__created__date=date)
         return querys.order_by('job__created').reverse()
 
     def get_source_facets(self):
         """Get Results faceted by Source."""
-        querys = self.get_queryset()
+        querys = self.__form_filtered_queryset()
         querys = querys.values('job__posts__source__name', 'job__posts__source__code').annotate(total=Count('job__posts__source')).order_by('job__posts__source__name')
+        return querys
+
+    def get_date_facets(self):
+        """Get results faceted by created."""
+        querys = self.__form_filtered_queryset()
+        querys = querys.values('job__created').annotate(total=Count(TruncDate('job__created'))).order_by('job__created').reverse()
         return querys
 
     def get_context_data(self, **kwargs):
         """Include search/filter form."""
         context = super(UserJobListView, self).get_context_data(**kwargs)
+        context['curdate'] = self.kwargs['date']
         context['form'] = self.get_form()
         context['source_facets'] = self.get_source_facets()
+        context['date_facets'] = self.get_date_facets()
         return context
 
 

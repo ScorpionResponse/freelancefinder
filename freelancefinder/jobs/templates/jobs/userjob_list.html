@@ -8,7 +8,7 @@
 
 {% block 'content' %}
 
-<h1 class="text-center">My Opportunities</h1>
+<h1 class="text-center">My Opportunities - {{ curdate }}</h1>
 <div class='searchform'>
     {% crispy form %}
 </div>
@@ -30,6 +30,19 @@
             </span>
         </a>
     {% endif %}
+    {% endfor %}
+</div>
+{% endif %}
+{% if date_facets %}
+<div class="facets p-2">
+    Dates:
+    {% for facet in date_facets %}
+    <a href="{% url 'userjob-list' date=facet.job__created %}?{% querystring request %}" class="btn btn-outline-warning">
+        {{ facet.job__created }}
+        <span class="badge badge-default" id="facet-{{ facet.job__created }}-count">
+            {{ facet.total }}
+        </span>
+    </a>
     {% endfor %}
 </div>
 {% endif %}
