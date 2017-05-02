@@ -59,7 +59,8 @@ class UserJobListView(LoginRequiredMixin, ListView, FormGetMixin):
 
     def __base_queryset(self):
         """Build the base queryset for the view."""
-        return UserJob.objects.filter(user=self.request.user)
+        today = timezone.now().date()
+        return UserJob.objects.filter(user=self.request.user).exclude(job__created__date=today)
 
     def __form_filtered_queryset(self):
         """Filter by the form fields."""
@@ -91,9 +92,8 @@ class UserJobListView(LoginRequiredMixin, ListView, FormGetMixin):
 
     def get_date_facets(self):
         """Get results faceted by created."""
-        today = timezone.now().date()
         querys = self.__form_filtered_queryset()
-        querys = querys.exclude(job__created__date=today).values(created_date=TruncDate('job__created')).annotate(total=Count(TruncDate('job__created'))).order_by('created_date').reverse()
+        querys = querys.values(created_date=TruncDate('job__created')).annotate(total=Count(TruncDate('job__created'))).order_by('created_date').reverse()
         return querys
 
     def get_context_data(self, **kwargs):
