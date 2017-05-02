@@ -93,7 +93,7 @@ class UserJobListView(LoginRequiredMixin, ListView, FormGetMixin):
     def get_date_facets(self):
         """Get results faceted by created."""
         querys = self.__form_filtered_queryset()
-        querys = querys.values('job__created').annotate(total=Count(TruncDate('job__created'))).order_by('job__created').reverse()
+        querys = querys.values(created_date=TruncDate('job__created')).annotate(total=Count(TruncDate('job__created'))).order_by('created_date').reverse()
         return querys
 
     def get_context_data(self, **kwargs):
