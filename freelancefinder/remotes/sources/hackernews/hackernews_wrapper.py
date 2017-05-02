@@ -120,7 +120,8 @@ class HackerHarvest(object):
             title = job_info.text.split('<')[0]
         if insert_author:
             title = job_info.by + ' - ' + title
-        title_cleaned = bleach.clean(title[:255], strip=True)
+        title_cleaned = bleach.clean(title, strip=True)
+        title_cleaned = title_cleaned[254:]
         desc = ''
         if job_info.text:
             desc = job_info.text
