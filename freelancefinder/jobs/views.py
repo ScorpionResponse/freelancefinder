@@ -67,13 +67,10 @@ class UserJobListView(LoginRequiredMixin, ListView, FormGetMixin):
 
         search = self.request.GET.get('search', None)
         tags = self.request.GET.getlist('tag', None)
-        source = self.request.GET.get('source', None)
         if search is not None and search != '':
             querys = querys.filter(Q(job__title__icontains=search) | Q(job__description__icontains=search))
         if tags and tags != ['']:
             querys = querys.filter(job__tags__slug__in=tags).distinct()
-        if source:
-            querys = querys.filter(job__posts__source__code=source)
         return querys
 
     def get_queryset(self):
@@ -81,6 +78,9 @@ class UserJobListView(LoginRequiredMixin, ListView, FormGetMixin):
         date = self.kwargs['date']
         querys = self.__form_filtered_queryset()
         querys = querys.filter(job__created__date=date)
+        source = self.request.GET.get('source', None)
+        if source:
+            querys = querys.filter(job__posts__source__code=source)
         return querys.order_by('job__created').reverse()
 
     def get_source_facets(self):
