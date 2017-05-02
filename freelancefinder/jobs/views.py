@@ -53,7 +53,6 @@ class UserJobListView(LoginRequiredMixin, ListView, FormGetMixin):
     """List just this user's jobs."""
 
     model = UserJob
-    paginate_by = 20
     form_class = UserJobSearchForm
     context_object_name = "userjob_list"
     template_name = "jobs/userjob_list.html"
