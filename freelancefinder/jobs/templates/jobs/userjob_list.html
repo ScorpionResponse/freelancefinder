@@ -8,7 +8,7 @@
 
 {% block 'content' %}
 
-<h1 class="text-center"><span id="opportunity-count">{{ userjob_list|length }}</span> Opportunities - {{ curdate }}</h1>
+<h1 class="text-center"><span id="opportunity-count">{{ userjob_list|length }}</span> Opportunit{% if userjob_list|length == 1 %}y{% else %}ies{% endif %} - {{ curdate }}</h1>
 <div class='searchform'>
     {% crispy form %}
 </div>
