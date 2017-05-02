@@ -8,7 +8,7 @@
 
 {% block 'content' %}
 
-<h1 class="text-center">My Opportunities - {{ curdate }}</h1>
+<h1 class="text-center"><span id="opportunity-count">{{ userjob_list|length }}</span> Opportunities - {{ curdate }}</h1>
 <div class='searchform'>
     {% crispy form %}
 </div>
@@ -112,6 +112,26 @@
 
 {% block 'scripts' %}
     <script>
+        function row_removed(source_code, date) {
+            // TODO(Paul): Technically there may be many calls to this, one per
+            // source in the row.
+            // Decrement source facet
+            var facet = $('#facet-' + source_code + '-count');
+            facet.html(parseInt(facet.text()) - 1);
+
+            // Decrement date facet
+            var facet_date = $('#facet-' + date + '-count');
+            facet_date.html(parseInt(facet_date.text()) - 1);
+
+            // Decrement header
+            var title_count = $('#opportunity-count');
+            title_count.html(parseInt(title_count.text()) - 1);
+
+            // If we've got no more, display congratulations.
+            if (parseInt(title_count.text()) === 0) {
+                $("ul.list-group").replaceWith("<h3 class='text-center'>Congratulations!  You're done for the day.</h3>");
+            }
+        }
         $(document).ready(function(){
             $('.row-dismiss-form').on('submit', function(e) {
                 e.preventDefault();
@@ -124,8 +144,7 @@
                 $("a[class^='sourcelink-']", $whole_row).each(function(elm) {
                     var cname = $(this).attr('class');
                     var source_code = cname.split('-')[1];
-                    var facet = $('#facet-' + source_code + '-count');
-                    facet.html(parseInt(facet.text()) -1);
+                    row_removed(source_code, "{{ curdate }}");
                 });
                 $whole_row.hide();
                 $.ajax({
