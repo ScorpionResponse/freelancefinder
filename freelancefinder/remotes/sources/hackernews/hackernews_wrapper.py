@@ -31,6 +31,7 @@ class HackerHarvest(object):
                 continue
             post = self.parse_job_to_post(story, subarea='jobs')
             post.title = 'Hiring - {}'.format(post.title)
+            post.title = post.title[:255]
             yield post
 
     def hiring_jobs(self):
@@ -49,6 +50,7 @@ class HackerHarvest(object):
                 continue
             post = self.parse_job_to_post(comment, subarea='who_is_hiring')
             post.title = 'Full Time - {}'.format(post.title)
+            post.title = post.title[:255]
             yield post
 
     def who_wants_jobs(self):
@@ -66,6 +68,7 @@ class HackerHarvest(object):
                 continue
             post = self.parse_job_to_post(comment, subarea='who_wants_to_be_hired', insert_author=True)
             post.title = 'For Hire - {}'.format(post.title)
+            post.title = post.title[:255]
             yield post
 
     def freelancer_jobs(self):
@@ -88,6 +91,7 @@ class HackerHarvest(object):
             elif 'SEEKING FREELANCER' in post.title.upper():
                 post.title = 'Freelance - {}'.format(post.title)
                 # TODO(Paul): Just set the is_freelance flag?
+            post.title = post.title[:255]
             yield post
 
     def check_who_is_hiring(self):
@@ -120,8 +124,7 @@ class HackerHarvest(object):
             title = job_info.text.split('<')[0]
         if insert_author:
             title = job_info.by + ' - ' + title
-        title_cleaned = bleach.clean(title, strip=True)
-        title_cleaned = title_cleaned[254:]
+        title_cleaned = bleach.clean(title[:255], strip=True)
         desc = ''
         if job_info.text:
             desc = job_info.text
