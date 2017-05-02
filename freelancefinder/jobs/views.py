@@ -59,8 +59,9 @@ class UserJobListView(LoginRequiredMixin, ListView, FormGetMixin):
 
     def __base_queryset(self):
         """Build the base queryset for the view."""
-        today = timezone.now().date()
-        return UserJob.objects.filter(user=self.request.user).exclude(job__created__date=today)
+        # today = timezone.now().date()
+        # return UserJob.objects.filter(user=self.request.user).exclude(job__created__date=today)
+        return UserJob.objects.filter(user=self.request.user)
 
     def __form_filtered_queryset(self):
         """Filter by the form fields."""
