@@ -30,7 +30,7 @@ class HackerHarvest(object):
                 logger.warning('Tried to get non-existent job story with ID: %s; ex: %s', story_id, iiid)
                 continue
             post = self.parse_job_to_post(story, subarea='jobs')
-            post.title = 'Hiring - {}'.format(post.title)
+            post.title = 'Full Time - {}'.format(post.title)
             post.title = post.title[:255]
             yield post
 
@@ -49,7 +49,7 @@ class HackerHarvest(object):
                 logger.debug("Skipping blank comment: %s", comment)
                 continue
             post = self.parse_job_to_post(comment, subarea='who_is_hiring')
-            post.title = 'Full Time - {}'.format(post.title)
+            post.title = 'Hiring - {}'.format(post.title)
             post.title = post.title[:255]
             yield post
 
@@ -85,12 +85,12 @@ class HackerHarvest(object):
                 logger.debug("Skipping blank comment: %s", comment)
                 continue
             post = self.parse_job_to_post(comment, subarea='freelancer', insert_author=True)
-            post.is_freelance = True
             if 'SEEKING WORK' in post.title.upper():
                 post.title = 'For Hire - {}'.format(post.title)
             elif 'SEEKING FREELANCER' in post.title.upper():
                 post.title = 'Freelance - {}'.format(post.title)
                 # TODO(Paul): Just set the is_freelance flag?
+                post.is_freelance = True
             post.title = post.title[:255]
             yield post
 
