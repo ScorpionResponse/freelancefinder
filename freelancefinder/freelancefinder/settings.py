@@ -127,6 +127,13 @@ if DEBUG:
         '192.168.2.4',
         '192.168.2.5',
     ]
+    DEBUG_TOOLBAR_CONFIG = {
+        # Add in this line to disable the panel
+        'DISABLE_PANELS': {
+            'debug_toolbar.panels.templates.TemplatesPanel',
+            'debug_toolbar.panels.redirects.RedirectsPanel',
+        },
+    }
 
 ROOT_URLCONF = 'freelancefinder.urls'
 

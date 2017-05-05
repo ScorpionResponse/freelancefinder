@@ -29,13 +29,3 @@ class UserProfileView(LoginRequiredMixin, FormView):
         kwargs = super(UserProfileView, self).get_form_kwargs()
         kwargs['user'] = self.request.user
         return kwargs
-
-class BullShit(FormView):
-    def get(self, request, *args, **kwargs):
-        """Handles GET requests and instantiates a blank version of the form."""
-        form_class = self.get_form_class()
-        form = self.get_form(form_class)
-        logger.info("Form: %s", form)
-        context = self.get_context_data()
-        context['form'] = form
-        return self.render_to_response(context)

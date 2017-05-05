@@ -19,7 +19,6 @@ class ProfileForm(forms.ModelForm):
         """Pop the user out of kwargs."""
         self.user = kwargs.pop('user', None)
         super(ProfileForm, self).__init__(*args, **kwargs)
-        logger.info("initializing form: %s", self)
 
     def save(self, commit=False):
         """Make sure we save the user."""
