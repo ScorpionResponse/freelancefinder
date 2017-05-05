@@ -3,6 +3,8 @@
 import logging
 from future.utils import python_2_unicode_compatible
 
+from model_utils import Choices
+from taggit.managers import TaggableManager
 from timezone_utils.fields import TimeZoneField
 from timezone_utils.choices import PRETTY_ALL_TIMEZONES_CHOICES as TIMEZONE_CHOICES
 
@@ -17,9 +19,12 @@ logger = logging.getLogger(__name__)
 @python_2_unicode_compatible
 class Profile(models.Model):
     """Hold user profile options not in default user model."""
+    REFRESH_FREQUENCY = Choices('daily', 'twice_a_day', 'hourly')
 
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")
     custom_timezone = TimeZoneField(choices=TIMEZONE_CHOICES, default='America/New_York')
+    refresh_frequency = models.CharField(choices=REFRESH_FREQUENCY, default=REFRESH_FREQUENCY.daily, max_length=20)
+    tags = TaggableManager()
 
     def __str__(self):
         """Representation of a profile."""
