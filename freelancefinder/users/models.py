@@ -12,6 +12,7 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.utils.translation import ugettext as _
 
 logger = logging.getLogger(__name__)
 
@@ -19,7 +20,8 @@ logger = logging.getLogger(__name__)
 @python_2_unicode_compatible
 class Profile(models.Model):
     """Hold user profile options not in default user model."""
-    REFRESH_FREQUENCY = Choices('daily', 'twice_a_day', 'hourly')
+
+    REFRESH_FREQUENCY = Choices(('daily', _('Daily')), ('twice_a_day', _('Twice a Day')), ('hourly', _('Hourly')))
 
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")
     custom_timezone = TimeZoneField(choices=TIMEZONE_CHOICES, default='America/New_York')
