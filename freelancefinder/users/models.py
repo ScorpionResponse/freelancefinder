@@ -23,7 +23,7 @@ class Profile(models.Model):
 
     REFRESH_FREQUENCY = Choices(('daily', _('Daily')), ('twice_a_day', _('Twice a Day')), ('hourly', _('Hourly')))
 
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile", unique=True)
     custom_timezone = TimeZoneField(choices=TIMEZONE_CHOICES, default='America/New_York')
     refresh_frequency = models.CharField(choices=REFRESH_FREQUENCY, default=REFRESH_FREQUENCY.daily, max_length=20)
     tags = TaggableManager(blank=True)
