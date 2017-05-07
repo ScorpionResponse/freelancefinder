@@ -40,7 +40,8 @@ def create_userjobs_for(user):
     query = Job.objects.exclude(userjobs__in=current_userjobs)
 
     tags = user.profile.tags.slugs()
-    if len(tags) > 1:
+    logger.info("Got tags '%s' for user '%s'", tags, user)
+    if tags:
         query = query.filter(tags__slugs__in=tags)
 
     for job in query:
