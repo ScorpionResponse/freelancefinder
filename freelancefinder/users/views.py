@@ -4,6 +4,7 @@ import logging
 
 from braces.views import LoginRequiredMixin
 
+from django.urls import reverse_lazy
 from django.views.generic.edit import FormView
 
 from .forms import ProfileForm
@@ -16,6 +17,7 @@ class UserProfileView(LoginRequiredMixin, FormView):
 
     template_name = "users/profile.html"
     form_class = ProfileForm
+    success_url = reverse_lazy('userjob-list')
 
     def get_context_data(self, **kwargs):
         """Add user to kwargs."""
