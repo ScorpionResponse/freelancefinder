@@ -1,6 +1,6 @@
 """Tests related to UserJobs functionality."""
 
-from datetime import date, timedelta
+from datetime import date, datetime, timedelta
 
 from ..models import UserJob
 
@@ -17,14 +17,21 @@ def test_userjob_list_date_200(authed_client, user_job):
     response = authed_client.get('/jobs/my-opportunities/%s/' % (yesterday,))
     assert response.status_code == 200
 
+def test_userjob_list_post_200(authed_client, user_job_factory, post):
+    """Simple test for the userjobs page with post."""
+    yesterday = (date.today() - timedelta(1)).strftime("%Y-%m-%d")
+    uj = user_job_factory(job=post.job, job__created=yesterday)
+    response = authed_client.get('/jobs/my-opportunities/%s/' % (yesterday,))
+    assert response.status_code == 200
+
 
 def test_userjob_list_100(authed_client, user_job_factory):
     """Simple test for the userjobs list page with 100 userjobs."""
-    yesterday = date.today() - timedelta(1)
+    today = datetime.today()
     for i in range(100):
-        new_userjob = user_job_factory(job__created=yesterday)
-    yesterday = yesterday.strftime('%Y-%m-%d')
-    response = authed_client.get('/jobs/my-opportunities/%s/' % (yesterday,))
+        new_userjob = user_job_factory(job__created=today, job__modified=today)
+    today = today.strftime('%Y-%m-%d')
+    response = authed_client.get('/jobs/my-opportunities/%s/' % (today,))
     assert response.status_code == 200
 
 
