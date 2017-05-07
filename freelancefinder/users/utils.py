@@ -42,7 +42,7 @@ def create_userjobs_for(user):
     tags = user.profile.tags.slugs()
     logger.info("Got tags '%s' for user '%s'", tags, user)
     if tags:
-        query = query.filter(tags__slugs__in=tags)
+        query = query.filter(tags__slug__in=tags)
 
     for job in query:
         logger.debug("Assigning job %s to user %s", job, user)
