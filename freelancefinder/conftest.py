@@ -2,10 +2,11 @@
 
 import pytest
 from pytest_factoryboy import register
+from django_factory_boy.auth import UserFactory
 
 from django.contrib.auth.models import Group
 
-from jobs.tests.factories import JobFactory, PostFactory, SourceFactory, TagFactory
+from jobs.tests.factories import JobFactory, PostFactory, SourceFactory, TagFactory, UserJobFactory
 
 # pylint: disable=redefined-outer-name,unused-variable
 
@@ -79,3 +80,5 @@ register(TagFactory)
 register(JobFactory)
 register(PostFactory)
 register(SourceFactory)
+register(UserJobFactory)
+register(UserFactory)

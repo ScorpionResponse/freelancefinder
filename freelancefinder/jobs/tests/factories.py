@@ -2,6 +2,7 @@
 
 import factory
 from faker import Factory as FakerFactory
+from django_factory_boy.auth import UserFactory
 
 FAKER = FakerFactory.create()
 
@@ -40,6 +41,18 @@ class JobFactory(factory.django.DjangoModelFactory):
             tags = extracted
         for tag in tags:
             self.tags.add(tag)
+
+
+class UserJobFactory(factory.django.DjangoModelFactory):
+    """UserJob Factory."""
+
+    job = factory.SubFactory(JobFactory)
+    user = factory.SubFactory(UserFactory)
+
+    class Meta(object):
+        """Config for userjobfactory."""
+
+        model = 'jobs.UserJob'
 
 
 class SourceFactory(factory.django.DjangoModelFactory):

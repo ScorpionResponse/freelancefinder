@@ -3,6 +3,7 @@
 coveralls==1.1
 django-debug-toolbar==1.8
 django_coverage_plugin==1.5.0
+django_factory_boy==1.0.0
 factory_boy==2.8.1
 Faker==0.7.11
 pycodestyle==2.3.1
