@@ -39,9 +39,9 @@ def create_userjobs_for(user):
     current_userjobs = UserJob.all_objects.filter(user=user)  # pylint: disable=no-member
     query = Job.objects.exclude(userjobs__in=current_userjobs)
 
-    tags = user.profile.tags.all()
+    tags = user.profile.tags.slugs()
     if len(tags) > 1:
-        query = query.filter(tags__in=tags)
+        query = query.filter(tags__slugs__in=tags)
 
     for job in query:
         logger.debug("Assigning job %s to user %s", job, user)
