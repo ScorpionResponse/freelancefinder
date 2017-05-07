@@ -23,15 +23,12 @@ class ProfileForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         """Pop the user out of kwargs."""
-        self.user = kwargs.pop('user', None)
         super(ProfileForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.add_input(Submit('submit', 'Save'))
 
+class Bullshit():
     def save(self, commit=True):
         """Make sure we save the user."""
-        profile = super(ProfileForm, self).save(commit=False)
-        profile.user = self.user
-        if commit:
-            profile.save()
-        return profile
+        self.instance = self.user.profile
+        return super(ProfileForm, self).save(commit=commit)
