@@ -18,19 +18,22 @@ def test_userjob_list_date_200(authed_client, user_job):
     assert response.status_code == 200
 
 
-def test_userjob_list_post_200(authed_client, user_job_factory, post):
+def test_userjob_list_post_200(authed_user, authed_client, user_job_factory, post, source):
     """Simple test for the userjobs page with post."""
-    yesterday = (date.today() - timedelta(1)).strftime("%Y-%m-%d")
-    uj = user_job_factory(job=post.job, job__created=yesterday)
+    yesterday = datetime.today() - timedelta(1)
+    post.source = source
+    post.save()
+    uj = user_job_factory(job=post.job, user=authed_user, created=yesterday)
+    yesterday = yesterday.strftime("%Y-%m-%d")
     response = authed_client.get('/jobs/my-opportunities/%s/' % (yesterday,))
     assert response.status_code == 200
 
 
-def test_userjob_list_30(authed_client, user_job_factory):
+def test_userjob_list_30(authed_user, authed_client, user_job_factory):
     """Simple test for the userjobs list page with 100 userjobs."""
     today = datetime.today()
     for i in range(30):
-        new_userjob = user_job_factory(job__created=today, job__modified=today)
+        new_userjob = user_job_factory(user=authed_user, job__created=today)
     today = today.strftime('%Y-%m-%d')
     response = authed_client.get('/jobs/my-opportunities/%s/' % (today,))
     assert response.status_code == 200
