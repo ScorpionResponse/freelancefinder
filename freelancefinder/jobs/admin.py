@@ -14,15 +14,13 @@ def remove_tags(modeladmin, request, queryset):
     for obj in queryset:
         obj.tags.clear()
 
-
 remove_tags.short_description = "Remove Tags"
 
 
 def set_is_removed(modeladmin, request, queryset):
     """Soft Delete objects."""
     logger.debug('MA: %s, request: %s', modeladmin, request)
-    for obj in queryset:
-        obj.update(is_removed=True)
+    queryset.update(is_removed=True)
 
 set_is_removed.short_description = "Soft Delete"
 
