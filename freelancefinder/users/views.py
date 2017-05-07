@@ -4,6 +4,7 @@ import logging
 
 from braces.views import LoginRequiredMixin
 
+from django.contrib import messages
 from django.urls import reverse_lazy
 from django.views.generic.edit import FormView
 
@@ -30,3 +31,9 @@ class UserProfileView(LoginRequiredMixin, FormView):
         kwargs = super(UserProfileView, self).get_form_kwargs()
         kwargs['user'] = self.request.user
         return kwargs
+
+    def form_valid(self, form):
+        """Save form and return."""
+        form.save()
+        messages.success(self.request, "Profile changes saved.")
+        return super(UserProfileView, self).form_valid(form)
