@@ -166,7 +166,9 @@ DATABASES = {
     'default': env.db()
 }
 
-LOG_LEVEL = DEBUG and 'DEBUG' or 'INFO'
+LOG_LEVEL = 'DEBUG' if DEBUG else 'INFO'
+
+ADMINS = [('Paul', 'moss.paul@gmail.com'), ('Paul', 'paul@freelancefinder.work')]
 
 LOGGING = {
     'version': 1,
