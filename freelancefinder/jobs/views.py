@@ -94,6 +94,9 @@ class UserJobListView(LoginRequiredMixin, ListView, FormGetMixin):
     def get_date_facets(self):
         """Get results faceted by created."""
         querys = self.__form_filtered_queryset()
+        source = self.request.GET.get('source', None)
+        if source:
+            querys = querys.filter(job__posts__source__code=source)
         querys = querys.values(created_date=TruncDate('job__created')).annotate(total=Count(TruncDate('job__created'))).order_by('created_date').reverse()
         return querys
 
