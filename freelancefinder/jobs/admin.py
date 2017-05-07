@@ -18,6 +18,15 @@ def remove_tags(modeladmin, request, queryset):
 remove_tags.short_description = "Remove Tags"
 
 
+def set_is_removed(modeladmin, request, queryset):
+    """Soft Delete objects."""
+    logger.debug('MA: %s, request: %s', modeladmin, request)
+    for obj in queryset:
+        obj.update(is_removed=True)
+
+set_is_removed.short_description = "Soft Delete"
+
+
 class JobAdmin(admin.ModelAdmin):
     """The Job model admin has some special tag handling."""
 
@@ -46,6 +55,7 @@ class UserJobAdmin(admin.ModelAdmin):
     """The UserJob model admin."""
 
     model = UserJob
+    actions = [set_is_removed]
 
     # List fields
     list_display = ('job', 'user', 'is_removed', 'created', 'modified')
