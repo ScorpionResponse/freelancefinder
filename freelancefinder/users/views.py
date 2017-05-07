@@ -5,6 +5,7 @@ import logging
 from braces.views import LoginRequiredMixin
 
 from django.contrib import messages
+from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.views.generic.edit import UpdateView
 
@@ -23,4 +24,11 @@ class UserProfileView(LoginRequiredMixin, UpdateView):
     success_url = reverse_lazy('userjob-list')
 
     def get_object(self, queryset=None):
-        return self.request.user
+        """Use the logged in user's profile."""
+        return self.request.user.profile
+
+    def form_valid(self, form):
+        """If the form is valid, redirect to the supplied URL."""
+        form.save()
+        messages.success(self.request, "Profile changes saved.")
+        return HttpResponseRedirect(self.get_success_url())

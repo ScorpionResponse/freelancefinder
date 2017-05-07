@@ -22,13 +22,7 @@ class ProfileForm(forms.ModelForm):
         exclude = ('user',)
 
     def __init__(self, *args, **kwargs):
-        """Pop the user out of kwargs."""
+        """Add Crispy Forms helpers."""
         super(ProfileForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.add_input(Submit('submit', 'Save'))
-
-class Bullshit():
-    def save(self, commit=True):
-        """Make sure we save the user."""
-        self.instance = self.user.profile
-        return super(ProfileForm, self).save(commit=commit)
