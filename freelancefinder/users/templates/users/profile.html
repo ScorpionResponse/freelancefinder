@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
 
-{% block 'title' %}Freelance Finder - User Profile{% endblock %}
+{% block 'title' %}Freelance Finder - Profile for {{ user }}{% endblock %}
 
 {% block 'content' %}
 
-<h1>{{ user }} Profile</h1>
+<h1>Profile for {{ user }}</h1>
 
 {% crispy form %}
 

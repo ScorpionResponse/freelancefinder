@@ -26,7 +26,7 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")
     custom_timezone = TimeZoneField(choices=TIMEZONE_CHOICES, default='America/New_York')
     refresh_frequency = models.CharField(choices=REFRESH_FREQUENCY, default=REFRESH_FREQUENCY.daily, max_length=20)
-    tags = TaggableManager()
+    tags = TaggableManager(blank=True)
 
     def __str__(self):
         """Representation of a profile."""
