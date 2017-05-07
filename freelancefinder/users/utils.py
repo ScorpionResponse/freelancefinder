@@ -35,11 +35,13 @@ def is_in_group(user, groups):
 
 def create_userjobs_for(user):
     """Create userjobs for a specific user."""
-    query = Job.objects.filter(userjobs__user=user, userjobs__isnull=True)
+    current_userjobs = UserJob.objects.filter(user=user)
+    query = Job.objects.exclude(userjobs__in=current_userjobs)
 
-    tags = user.profile.tags
+    tags = user.profile.tags.all()
     if len(tags) > 1:
         query = query.filter(tags__in=tags)
 
     for job in query:
+        logger.debug("Assigning job %s to user %s", job, user)
         UserJob.objects.create(job=job, user=user)

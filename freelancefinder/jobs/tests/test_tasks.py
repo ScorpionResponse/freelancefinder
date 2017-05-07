@@ -1,7 +1,7 @@
 """Tests for the jobs.tasks."""
 
-from ..models import Post, Job
-from ..tasks import process_new_posts, create_jobs, tag_jobs
+from ..models import Post, Job, UserJob
+from ..tasks import process_new_posts, create_jobs, tag_jobs, create_userjobs
 
 
 def test_post_processing(post_factory):
@@ -16,6 +16,34 @@ def test_post_processing(post_factory):
     assert post_unprocessed_posts == 0
 
 
+def test_post_processing_full_time(post_factory):
+    """Verify that Full Time posts are garbaged."""
+    this_post = post_factory.create(title='[Full Time] some job posting', processed=False, create_tags=['Full Time'])
+    this_post.save()
+    pre_unprocessed_posts = Post.objects.filter(processed=False).count()
+    process_new_posts()
+    post_unprocessed_posts = Post.objects.filter(processed=False).count()
+    this_post = Post.all_objects.get(pk=this_post.id)
+
+    assert pre_unprocessed_posts != post_unprocessed_posts
+    assert post_unprocessed_posts == 0
+    assert this_post.garbage
+
+
+def test_post_processing_for_hire(post_factory):
+    """Verify that For Hire posts are garbaged."""
+    this_post = post_factory(title='[For Hire] some job posting', processed=False, create_tags=['For Hire'])
+    this_post.save()
+    pre_unprocessed_posts = Post.objects.filter(processed=False).count()
+    process_new_posts()
+    post_unprocessed_posts = Post.objects.filter(processed=False).count()
+    this_post = Post.all_objects.get(pk=this_post.id)
+
+    assert pre_unprocessed_posts != post_unprocessed_posts
+    assert post_unprocessed_posts == 0
+    assert this_post.garbage
+
+
 def test_create_jobs(post_factory):
     """Verify that jobs are created."""
     post_factory(is_freelance=True, processed=False, job=None)
@@ -25,6 +53,12 @@ def test_create_jobs(post_factory):
 
     assert post_jobs != 0
     assert pre_jobs != post_jobs
+
+
+def test_create_userjobs(paid_user, job):
+    """Verify that UserJobs are created."""
+    create_userjobs()
+    assert UserJob.objects.all().count() > 0
 
 
 def test_jobs_detect_dupes(post_factory):

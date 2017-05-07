@@ -72,3 +72,14 @@ class PostFactory(factory.django.DjangoModelFactory):
         """Config for PostFactory."""
 
         model = 'jobs.Post'
+
+    @factory.post_generation
+    def create_tags(self, create, extracted):
+        """Generate tags."""
+        if not create:
+            return
+        tags = ['job', 'django', 'soup']
+        if extracted:
+            tags = extracted
+        for tag in tags:
+            self.tags.add(tag)

@@ -56,6 +56,7 @@ def create_userjobs():
     from django.contrib.auth.models import User
     from users.utils import create_userjobs_for
 
+    logger.info("Creating user jobs.")
     for user in User.objects.all():
         create_userjobs_for(user)
 
