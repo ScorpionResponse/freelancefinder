@@ -53,12 +53,11 @@ def create_jobs():
 @celery_app.task
 def create_userjobs():
     """Link Users and Jobs."""
-    from .models import Job, UserJob
     from django.contrib.auth.models import User
+    from users.utils import create_userjobs_for
 
-    for job in Job.objects.filter(userjobs__isnull=True).order_by('-created'):
-        for user in User.objects.all():
-            UserJob.objects.create(job=job, user=user)
+    for user in User.objects.all():
+        create_userjobs_for(user)
 
 
 @celery_app.task

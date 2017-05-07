@@ -4,6 +4,8 @@ import logging
 
 from django.core.cache import cache
 
+from jobs.models import Job, UserJob
+
 logger = logging.getLogger(__name__)
 
 
@@ -29,3 +31,15 @@ def is_in_group(user, groups):
         finally:
             cache.set(cache_key, user_is_in_group, 3600)
     return user_is_in_group
+
+
+def create_userjobs_for(user):
+    """Create userjobs for a specific user."""
+    query = Job.objects.filter(userjobs__user=user, userjobs__isnull=True)
+
+    tags = user.profile.tags
+    if len(tags) > 1:
+        query = query.filter(tags__in=tags)
+
+    for job in query:
+        UserJob.objects.create(job=job, user=user)
