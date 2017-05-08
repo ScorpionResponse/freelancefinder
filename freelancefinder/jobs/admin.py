@@ -15,16 +15,28 @@ def remove_tags(modeladmin, request, queryset):
         obj.tags.clear()
 
 
-remove_tags.short_description = "Remove Tags"
-
-
 def set_is_removed(modeladmin, request, queryset):
     """Soft Delete objects."""
     logger.debug('MA: %s, request: %s', modeladmin, request)
     queryset.update(is_removed=True)
 
 
+def set_as_garbage(modeladmin, request, queryset):
+    """Set posts as garbage."""
+    logger.debug('MA: %s, request: %s', modeladmin, request)
+    queryset.update(garbage=True)
+
+
+def set_as_freelance(modeladmin, request, queryset):
+    """Set posts as freelance."""
+    logger.debug('MA: %s, request: %s', modeladmin, request)
+    queryset.update(is_freelance=True)
+
+
+remove_tags.short_description = "Remove Tags"
 set_is_removed.short_description = "Soft Delete"
+set_as_garbage.short_description = 'Mark Garbage'
+set_as_freelance.short_description = 'Mark Freelance'
 
 
 class JobAdmin(admin.ModelAdmin):
