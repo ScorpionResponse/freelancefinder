@@ -40,10 +40,10 @@ def create_userjobs_for(user):
     query = Job.objects.exclude(userjobs__in=current_userjobs)
 
     tags = user.profile.tags.slugs()
-    logger.info("Got tags '%s' for user '%s'", tags, user)
     if tags:
+        logger.info("Got tags '%s' for user '%s'", tags, user)
         query = query.filter(tags__slug__in=tags).distinct()
 
     for job in query:
-        logger.debug("Assigning job %s to user %s", job, user)
+        logger.info("Assigning job %s to user %s", job, user)
         UserJob.objects.create(job=job, user=user)
