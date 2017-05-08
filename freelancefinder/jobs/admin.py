@@ -96,7 +96,7 @@ class PostAdmin(admin.ModelAdmin):
     # List fields
     list_display = ('title', 'source', 'subarea', 'tag_list', 'is_freelance', 'processed', 'garbage', 'created')
     search_fields = ('title',)
-    list_filter = ('source__name', 'garbage')
+    list_filter = ('source__name', 'garbage', 'is_freelance')
 
     # Detail screen fields
     fields = ('title', 'url', 'source', 'subarea', 'description', 'unique', 'tags', 'is_freelance', 'processed', 'garbage', 'created', 'modified')
