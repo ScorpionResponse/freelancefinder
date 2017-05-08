@@ -91,7 +91,7 @@ class PostAdmin(admin.ModelAdmin):
     """The Post model needs no special admin configuration."""
 
     model = Post
-    actions = [remove_tags]
+    actions = [remove_tags, set_as_garbage, set_as_freelance]
 
     # List fields
     list_display = ('title', 'source', 'subarea', 'tag_list', 'is_freelance', 'processed', 'garbage', 'created')
