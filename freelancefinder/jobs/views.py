@@ -44,8 +44,12 @@ class UserJobRedirectView(LoginRequiredMixin, RedirectView):
     def get_redirect_url(self, *args, **kwargs):
         """Insert a default date and redirect."""
         now = timezone.now()
-        yesterday = now - datetime.timedelta(days=1)
-        kwargs['date'] = yesterday.strftime("%Y-%m-%d")
+        redirect_date = now - datetime.timedelta(days=1)
+
+        first_userjob = UserJob.objects.filter(user=self.request.user).order_by('job__created').reverse().first()
+        if first_userjob:
+            redirect_date = first_userjob.job.created
+        kwargs['date'] = redirect_date.strftime("%Y-%m-%d")
         return super(UserJobRedirectView, self).get_redirect_url(*args, **kwargs)
 
 
