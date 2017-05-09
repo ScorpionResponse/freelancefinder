@@ -1,5 +1,4 @@
 {% extends 'base.html' %}
-{% load django_tables2 %}
 
 {% block 'title' %}Freelance Finder - Source List{% endblock %}
 
@@ -21,7 +20,7 @@
 </div>
 
 <h4>History:</h4>
-<div>{% render_table harvest_history %}</div>
+<div>{{ harvest_history }}</div>
 
 <h4>Debug:</h4>
 <div>{{ request.META }}</div>
