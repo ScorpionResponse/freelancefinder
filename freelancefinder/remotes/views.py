@@ -6,7 +6,6 @@ from django.db.models.functions.datetime import TruncDate
 from django.views.generic import ListView
 
 from .models import Source
-from .tables import HistoryTable
 
 
 class SourceListView(GroupRequiredMixin, ListView):
@@ -18,8 +17,26 @@ class SourceListView(GroupRequiredMixin, ListView):
 
     def _get_harvest_history(self):
         """Get a history of harvests executed."""
-        history = Source.objects.all().values('code', harvest_date=TruncDate('posts__modified')).annotate(post_count=Count('posts')).order_by('-harvest_date', 'name')
-        return HistoryTable(history)
+        harvest_table = []
+        code_position = {}
+        header = ['Harvest Date']
+
+        all_sources = Source.objects.all().values_list('code', 'name').order_by('name')
+        for position, (code, name) in enumerate(all_sources):
+            code_position[code] = position
+            header.append(name)
+
+        history = Source.objects.all().values('code', harvest_date=TruncDate('posts__modified')).annotate(post_count=Count('posts')).order_by('-harvest_date')
+        current_date = None
+        this_row = header
+        for row in history:
+            if row.harvest_date != current_date:
+                harvest_table.append(this_row)
+                this_row.append(row.harvest_date)
+                current_date = row.harvest_date
+            this_row.insert(code_position[row.code], row.post_count)
+
+        return harvest_table
 
     def get_context_data(self, **kwargs):
         """Add history to context info."""

@@ -39,7 +39,6 @@ PREREQ_APPS = [
     'allauth.socialaccount.providers.linkedin',
     'allauth.socialaccount.providers.reddit',
     'django_logtail',
-    'django_tables2',
     'taggit',
 ]
 
