@@ -63,18 +63,20 @@
         });
 
         // Grab the headings for the line labels
-        var dataset_labels = $history_table.find('thead td:not(:first)').map(function() {
-            return $(this).text();
+        var dataset_labels = []
+        $history_table.find('thead th:not(:first)').map(function() {
+            dataset_labels.push($(this).text());
         });
 
         // Start creating the datasets for each line
-        var datasets = dataset_labels.each(function(ind, elem) {
-            return {label: elem, data: []};
+        var datasets = [];
+        $.each(dataset_labels, function(ind, elem) {
+            datasets.push({label: elem, data: []});
         });
         // Add the data for each line's coordinates
         $history_table.find('tbody tr').each(function() {
             $(this).find('td:not(:first)').each(function(ind, elem) {
-                datasets[ind]['data'].push(elem.text());
+                datasets[ind]['data'].push($(elem).text());
             });
         });
 
