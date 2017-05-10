@@ -59,5 +59,5 @@ class SourceListView(GroupRequiredMixin, ListView):
         """Add history to context info."""
         context = super(SourceListView, self).get_context_data(**kwargs)
         # Trim out the last 30 days, since we only want a snapshot
-        context['harvest_history'] = self._get_harvest_history()[:30]
+        context['harvest_history'] = self._get_harvest_history()
         return context
