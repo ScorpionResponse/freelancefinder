@@ -61,7 +61,7 @@
         // Grab the dates for the X axis labels
         var labels = [];
         $history_table.find('tbody tr').each(function() {
-            return $(this).find("td:first").text();
+            labels.push($(this).find("td:first").text());
         });
         console.log('Got x axis labels: ' + labels);
 
