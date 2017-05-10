@@ -1,4 +1,6 @@
 """Views for remotes app."""
+import logging
+
 from braces.views import GroupRequiredMixin
 
 from django.db.models.aggregates import Count
@@ -6,6 +8,8 @@ from django.db.models.functions.datetime import TruncDate
 from django.views.generic import ListView
 
 from .models import Source
+
+logger = logging.getLogger(__name__)
 
 
 class SourceListView(GroupRequiredMixin, ListView):
@@ -31,6 +35,7 @@ class SourceListView(GroupRequiredMixin, ListView):
         this_row = header
         for row in history:
             if row['harvest_date'] != current_date:
+                logger.debug('Appending info: %s', this_row)
                 harvest_table.append([value for position, value in sorted(this_row)])
                 this_row = []
                 this_row.append((0, row['harvest_date']))
