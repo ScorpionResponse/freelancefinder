@@ -36,6 +36,15 @@ class SourceListView(GroupRequiredMixin, ListView):
         for row in history:
             logger.info("Processing source history row: %s", row)
             if row['harvest_date'] != current_date:
+                if len(this_row) < len(code_position) + 1:
+                    this_row_dict = {k: v for k, v in this_row}
+                    new_row = []
+                    for position in range(len(code_position) + 1):
+                        if position in this_row_dict:
+                            new_row.append((position, this_row_dict[position]))
+                        else:
+                            new_row.append((position, 0))
+                    this_row = new_row
                 logger.debug('Appending info: %s', this_row)
                 harvest_table.append([value for position, value in sorted(this_row)])
                 this_row = []
