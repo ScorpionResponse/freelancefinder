@@ -61,12 +61,14 @@
         var labels = $history_table.find('tbody tr').map(function() {
             return $(this).find("td:first").text();
         });
+        console.log('Got x axis labels: ' + labels);
 
         // Grab the headings for the line labels
         var dataset_labels = []
         $history_table.find('thead th:not(:first)').map(function() {
             dataset_labels.push($(this).text());
         });
+        console.log('Got dataset labels: ' + dataset_labels);
 
         // Start creating the datasets for each line
         var datasets = [];
@@ -79,6 +81,7 @@
                 datasets[ind]['data'].push($(elem).text());
             });
         });
+        console.log('Got dataset: ' + dataset);
 
         var data = {labels: labels, datasets: datasets};
         var options = {};
