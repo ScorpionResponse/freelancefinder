@@ -19,23 +19,23 @@ class SourceListView(GroupRequiredMixin, ListView):
         """Get a history of harvests executed."""
         harvest_table = []
         code_position = {}
-        header = ['Harvest Date']
+        header = [(0, 'Harvest Date')]
 
         all_sources = Source.objects.all().values_list('code', 'name').order_by('name')
-        for position, (code, name) in enumerate(all_sources):
+        for position, (code, name) in enumerate(all_sources, 1):
             code_position[code] = position
-            header.append(name)
+            header.append((position, name))
 
         history = Source.objects.all().values('code', harvest_date=TruncDate('posts__modified')).annotate(post_count=Count('posts')).order_by('-harvest_date')
         current_date = None
         this_row = header
         for row in history:
             if row['harvest_date'] != current_date:
-                harvest_table.append(this_row)
+                harvest_table.append([value for position, value in sorted(this_row)])
                 this_row = []
-                this_row.append(row['harvest_date'])
+                this_row.append((0, row['harvest_date']))
                 current_date = row['harvest_date']
-            this_row.insert(code_position[row['code']], row['post_count'])
+            this_row.append((code_position[row['code']], row['post_count']))
 
         return harvest_table
 

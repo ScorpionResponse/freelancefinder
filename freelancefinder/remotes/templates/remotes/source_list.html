@@ -20,7 +20,15 @@
 </div>
 
 <h4>History:</h4>
-<div>{{ harvest_history }}</div>
+<table>
+    {% for history_row in harvest_history %}
+        <tr>
+            {% for history_column in history_row %}
+            <td>{{ history_column }}</td>
+            {% endfor %}
+        </tr>
+    {% endfor %}
+</table>
 
 <h4>Debug:</h4>
 <div>{{ request.META }}</div>
