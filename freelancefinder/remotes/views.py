@@ -30,7 +30,7 @@ class SourceListView(GroupRequiredMixin, ListView):
             code_position[code] = position
             header.append((position, name))
 
-        history = Source.objects.all().values('code', harvest_date=TruncDate('posts__modified')).annotate(post_count=Count('posts')).order_by('-harvest_date')
+        history = Source.objects.all().values('code', harvest_date=TruncDate('posts__created')).annotate(post_count=Count('posts')).order_by('-harvest_date')
         current_date = None
         this_row = header
         for row in history:
