@@ -34,6 +34,7 @@ class SourceListView(GroupRequiredMixin, ListView):
         current_date = None
         this_row = header
         for row in history:
+            logger.info("Processing source history row: %s", row)
             if row['harvest_date'] != current_date:
                 logger.debug('Appending info: %s', this_row)
                 harvest_table.append([value for position, value in sorted(this_row)])
