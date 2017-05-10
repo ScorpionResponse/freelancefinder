@@ -74,7 +74,7 @@
         // Start creating the datasets for each line
         var datasets = [];
         $.each(dataset_labels, function(ind, elem) {
-            datasets.push({label: elem, data: []});
+            datasets.push({"label": elem, "data": []});
         });
         // Add the data for each line's coordinates
         $history_table.find('tbody tr').each(function() {
@@ -84,7 +84,7 @@
         });
         console.log('Got dataset: ' + datasets);
 
-        var data = {labels: labels, datasets: datasets};
+        var data = {"labels": labels, "datasets": datasets};
         var options = {};
 
         // Create a line chart
