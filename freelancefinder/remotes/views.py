@@ -37,6 +37,7 @@ class SourceListView(GroupRequiredMixin, ListView):
             logger.info("Processing source history row: %s", row)
             if row['harvest_date'] != current_date:
                 if len(this_row) < len(code_position) + 1:
+                    # This is some kind of garbage that could be cleaned up
                     this_row_dict = {k: v for k, v in this_row}
                     new_row = []
                     for position in range(len(code_position) + 1):
@@ -57,5 +58,6 @@ class SourceListView(GroupRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         """Add history to context info."""
         context = super(SourceListView, self).get_context_data(**kwargs)
-        context['harvest_history'] = self._get_harvest_history()
+        # Trim out the last 30 days, since we only want a snapshot
+        context['harvest_history'] = self._get_harvest_history()[:30]
         return context
