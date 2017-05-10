@@ -5,6 +5,11 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment-with-locales.min.js" crossorigin="anonymous"></script>
     {# <script src="//cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js" crossorigin="anonymous"></script> #}
     <script src="//cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.js" crossorigin="anonymous"></script>
+    <style type="text/css">
+    .history-chart {
+        background-color: #FFFFFF;
+    }
+    </style>
 {% endblock %}
 
 {% block 'content' %}
@@ -25,7 +30,9 @@
 </div>
 
 <h4>History:</h4>
+<div class="history-chart">
 <canvas id="history-chart" width="400" height="400"></canvas>
+</div>
 <table id="history-table" class="table table-striped table-bordered table-sm">
     {% for history_row in harvest_history %}
         {% if forloop.first %}
