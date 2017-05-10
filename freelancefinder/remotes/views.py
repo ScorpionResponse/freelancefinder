@@ -1,5 +1,6 @@
 """Views for remotes app."""
 import logging
+from datetime import datetime, timedelta
 
 from braces.views import GroupRequiredMixin
 
@@ -21,6 +22,7 @@ class SourceListView(GroupRequiredMixin, ListView):
 
     def _get_harvest_history(self):
         """Get a history of harvests executed."""
+        report_since_day = datetime.now() - timedelta(days=30)
         harvest_table = []
         code_position = {}
         header = [(0, 'Harvest Date')]
@@ -30,7 +32,7 @@ class SourceListView(GroupRequiredMixin, ListView):
             code_position[code] = position
             header.append((position, name))
 
-        history = Source.objects.all().values('code', harvest_date=TruncDate('posts__created')).annotate(post_count=Count('posts')).order_by('harvest_date')
+        history = Source.objects.filter(posts__created__gte=report_since_day).values('code', harvest_date=TruncDate('posts__created')).annotate(post_count=Count('posts')).order_by('harvest_date')
         current_date = None
         this_row = header
         for row in history:
