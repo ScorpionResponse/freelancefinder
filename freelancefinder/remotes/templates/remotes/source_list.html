@@ -80,12 +80,12 @@
             });
         });
 
+        var data = {labels: labels, datasets: datasets};
         var options = {};
 
         // Create a line chart
         var historyChart = Chart.Line(ctx, {
-            labels: labels,
-            data: datasets,
+            data: data,
             options: options,
         });
     }); 
