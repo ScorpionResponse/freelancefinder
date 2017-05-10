@@ -32,6 +32,7 @@ class SourceListView(GroupRequiredMixin, ListView):
         for row in history:
             if row['harvest_date'] != current_date:
                 harvest_table.append(this_row)
+                this_row = []
                 this_row.append(row['harvest_date'])
                 current_date = row['harvest_date']
             this_row.insert(code_position[row['code']], row['post_count'])
