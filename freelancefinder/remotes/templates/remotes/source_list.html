@@ -59,7 +59,8 @@
         var ctx = $('#history-chart');
         var $history_table = $('#history-table');
         // Grab the dates for the X axis labels
-        var labels = $history_table.find('tbody tr').map(function() {
+        var labels = [];
+        $history_table.find('tbody tr').each(function() {
             return $(this).find("td:first").text();
         });
         console.log('Got x axis labels: ' + labels);
