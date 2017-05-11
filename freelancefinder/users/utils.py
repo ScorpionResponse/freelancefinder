@@ -2,6 +2,7 @@
 
 import logging
 
+from django.contrib.auth.models import User
 from django.core.cache import cache
 
 from jobs.models import Job, UserJob
@@ -47,3 +48,8 @@ def create_userjobs_for(user):
     for job in query:
         logger.info("Assigning job %s to user %s", job, user)
         UserJob.objects.create(job=job, user=user)
+
+
+def users_with_frequency(frequency):
+    """Get users with this frequency setting."""
+    return User.objects.filter(profile__refresh_frequency=frequency)

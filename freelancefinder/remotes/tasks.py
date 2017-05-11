@@ -38,6 +38,14 @@ def setup_periodic_tasks(sender, **kwargs):
     schedule_10_minutes, created = IntervalSchedule.objects.get_or_create(every=10, period=IntervalSchedule.MINUTES)
     logger.debug("IntervalSchedule: %s; Created: %s", schedule_10_minutes, created)
 
+    # UserJob Frequencies
+    schedule_daily, created = IntervalSchedule.objects.get_or_create(every=1, period=IntervalSchedule.DAYS)
+    logger.debug("IntervalSchedule: %s; Created: %s", schedule_daily, created)
+    schedule_twice_daily, created = IntervalSchedule.objects.get_or_create(every=12, period=IntervalSchedule.HOURS)
+    logger.debug("IntervalSchedule: %s; Created: %s", schedule_twice_daily, created)
+    schedule_hourly, created = IntervalSchedule.objects.get_or_create(every=1, period=IntervalSchedule.HOURS)
+    logger.debug("IntervalSchedule: %s; Created: %s", schedule_hourly, created)
+
     pertask, created = PeriodicTask.objects.get_or_create(interval=schedule_4_minutes, name="Process New Posts", task='jobs.tasks.process_new_posts')
     logger.debug("PeriodicTask: %s; Created: %s", pertask, created)
     pertask, created = PeriodicTask.objects.get_or_create(interval=schedule_4_minutes, name="Tag Posts", task='jobs.tasks.tag_posts')
@@ -47,7 +55,11 @@ def setup_periodic_tasks(sender, **kwargs):
     pertask, created = PeriodicTask.objects.get_or_create(interval=schedule_4_minutes, name="Tag Jobs", task='jobs.tasks.tag_jobs')
     logger.debug("PeriodicTask: %s; Created: %s", pertask, created)
 
-    pertask, created = PeriodicTask.objects.get_or_create(interval=schedule_4_minutes, name="Create UserJobs", task='jobs.tasks.create_userjobs')
+    pertask, created = PeriodicTask.objects.get_or_create(interval=schedule_daily, name="Create UserJobs - Daily Users", task='jobs.tasks.create_userjobs', kwargs='{"frequency": "daily"}')
+    logger.debug("PeriodicTask: %s; Created: %s", pertask, created)
+    pertask, created = PeriodicTask.objects.get_or_create(interval=schedule_twice_daily, name="Create UserJobs - Twice Daily Users", task='jobs.tasks.create_userjobs', kwargs='{"frequency": "twice_a_day"}')
+    logger.debug("PeriodicTask: %s; Created: %s", pertask, created)
+    pertask, created = PeriodicTask.objects.get_or_create(interval=schedule_hourly, name="Create UserJobs - Hourly Users", task='jobs.tasks.create_userjobs', kwargs='{"frequency": "hourly"}')
     logger.debug("PeriodicTask: %s; Created: %s", pertask, created)
 
     pertask, created = PeriodicTask.objects.get_or_create(interval=schedule_10_minutes, name='Harvest Remotes', task='remotes.tasks.harvest_sources')

@@ -51,13 +51,12 @@ def create_jobs():
 
 
 @celery_app.task
-def create_userjobs():
+def create_userjobs(frequency):
     """Link Users and Jobs."""
-    from django.contrib.auth.models import User
-    from users.utils import create_userjobs_for
+    from users.utils import create_userjobs_for, users_with_frequency
 
-    logger.info("Creating user jobs.")
-    for user in User.objects.all():
+    for user in users_with_frequency(frequency):
+        logger.info("Creating user jobs for user: %s.", user)
         create_userjobs_for(user)
 
 
