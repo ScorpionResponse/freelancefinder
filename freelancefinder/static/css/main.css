@@ -76,6 +76,14 @@ body {
     margin-right: 0.2em;
 }
 
+/* Select2 */
+.select2-results { 
+    color: #000; 
+}
+.select2-selection { 
+    color: #000; 
+}
+
 /* Buttons */
 .btn-circle {
   width: 30px;

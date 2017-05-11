@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-01 09:31+0000\n"
+"POT-Creation-Date: 2017-05-10 18:59+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -376,4 +376,16 @@ msgstr ""
 
 #: templates/socialaccount/messages/account_disconnected.txt:2
 msgid "The social account has been disconnected."
+msgstr ""
+
+#: users/models.py:24
+msgid "Daily"
+msgstr ""
+
+#: users/models.py:24
+msgid "Twice a Day"
+msgstr ""
+
+#: users/models.py:24
+msgid "Hourly"
 msgstr ""
