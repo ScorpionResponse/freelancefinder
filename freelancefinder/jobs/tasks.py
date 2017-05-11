@@ -55,8 +55,9 @@ def create_userjobs(frequency):
     """Link Users and Jobs."""
     from users.utils import create_userjobs_for, users_with_frequency
 
+    logger.info("Starting User Job Creation for interval: %s", frequency)
     for user in users_with_frequency(frequency):
-        logger.info("Creating user jobs for user: %s.", user)
+        logger.info("Creating user jobs (%s) for user: %s.", frequency, user)
         create_userjobs_for(user)
 
 
