@@ -15,7 +15,7 @@ class ProfileAdmin(admin.ModelAdmin):
         """Prefetch the tags data to make this more efficient."""
         return super(ProfileAdmin, self).get_queryset(request).prefetch_related('tags')
 
-    def tag_list(self, obj):
+    def tag_list(self, obj):  # pylint: disable=no-self-use
         """Concatenate all tags for each profile."""
         return u", ".join(o.name for o in obj.tags.all())
 

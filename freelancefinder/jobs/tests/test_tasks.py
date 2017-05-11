@@ -57,7 +57,7 @@ def test_create_jobs(post_factory):
 
 def test_create_userjobs(paid_user, job):
     """Verify that UserJobs are created."""
-    create_userjobs()
+    create_userjobs(frequency='daily')
     assert UserJob.objects.all().count() > 0
 
 
