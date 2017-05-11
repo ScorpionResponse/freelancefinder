@@ -1,9 +1,11 @@
 """User related utilities."""
 
 import logging
+from datetime import timedelta
 
 from django.contrib.auth.models import User
 from django.core.cache import cache
+from django.utils import timezone
 
 from jobs.models import Job, UserJob
 
@@ -53,3 +55,26 @@ def create_userjobs_for(user):
 def users_with_frequency(frequency):
     """Get users with this frequency setting."""
     return User.objects.filter(profile__refresh_frequency=frequency)
+
+
+def my_next_run(user):
+    """Get the time of this user's next set of jobs."""
+    from django_celery_beat.models import PeriodicTask
+    refresh_frequency = user.profile.refresh_frequency
+    last_run_at = timezone.now()
+
+    try:
+        refresh_task = PeriodicTask.objects.filter(name__icontains='Create UserJobs', kwargs__icontains=refresh_frequency).first()
+        last_run_at = refresh_task.last_run_at
+    except AttributeError:
+        logger.warning("Tried to lookup timing for user %s with frequency %s but job had not run.", user, refresh_frequency)
+
+    frequency_calculator = {
+        'daily': timedelta(days=1),
+        'twice_a_day': timedelta(hours=12),
+        'hourly': timedelta(hours=1),
+    }
+
+    time_to_next_run = frequency_calculator[refresh_frequency]
+    estimated_next_run = last_run_at + time_to_next_run
+    return estimated_next_run

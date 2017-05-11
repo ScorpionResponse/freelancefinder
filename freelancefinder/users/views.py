@@ -11,6 +11,7 @@ from django.views.generic.edit import UpdateView
 
 from .forms import ProfileForm
 from .models import Profile
+from .utils import my_next_run
 
 logger = logging.getLogger(__name__)
 
@@ -32,3 +33,8 @@ class UserProfileView(LoginRequiredMixin, UpdateView):
         form.save()
         messages.success(self.request, "Profile changes saved.")
         return HttpResponseRedirect(self.get_success_url())
+
+    def get_context_data(self, **kwargs):
+        context = super(UserProfileView, self).get_context_data(**kwargs)
+        context['my_next_run'] = my_next_run(self.request.user)
+        return context
