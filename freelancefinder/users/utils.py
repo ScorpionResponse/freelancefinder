@@ -63,11 +63,14 @@ def my_next_run(user):
     refresh_frequency = user.profile.refresh_frequency
     last_run_at = timezone.now()
 
+    refresh_task = PeriodicTask.objects.filter(name__icontains='Create UserJobs', kwargs__icontains=refresh_frequency).first()
     try:
-        refresh_task = PeriodicTask.objects.filter(name__icontains='Create UserJobs', kwargs__icontains=refresh_frequency).first()
-        last_run_at = refresh_task.last_run_at
+        if refresh_task.last_run_at is not None:
+            last_run_at = refresh_task.last_run_at
+        else:
+            logger.info("Tried to lookup timing for user %s with frequency %s but job had not run.", user, refresh_frequency)
     except AttributeError:
-        logger.warning("Tried to lookup timing for user %s with frequency %s but job had not run.", user, refresh_frequency)
+        logger.warning("Tried to lookup timing for user %s with frequency %s but PeriodicTask could not be found.", user, refresh_frequency)
 
     frequency_calculator = {
         'daily': timedelta(days=1),
