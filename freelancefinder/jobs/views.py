@@ -19,6 +19,8 @@ from django.views.generic.base import RedirectView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import FormMixin
 
+from users.utils import my_next_run
+
 from .forms import PostFilterForm, JobSearchForm, UserJobSearchForm
 from .models import Job, Post, UserJob
 
@@ -111,6 +113,7 @@ class UserJobListView(LoginRequiredMixin, ListView, FormGetMixin):
         context['form'] = self.get_form()
         context['source_facets'] = self.get_source_facets()
         context['date_facets'] = self.get_date_facets()
+        context['my_next_run'] = my_next_run(self.request.user)
         return context
 
 

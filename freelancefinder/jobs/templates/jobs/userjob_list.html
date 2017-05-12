@@ -103,7 +103,7 @@
     {% endfor %}
     </ul>
 {% else %}
-    <h3 class="text-center">Congratulations!  You're done for the day.</h3>
+    <h3 class="text-center">Congratulations!  You're done until {{ my_next_run|localtime }}.</h3>
 {% endif %}
 
 {% include 'helpers/pagination.html' %}
@@ -129,7 +129,7 @@
 
             // If we've got no more, display congratulations.
             if (parseInt(title_count.text()) === 0) {
-                $("ul.list-group").replaceWith("<h3 class='text-center'>Congratulations!  You're done for the day.</h3>");
+                $("ul.list-group").replaceWith("<h3 class='text-center'>Congratulations!  You're done until {{ my_next_run|localtime }}.</h3>");
             }
         }
         $(document).ready(function(){
