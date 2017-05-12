@@ -103,7 +103,8 @@
     {% endfor %}
     </ul>
 {% else %}
-    <h3 class="text-center">Congratulations!  You're done until {{ my_next_run|localtime }}.</h3>
+<h3 class="text-center">Congratulations!  You're done!</h3>
+<small class="text-center">Next refresh at {{ my_next_run|localtime }}</small>
 {% endif %}
 
 {% include 'helpers/pagination.html' %}
@@ -129,7 +130,7 @@
 
             // If we've got no more, display congratulations.
             if (parseInt(title_count.text()) === 0) {
-                $("ul.list-group").replaceWith("<h3 class='text-center'>Congratulations!  You're done until {{ my_next_run|localtime }}.</h3>");
+                $("ul.list-group").replaceWith("<h3 class='text-center'>Congratulations!  You're done!</h3><small class='text-center'>Next refresh at {{ my_next_run|localtime }}</small>");
             }
         }
         $(document).ready(function(){
