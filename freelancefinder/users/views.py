@@ -35,6 +35,7 @@ class UserProfileView(LoginRequiredMixin, UpdateView):
         return HttpResponseRedirect(self.get_success_url())
 
     def get_context_data(self, **kwargs):
+        """Add next run time to the response context."""
         context = super(UserProfileView, self).get_context_data(**kwargs)
         context['my_next_run'] = my_next_run(self.request.user)
         return context
