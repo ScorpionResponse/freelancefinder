@@ -62,10 +62,10 @@ def users_with_frequency(frequency):
 def my_next_run(user):
     """Get the time of this user's next set of jobs."""
     cache_key = "next-run-{}".format(user.username)
-    expected_next_run = cache.get(cache_key)
-    if expected_next_run:
-        logger.info("Next Run got cached value user: %s, value: %s", user, expected_next_run)
-        return expected_next_run
+    estimated_next_run = cache.get(cache_key)
+    if estimated_next_run:
+        logger.info("Next Run got cached value user: %s, value: %s", user, estimated_next_run)
+        return estimated_next_run
 
     refresh_frequency = user.profile.refresh_frequency
     right_now = timezone.now()
@@ -90,6 +90,6 @@ def my_next_run(user):
     time_to_next_run = frequency_calculator[refresh_frequency]
     estimated_next_run = last_run_at + time_to_next_run
     seconds = (estimated_next_run - right_now).total_seconds()
-    logger.info("Next Run caching value user: %s, value: %s, seconds: %s", user, expected_next_run, seconds)
-    cache.set(cache_key, expected_next_run, seconds)
+    logger.info("Next Run caching value user: %s, value: %s, seconds: %s", user, estimated_next_run, seconds)
+    cache.set(cache_key, estimated_next_run, seconds)
     return estimated_next_run
