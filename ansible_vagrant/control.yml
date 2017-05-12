@@ -54,6 +54,7 @@
         - ansible-pip
         - ansible-personal_dev
         - ansible-supervisord
+        - django-taggit-labels
 
     - name: Update bashrc
       blockinfile:
