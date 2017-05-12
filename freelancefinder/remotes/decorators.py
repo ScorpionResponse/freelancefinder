@@ -16,6 +16,8 @@ def periodically(period='daily', check_name='last_processed', fail_return=None):
 
         if period == 'daily':
             timecheck = datetime.datetime.today().strftime("%Y-%m-%d")
+        elif period == 'twice_daily':
+            timecheck = datetime.datetime.today().strftime("%Y-%m-%d-%p")
         elif period == 'hourly':
             timecheck = datetime.datetime.today().strftime("%Y-%m-%d-%H")
         elif period == 'minutely':

@@ -30,6 +30,8 @@ class Source(models.Model):
             from .sources.trabajospython.harvest import Harvester
         elif self.code == 'workinstartups':
             from .sources.workinstartups.harvest import Harvester
+        elif self.code == 'workingnomads':
+            from .sources.workingnomads.harvest import Harvester
 
         source_harvester = Harvester(self)
         return source_harvester
