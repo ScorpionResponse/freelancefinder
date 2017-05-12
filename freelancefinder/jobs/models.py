@@ -25,8 +25,8 @@ class PostManager(models.Manager):
         return super(PostManager, self).get_queryset().filter(garbage=False)
 
     def new(self):
-        """Get unprocessed Posts."""
-        return self.get_queryset().filter(processed=False).order_by('created')
+        """Get unprocessed but already tagged Posts."""
+        return self.get_queryset().filter(processed=False, tags__isnull=False).order_by('created')
 
     def pending_freelance_jobs(self):
         """Get only freelance job posts which are not linked."""

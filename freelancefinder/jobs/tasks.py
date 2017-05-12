@@ -14,7 +14,7 @@ def process_new_posts():
     from .models import Post
 
     for post in Post.objects.new():
-        logger.debug("Processing post: %s", post)
+        logger.info("Processing post: %s", post)
         post.processed = True
         current_tags = post.tags.names()
         if 'Full Time' in current_tags:
@@ -37,7 +37,7 @@ def create_jobs():
     from utils.text import generate_fingerprint
 
     for post in Post.objects.pending_freelance_jobs():
-        logger.debug("Creating job from post: %s", post)
+        logger.info("Creating job from post: %s", post)
         fingerprint = generate_fingerprint(post.title + " " + post.description)
         potential_matches = Job.objects.filter(fingerprint=fingerprint)
         if len(potential_matches) == 1:
