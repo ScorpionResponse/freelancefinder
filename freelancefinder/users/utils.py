@@ -3,6 +3,8 @@
 import logging
 from datetime import timedelta
 
+from django_celery_beat.models import PeriodicTask
+
 from django.contrib.auth.models import User
 from django.core.cache import cache
 from django.utils import timezone
@@ -59,9 +61,14 @@ def users_with_frequency(frequency):
 
 def my_next_run(user):
     """Get the time of this user's next set of jobs."""
-    from django_celery_beat.models import PeriodicTask
+    cache_key = "next-run-{}".format(user.username)
+    expected_next_run = cache.get(cache_key)
+    if expected_next_run:
+        logger.info("Next Run got cached value user: %s, value: %s", user, expected_next_run)
+        return expected_next_run
+
     refresh_frequency = user.profile.refresh_frequency
-    last_run_at = timezone.now()
+    right_now = timezone.now()
 
     refresh_task = PeriodicTask.objects.filter(name__icontains='Create UserJobs', kwargs__icontains=refresh_frequency).first()
     try:
@@ -69,8 +76,10 @@ def my_next_run(user):
             last_run_at = refresh_task.last_run_at
         else:
             logger.info("Tried to lookup timing for user %s with frequency %s but job had not run.", user, refresh_frequency)
+            last_run_at = right_now
     except AttributeError:
         logger.warning("Tried to lookup timing for user %s with frequency %s but PeriodicTask could not be found.", user, refresh_frequency)
+        last_run_at = right_now
 
     frequency_calculator = {
         'daily': timedelta(days=1),
@@ -80,4 +89,7 @@ def my_next_run(user):
 
     time_to_next_run = frequency_calculator[refresh_frequency]
     estimated_next_run = last_run_at + time_to_next_run
+    seconds = (estimated_next_run - right_now).total_seconds()
+    logger.info("Next Run caching value user: %s, value: %s, seconds: %s", user, expected_next_run, seconds)
+    cache.set(cache_key, expected_next_run, seconds)
     return estimated_next_run
