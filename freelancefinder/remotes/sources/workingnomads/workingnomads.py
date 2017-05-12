@@ -27,7 +27,7 @@ class WorkingNomads(object):
 
     def parse_job_to_post(self, job_info):
         """Convert from the api response format to a Post."""
-        created = maya.parse(job_info['_source']['pub_date'])
+        created = maya.parse(job_info['_source']['pub_date']).datetime()
         url = 'https://www.workingnomads.co/jobs?job={}'.format(job_info['_source']['slug'])
         post = Post(
             url=url,
