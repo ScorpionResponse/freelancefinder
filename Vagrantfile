@@ -23,6 +23,8 @@ Vagrant.configure("2") do |config|
   # Define the App machines
   config.vm.define "freelance_app1" do |instance|
     instance.vm.network "private_network", ip: "192.168.2.3"
+    # Add public network too, just for the app server
+    instance.vm.network "public_network", type: "dhcp"
     config.vm.provider "virtualbox" do |v|
       v.name = "freelance_app1"
       v.memory = 1024
