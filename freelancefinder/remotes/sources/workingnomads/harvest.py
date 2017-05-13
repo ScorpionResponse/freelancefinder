@@ -23,8 +23,8 @@ class Harvester(object):
         nomads = WorkingNomads(self.source)
         for post in nomads.jobs():
             if post.exists():
-                logger.debug('Alread processed this item %s, skipping the rest.', post)
-                break
+                logger.debug('Alread processed this item %s, skipping and processing the rest.', post)
+                continue
             self.status_info['count-api'] += 1
             self.status_info['total'] += 1
             yield post
