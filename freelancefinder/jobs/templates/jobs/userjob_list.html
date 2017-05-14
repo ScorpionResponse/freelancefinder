@@ -66,14 +66,14 @@
                 {% if userjob.job.description %}
                     <a href="#" data-toggle="collapse" data-target="#jobdesc-{{ userjob.id }}" class="list-group-item-action">
                 {% endif %}
-                    <div class="d-flex flex-row w-100 justify-content-between flex-md-wrap">
+                    <div class="d-flex flex-row w-100 justify-content-between flex-wrap">
                         <h5>{{ userjob.job.title }}</h5>
                         <small>{{ userjob.job.created|localtime }}</small>
                     </div>
                 {% if userjob.job.description %}
                     </a>
                 {% endif %}
-                <div class="d-flex flex-row w-100 justify-content-start flex-md-wrap">
+                <div class="d-flex flex-row w-100 justify-content-start flex-wrap">
                     <span class="p-2">
                         <a href="{% url 'job-detail' userjob.job.id %}">Detail</a>
                     </span>
