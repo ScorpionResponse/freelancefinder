@@ -78,7 +78,7 @@ class UserJobListView(LoginRequiredMixin, ListView, FormGetMixin):
         if search is not None and search != '':
             querys = querys.filter(Q(job__title__icontains=search) | Q(job__description__icontains=search))
         if tags and tags != ['']:
-            querys = querys.filter(job__tags__slug__in=tags).distinct()
+            querys = querys.filter(job__tags__name__in=tags).distinct()
         return querys
 
     def get_queryset(self):
