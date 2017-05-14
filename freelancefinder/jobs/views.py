@@ -96,7 +96,7 @@ class UserJobListView(LoginRequiredMixin, ListView, FormGetMixin):
     def get_source_facets(self):
         """Get Results faceted by Source."""
         querys = self.__form_filtered_queryset()
-        querys = querys.values('job__posts__source__name', 'job__posts__source__code').annotate(total=Count('job__posts_id', distinct=True)).order_by('job__posts__source__name')
+        querys = querys.values('job__posts__source__name', 'job__posts__source__code').annotate(total=Count('job__posts__id', distinct=True)).order_by('job__posts__source__name')
         return querys
 
     def get_date_facets(self):
