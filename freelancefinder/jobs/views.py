@@ -98,7 +98,7 @@ class UserJobListView(LoginRequiredMixin, ListView, FormGetMixin):
         """Get Results faceted by Source."""
         querys = self.__form_filtered_queryset()
         querys = querys.values('job__posts__source__name', 'job__posts__source__code').annotate(total=Count('job__posts__source')).order_by('job__posts__source__name')
-        return querys.distinct()
+        return querys
 
     def get_date_facets(self):
         """Get results faceted by created."""
@@ -106,8 +106,8 @@ class UserJobListView(LoginRequiredMixin, ListView, FormGetMixin):
         source = self.request.GET.get('source', None)
         if source:
             querys = querys.filter(job__posts__source__code=source)
-        querys = querys.values(created_date=TruncDate('job__created')).annotate(total=Count(TruncDate('job__created'))).order_by('created_date').reverse()
-        return querys.distinct()
+        querys = querys.values(created_date=TruncDate('job__created')).annotate(total=Count('job_id', distinct=True)).order_by('created_date').reverse()
+        return querys
 
     def get_context_data(self, **kwargs):
         """Include search/filter form."""
