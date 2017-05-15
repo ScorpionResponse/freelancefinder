@@ -9,8 +9,13 @@
 {% block 'content' %}
 
 <h1 class="text-center"><span id="opportunity-count">{{ userjob_list|length }}</span> Opportunit{% if userjob_list|length == 1 %}y{% else %}ies{% endif %} - {{ curdate }}</h1>
-<div class='searchform'>
-    {% crispy form %}
+<div class="container-fluid">
+    <div class='collapse searchform' id="searchform">
+        {% crispy form %}
+    </div>
+    <button id="filters-button" type="button" class="btn btn-primary" data-toggle="collapse" data-target="#searchform">
+        <span class="fa fa-cogs"></span> <span id="filters-text" data-state="show">Show Filters</span>
+    </button>
 </div>
 {% if source_facets %}
 <div class="facets p-2">
@@ -136,6 +141,16 @@
             }
         }
         $(document).ready(function(){
+            $('#filters-button').click(function() {
+                var $text_label = $('#filters-text');
+                if ($text_label.data('state') === 'show') {
+                    $text_label.text('Hide Filters');
+                    $text_label.data('state', 'hide');
+                } else {
+                    $text_label.text('Show Filters');
+                    $text_label.data('state', 'show');
+                }
+            });
             $('.row-dismiss-form').on('submit', function(e) {
                 e.preventDefault();
                 var $form = $(e.target);
