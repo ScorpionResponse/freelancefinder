@@ -10,12 +10,12 @@
 
 <h1 class="text-center"><span id="opportunity-count">{{ userjob_list|length }}</span> Opportunit{% if userjob_list|length == 1 %}y{% else %}ies{% endif %} - {{ curdate }}</h1>
 <div class="container-fluid">
-    <div class='collapse searchform' id="searchform">
-        {% crispy form %}
-    </div>
     <button id="filters-button" type="button" class="btn btn-primary" data-toggle="collapse" data-target="#searchform">
         <span class="fa fa-cogs"></span> <span id="filters-text" data-state="show">Show Filters</span>
     </button>
+    <div class='collapse searchform' id="searchform">
+        {% crispy form %}
+    </div>
 </div>
 {% if source_facets %}
 <div class="facets p-2">
