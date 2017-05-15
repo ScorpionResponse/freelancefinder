@@ -41,8 +41,11 @@ def is_in_group(user, groups):
 def create_userjobs_for(user):
     """Create userjobs for a specific user."""
     # TODO(Paul): Pretty sure there is a better way to do this
+    today = timezone.now()
+    a_week_ago = today - timedelta(days=7)
+
     current_userjobs = UserJob.all_objects.filter(user=user)  # pylint: disable=no-member
-    query = Job.objects.exclude(userjobs__in=current_userjobs)
+    query = Job.objects.exclude(userjobs__in=current_userjobs).filter(created__gte=a_week_ago)
 
     tags = user.profile.tags.slugs()
     if tags:
