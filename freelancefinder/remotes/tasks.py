@@ -2,7 +2,7 @@
 
 from django.conf import settings
 
-from django_celery_beat.models import IntervalSchedule, PeriodicTask
+from django_celery_beat.models import CrontabSchedule, IntervalSchedule, PeriodicTask
 from celery import Celery
 from celery.utils.log import get_task_logger
 
@@ -38,13 +38,13 @@ def setup_periodic_tasks(sender, **kwargs):
     schedule_10_minutes, created = IntervalSchedule.objects.get_or_create(every=10, period=IntervalSchedule.MINUTES)
     logger.debug("IntervalSchedule: %s; Created: %s", schedule_10_minutes, created)
 
-    # UserJob Frequencies
-    schedule_daily, created = IntervalSchedule.objects.get_or_create(every=1, period=IntervalSchedule.DAYS)
-    logger.debug("IntervalSchedule: %s; Created: %s", schedule_daily, created)
-    schedule_twice_daily, created = IntervalSchedule.objects.get_or_create(every=12, period=IntervalSchedule.HOURS)
-    logger.debug("IntervalSchedule: %s; Created: %s", schedule_twice_daily, created)
-    schedule_hourly, created = IntervalSchedule.objects.get_or_create(every=1, period=IntervalSchedule.HOURS)
-    logger.debug("IntervalSchedule: %s; Created: %s", schedule_hourly, created)
+    # UserJob Frequencies use crontab so we can control exactly when they run
+    schedule_daily, created = CrontabSchedule.objects.get_or_create(minute='15', hour='4', day_of_week='*', day_of_month='*', month_of_year='*')
+    logger.debug("CrontabSchedule: %s; Created: %s", schedule_daily, created)
+    schedule_twice_daily, created = CrontabSchedule.objects.get_or_create(minute='20', hour='4, 16', day_of_week='*', day_of_month='*', month_of_year='*')
+    logger.debug("CrontabSchedule: %s; Created: %s", schedule_twice_daily, created)
+    schedule_hourly, created = CrontabSchedule.objects.get_or_create(minute='59', hour='*', day_of_week='*', day_of_month='*', month_of_year='*')
+    logger.debug("CrontabSchedule: %s; Created: %s", schedule_hourly, created)
 
     pertask, created = PeriodicTask.objects.get_or_create(interval=schedule_4_minutes, name="Process New Posts", task='jobs.tasks.process_new_posts')
     logger.debug("PeriodicTask: %s; Created: %s", pertask, created)
@@ -55,11 +55,11 @@ def setup_periodic_tasks(sender, **kwargs):
     pertask, created = PeriodicTask.objects.get_or_create(interval=schedule_4_minutes, name="Tag Jobs", task='jobs.tasks.tag_jobs')
     logger.debug("PeriodicTask: %s; Created: %s", pertask, created)
 
-    pertask, created = PeriodicTask.objects.get_or_create(interval=schedule_daily, name="Create UserJobs - Daily Users", task='jobs.tasks.create_userjobs', kwargs='{"frequency": "daily"}')
+    pertask, created = PeriodicTask.objects.get_or_create(crontab=schedule_daily, name="Create UserJobs - Daily Users", task='jobs.tasks.create_userjobs', kwargs='{"frequency": "daily"}')
     logger.debug("PeriodicTask: %s; Created: %s", pertask, created)
-    pertask, created = PeriodicTask.objects.get_or_create(interval=schedule_twice_daily, name="Create UserJobs - Twice Daily Users", task='jobs.tasks.create_userjobs', kwargs='{"frequency": "twice_a_day"}')
+    pertask, created = PeriodicTask.objects.get_or_create(crontab=schedule_twice_daily, name="Create UserJobs - Twice Daily Users", task='jobs.tasks.create_userjobs', kwargs='{"frequency": "twice_a_day"}')
     logger.debug("PeriodicTask: %s; Created: %s", pertask, created)
-    pertask, created = PeriodicTask.objects.get_or_create(interval=schedule_hourly, name="Create UserJobs - Hourly Users", task='jobs.tasks.create_userjobs', kwargs='{"frequency": "hourly"}')
+    pertask, created = PeriodicTask.objects.get_or_create(crontab=schedule_hourly, name="Create UserJobs - Hourly Users", task='jobs.tasks.create_userjobs', kwargs='{"frequency": "hourly"}')
     logger.debug("PeriodicTask: %s; Created: %s", pertask, created)
 
     pertask, created = PeriodicTask.objects.get_or_create(interval=schedule_10_minutes, name='Harvest Remotes', task='remotes.tasks.harvest_sources')
