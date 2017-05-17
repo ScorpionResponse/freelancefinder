@@ -19,7 +19,7 @@ NEW_SOURCES = [
 
 def load_sources(apps, schema_editor):
     '''Load new source data.'''
-    frequency_config = {'config_key': 'frequency', 'config_value': 'daily'}
+    frequency_config = {'config_key': 'frequency', 'config_value': 'hourly'}
     Source = apps.get_model('remotes', 'Source')
     for source in NEW_SOURCES:
         config_data = source['config']
