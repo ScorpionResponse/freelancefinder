@@ -14,10 +14,11 @@ PASS_TAGS = ['Hiring', 'Contract', 'Part Time', 'Freelance']
 @celery_app.task
 def process_new_posts():
     """Determine which posts are about freelance jobs."""
-    from datetime import datetime, timedelta
+    from datetime import timedelta
+    from django.utils import timezone
     from .models import Post
 
-    today = datetime.today()
+    today = timezone.now()
     a_month_ago = today - timedelta(days=31)
 
     for post in Post.objects.new():
