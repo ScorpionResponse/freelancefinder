@@ -14,18 +14,24 @@ PASS_TAGS = ['Hiring', 'Contract', 'Part Time', 'Freelance']
 @celery_app.task
 def process_new_posts():
     """Determine which posts are about freelance jobs."""
+    from datetime import datetime, timedelta
     from .models import Post
+
+    today = datetime.today()
+    a_month_ago = today - timedelta(days=31)
 
     for post in Post.objects.new():
         logger.info("Processing post: %s", post)
         post.processed = True
         current_tags = post.tags.names()
         if any(tag in current_tags for tag in FAIL_TAGS):
-            logger.info('Marking post as garbage: %s', post)
+            logger.info('Marking post as garbage for tags: %s', post)
             post.garbage = True
-
-        if any(tag in current_tags for tag in PASS_TAGS):
-            logger.info('Marking post as freelance: %s', post)
+        elif post.created < a_month_ago:
+            logger.info('Marking post as garbage due to age: %s', post)
+            post.garbage = True
+        elif any(tag in current_tags for tag in PASS_TAGS):
+            logger.info('Marking post as freelance for tags: %s', post)
             post.is_freelance = True
         post.save()
 
