@@ -7,13 +7,21 @@ from .models import Source, SourceConfig
 class SourceAdmin(admin.ModelAdmin):
     """Basic admin for sources."""
 
-    pass
+    model = Source
+
+    list_display = ('code', 'name', 'url', 'harvest_type')
+    search_fields = ('name',)
+    list_filter = ('harvest_type',)
 
 
 class SourceConfigAdmin(admin.ModelAdmin):
     """Basic admin for sourceconfig."""
 
-    pass
+    model = SourceConfig
+
+    list_display = ('source', 'config_key', 'config_value')
+    search_fields = ('source',)
+    list_filter = ('source__name',)
 
 
 admin.site.register(Source, SourceAdmin)

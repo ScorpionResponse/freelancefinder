@@ -19,8 +19,13 @@ def periodically(period='daily', check_name='last_processed', fail_return=None):
         """Wrap function to enfore period."""
         source = instance.source
 
+        # If period is 'arg' we get this from the argument 'frequency'
+        frequency = period
+        if frequency == 'arg':
+            frequency = kwargs['frequency']
+
         # Get our period defining key
-        strftime_format = STRFTIME_MAP[period]
+        strftime_format = STRFTIME_MAP[frequency]
         timecheck = datetime.datetime.today().strftime(strftime_format)
 
         # Check if we've already got the value (aka already run this period)

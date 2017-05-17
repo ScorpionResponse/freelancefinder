@@ -19,10 +19,20 @@ def harvest_sources():
     for source in Source.objects.all():
         logger.info("Harvesting from Source: %s", source)
         harvester = source.harvester()
+        # TODO(Paul): With the frequency stuff this is kind of ugly
+        frequency = None
+        config_row = source.config.filter(config_key='frequency').first()
+        if config_row:
+            frequency = config_row.config_value
         try:
-            for post in harvester.harvest():
-                logger.info("Got new Post: %s", post)
-                post.save()
+            if frequency:
+                for post in harvester.harvest(frequency=frequency):
+                    logger.info("Got new Post: %s", post)
+                    post.save()
+            else:
+                for post in harvester.harvest():
+                    logger.info("Got new Post: %s", post)
+                    post.save()
         except Exception as harvester_exception:  # pylint: disable=broad-except
             logger.exception('Source %s harvester is broken due to: %s', source, harvester_exception)
 
