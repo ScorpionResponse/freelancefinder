@@ -13,7 +13,7 @@ NEW_SOURCES = [
     {'code': 'pythonjobs', 'name': 'Python Job Board', 'url': 'https://www.python.org/jobs/', 'harvest_type': 'rss_feed', 'config': {'config_key': 'rss_feed_address', 'config_value': 'https://www.python.org/jobs/feed/rss/'}},
     {'code': 'pythonjobs_github', 'name': 'Free Python Job Board', 'url': 'http://pythonjobs.github.io/', 'harvest_type': 'rss_feed', 'config': {'config_key': 'rss_feed_address', 'config_value': 'http://pythonjobs.github.io/atom.xml'}},
     {'code': 'pythonjobs_hq', 'name': 'Python Jobs HQ', 'url': 'http://www.pythonjobshq.com/', 'harvest_type': 'rss_feed', 'config': {'config_key': 'rss_feed_address', 'config_value': 'http://www.pythonjobshq.com/jobs.atom'}},
-    {'code': 'stackoverflow', 'name': 'StackOverflow Jobs', 'url': 'http://stackoverflow.com/jobs/', 'harvest_type': 'rss_feed', 'config': {'config_key': 'rss_feed_address', 'config_value': 'http://stackoverflow.com/jobs/feed'}},
+    {'code': 'stackoverflow', 'name': 'StackOverflow Jobs', 'url': 'http://stackoverflow.com/jobs/', 'harvest_type': 'rss_feed', 'config': {'config_key': 'rss_feed_address', 'config_value': 'http://stackoverflow.com/jobs/feed?r=True&j=contract&j=internship'}},
 ]
 
 
