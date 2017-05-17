@@ -1,5 +1,6 @@
 """Utils for the remotes app."""
 import logging
+import itertools
 from datetime import datetime, timedelta
 
 from django.db.models.aggregates import Count
@@ -25,7 +26,8 @@ def get_harvest_history():
     history = Source.objects.filter(posts__created__gte=report_since_day).values('code', harvest_date=TruncDate('posts__created')).annotate(post_count=Count('posts')).order_by('harvest_date')
     current_date = None
     this_row = header
-    for row in history:
+    # TODO(Paul): The way this sentinel value is added is bad
+    for row in itertools.chain(history, [{'harvest_date': None, 'code': 'djangogigs', 'post_count': None}]):
         logger.info("Processing source history row: %s", row)
         if row['harvest_date'] != current_date:
             if len(this_row) < len(code_position) + 1:
