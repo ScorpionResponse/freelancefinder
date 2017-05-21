@@ -50,7 +50,7 @@ class UserJobRedirectView(LoginRequiredMixin, RedirectView):
 
         first_userjob = UserJob.objects.filter(user=self.request.user).values(created_date=TruncDate('job__created')).order_by('created_date').reverse().first()
         if first_userjob:
-            redirect_date = first_userjob.created_date
+            redirect_date = first_userjob['created_date']
             logger.info("Redirecting to a different date: %s - %s - %s", redirect_date, first_userjob, self.request.user)
         kwargs['date'] = redirect_date.strftime("%Y-%m-%d")
         return super(UserJobRedirectView, self).get_redirect_url(*args, **kwargs)
