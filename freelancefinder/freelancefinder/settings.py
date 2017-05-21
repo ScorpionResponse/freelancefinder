@@ -171,6 +171,7 @@ DATABASES = {
 LOG_LEVEL = 'DEBUG' if DEBUG else 'INFO'
 
 ADMINS = [('Paul', 'moss.paul@gmail.com'), ('Paul', 'paul@freelancefinder.work')]
+MANAGERS = [('Paul', 'moss.paul@gmail.com'), ('Paul', 'paul@freelancefinder.work')]
 DEFAULT_FROM_EMAIL = 'noreply@freelancefinder.work'
 
 LOGGING = {

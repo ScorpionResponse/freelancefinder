@@ -4,6 +4,8 @@ Django==1.11.1
 django-allauth==0.32.0
 django-braces==1.11.0
 django-crispy-forms==1.6.1
+# django-contact-form==1.3
+-e git://github.com/ubernostrum/django-contact-form.git#egg=django-contact-form
 django-environ==0.4.3
 django-log-request-id==1.3.2
 django-model-utils==3.0.0

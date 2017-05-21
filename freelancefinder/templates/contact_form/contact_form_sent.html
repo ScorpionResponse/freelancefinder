@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load tz %}
+
+{% block 'title' %}Freelance Finder - Contact Sent!{% endblock %}
+
+{% block 'content' %}
+
+<h1>Thanks for your message!</h1>
+
+<div>
+    Head on back to your <a href="{% url 'userjob-list' %}">opportunities list</a>.
+</div>
+
+{% endblock %}

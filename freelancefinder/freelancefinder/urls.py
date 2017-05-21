@@ -18,6 +18,7 @@ urlpatterns = [
     url(r'^remotes/', include('remotes.urls')),
     url(r'^users/', include('users.urls')),
     url(r'^accounts/', include('allauth.urls')),
+    url(r'^contact/', include('contact_form.urls')),
     url(r'^select2/', include('django_select2.urls')),
     url(r'^freelance_admin/', admin.site.urls),
     url(r'^robots\.txt$', TemplateView.as_view(template_name='robots.txt', content_type='text/plain'), name='robots.txt'),
