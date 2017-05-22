@@ -40,3 +40,29 @@ def create_or_update_user_profile(sender, instance, created, **kwargs):
     if created:
         Profile.objects.create(user=instance)
     instance.profile.save()
+
+
+@python_2_unicode_compatible
+class Account(models.Model):
+    """Track internal accounting/other info about this user."""
+
+    SUBSCRIPTION_MODELS = Choices('yearly', 'monthly')
+
+    user = models.OneToOneField(User, on_delete=models.SET_NULL, related_name="account", blank=True, null=True)
+    stripe_customer_id = models.CharField(max_length=100, blank=True, null=True)
+    stripe_subscription_id = models.CharField(max_length=100, blank=True, null=True)
+    stripe_subscription_created = models.DateTimeField(blank=True, null=True)
+    subscription = models.CharField(choices=SUBSCRIPTION_MODELS, max_length=100, blank=True, null=True)
+
+    def __str__(self):
+        """Representation of a user account."""
+        return u"<Account ID:{}; User ID: {}>".format(self.pk, self.user_id)
+
+
+@receiver(post_save, sender=User)
+def create_or_update_user_account(sender, instance, created, **kwargs):
+    """If a new user is created, also create an account."""
+    logger.debug('Create Or Update User Account caught signal from sender: %s, instance: %s, created: %s, kwargs: %s', sender, instance, created, kwargs)
+    if created:
+        Account.objects.create(user=instance)
+    instance.account.save()

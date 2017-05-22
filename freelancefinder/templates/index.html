@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block 'title' %}Freelance Finder - Welcome{% endblock %}
+{% block 'extrahead' %}
+<script src="//checkout.stripe.com/checkout.js"></script>
+{% endblock %}
 
 {% block 'content' %}
 
@@ -54,24 +58,21 @@
     for those skills are still aggregated anyway, and hopefully the work I've
     done can benefit you.
     </p>
-    <div class="pricing-plan">
-        <div class="row align-items-center">
-            <div class="col text-right">Yearly - $50 / Month:</div>
-            <div class="col"><a class="btn btn-primary" href="https://stripe.com/">Sign up</a></div>
+    <form id="stripe-payment-form" action="{% url 'accept-payment' %}" method="POST">
+        {% csrf_token %}
+        <input type="hidden" name="token" value="nojs">
+        <input type="hidden" name="subscription" value="nojs">
+        <div class="pricing-plan">
+            <div class="row align-items-center">
+                <div class="col text-right">Yearly - $40 / Month:</div>
+                <div class="col"><button type="submit" id="stripe-yearly" class="btn btn-primary">Sign up</button></div>
+            </div>
+            <div class="row align-items-center">
+                <div class="col text-right">Monthly - $50 / Month:</div>
+                <div class="col"><button type="submit" id="stripe-monthly" class="btn btn-primary">Sign up</button></div>
+            </div>
         </div>
-        <div class="row align-items-center">
-            <div class="col text-right">Semi-annually - $50 / Month:</div>
-            <div class="col"><a class="btn btn-primary" href="https://stripe.com/">Sign up</a></div>
-        </div>
-        <div class="row align-items-center">
-            <div class="col text-right">Quarterly - $50 / Month:</div>
-            <div class="col"><a class="btn btn-primary" href="https://stripe.com/">Sign up</a></div>
-        </div>
-        <div class="row align-items-center">
-            <div class="col text-right">Monthly - $50 / Month:</div>
-            <div class="col"><a class="btn btn-primary" href="https://stripe.com/">Sign up</a></div>
-        </div>
-    </div>
+    </form>
     <p>
     If you're looking to hire a product management and 
     Python/Django development consultant, feel free to send me an email <a href="mailto:paul@freelancefinder.work">paul@freelancefinder.work</a> and we can talk.
@@ -79,4 +80,38 @@
 </div>
 </div>
 
+{% endblock %}
+{% block 'scripts' %}
+<script>
+
+    function handleStripeToken(token, args) {
+        var $payment_form = $('#stripe-payment-form');
+        var token_input = $('input[name="token"]', $payment_form).first();
+        token_input.val(token.id);
+        $payment_form.submit();
+    }
+
+    var handler = StripeCheckout.configure({
+        key: "{{ stripe_key }}",
+        image: "{% static 'images/favicon/favicon-96x96.png' %}",
+        name: "FreelanceFinder",
+        email: "{{ request.user.email }}",
+        panelLabel: "Subscribe",
+        token: handleStripeToken,
+        allowRememberMe: false,
+    });
+
+    $(document).ready(function(){
+        $('#stripe-yearly').click(function(e) {
+            handler.open({amount: 48000, description: 'Yearly ($480 billed annually)'});
+            $('#stripe-payment-form input[name="subscription"]').first().val('yearly');
+            e.preventDefault();
+        });
+        $('#stripe-monthly').click(function(e) {
+            handler.open({amount: 5000, description: 'Monthly ($50 billed monthly)'});
+            $('#stripe-payment-form input[name="subscription"]').first().val('monthly');
+            e.preventDefault();
+        });
+    });
+</script>
 {% endblock %}

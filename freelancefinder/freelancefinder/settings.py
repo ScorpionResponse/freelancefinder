@@ -103,6 +103,8 @@ LINKEDIN_CLIENT_ID = env('LINKEDIN_CLIENT_ID', default='')
 LINKEDIN_CLIENT_SECRET = env('LINKEDIN_CLIENT_SECRET', default='')
 REDDIT_CLIENT_ID = env('REDDIT_CLIENT_ID', default='')
 REDDIT_CLIENT_SECRET = env('REDDIT_CLIENT_SECRET', default='')
+STRIPE_PUBLIC_KEY = env('STRIPE_PUBLIC_KEY', default='')
+STRIPE_SECRET_KEY = env('STRIPE_SECRET_KEY', default='')
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
