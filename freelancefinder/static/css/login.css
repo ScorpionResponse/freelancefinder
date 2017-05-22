@@ -1,0 +1,45 @@
+
+.socialaccount_providers li {
+    list-style-type: none;
+}
+
+.socialaccount_providers a {
+    margin: 0 6px 2px 0;
+    width: 250px;
+    text-align: left;
+    display: inline-block;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+}
+
+.socialaccount_providers a i {
+    margin-right: 10px;
+}
+
+.signup-or hr {
+    border: 1px solid #a9a9a9;
+    margin: 25px 0;
+}
+
+.login-or hr {
+    border: 1px solid #696969;
+    margin: 25px 0;
+}
+
+#login-wrapper {
+    margin: 50px auto;
+    max-width: 540px;
+    background: #373A3C;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -o-border-radius: 5px;
+    -ms-border-radius: 5px;
+    border-radius: 5px;
+    padding: 40px;
+}
+.form-signin {
+    max-width: 330px;
+    padding: 15px;
+    margin: 0 auto;
+}
