@@ -43,26 +43,22 @@ class AcceptPaymentView(View):
         # TODO(Paul): Probably do the most:
         # https://stripe.com/docs/api?lang=python#error_handling
         try:
-            # TODO(Paul): If we already have a customer id, probably the source
-            # should be updated, but I guess we can re-use the old one?
-            customer = stripe.Customer.create(
-                email=request.user.email,
-                source=token,
-                metadata={
-                    'username': request.user.username,
-                }
-            )
-
-            # charge = stripe.Charge.create(
-            #    customer=customer.id,
-            #    amount=amount,
-            #    currency='usd',
-            #    description=description,
-            # )
+            customer = None
+            if request.user.account.stripe_customer_id:
+                customer = stripe.Customer.retrieve(request.user.account.stripe_customer_id)
+                customer.source = token
+                customer.save()
+            else:
+                customer = stripe.Customer.create(
+                    email=request.user.email,
+                    source=token,
+                    metadata={
+                        'username': request.user.username,
+                    }
+                )
 
             subscription = stripe.Subscription.create(
                 customer=customer.id,
-                # source=token,
                 plan=subscription_type,
             )
             created = datetime.utcfromtimestamp(subscription.created)
