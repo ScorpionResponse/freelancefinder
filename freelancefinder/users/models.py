@@ -8,7 +8,7 @@ from taggit.managers import TaggableManager
 from timezone_utils.fields import TimeZoneField
 from timezone_utils.choices import PRETTY_ALL_TIMEZONES_CHOICES as TIMEZONE_CHOICES
 
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -57,6 +57,12 @@ class Account(models.Model):
     def __str__(self):
         """Representation of a user account."""
         return u"<Account ID:{}; User ID: {}>".format(self.pk, self.user_id)
+
+    def confirm_payment(self):
+        """Confirm the payment of this account."""
+        group = Group.objects.get(name='Paid')
+        self.user.groups.add(group)
+        self.user.save()
 
 
 @receiver(post_save, sender=User)

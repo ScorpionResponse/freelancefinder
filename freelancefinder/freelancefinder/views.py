@@ -68,6 +68,7 @@ class AcceptPaymentView(View):
             request.user.account.stripe_subscription_id = subscription.id
             request.user.account.stripe_subscription_created = created
             request.user.account.save()
+            request.user.account.confirm_payment()
         except stripe.error.CardError as carde:
             logger.exception("Stripe Card Error: %s", carde)
             raise Exception("Charge Card Error: %s" % carde)
