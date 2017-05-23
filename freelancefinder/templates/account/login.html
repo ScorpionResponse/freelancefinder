@@ -16,19 +16,10 @@
 <!-- START: templates/account/login.html -->
 
 <div id="login-wrapper">
-    <h1>Log into your account</h1>
+    <h1>Log in to your account</h1>
 
     {% get_providers as socialaccount_providers %}
 
-    <p>
-        New Users: <a class="btn btn-info" href="{{ signup_url }}">Sign Up</a>
-    </p>
-
-    <div class="signup-or"><hr/></div>
-
-    <p>
-        Existing Users:
-    </p>
     <div class="socialaccount_ballot">
 
     <ul class="socialaccount_providers">
@@ -36,6 +27,13 @@
     </ul>
 
     <div class="login-or"><hr/></div>
+
+    <p class="new-users text-center">
+        New Users: <a class="btn btn-info m-2" href="{{ signup_url }}">Sign Up</a>
+    </p>
+
+    <div class="signup-or"><hr/></div>
+
 
     </div>
 

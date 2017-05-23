@@ -1,11 +1,12 @@
 
 .socialaccount_providers li {
     list-style-type: none;
+    text-align: center;
 }
 
 .socialaccount_providers a {
     margin: 0 6px 2px 0;
-    width: 250px;
+    width: 200px;
     text-align: left;
     display: inline-block;
     -webkit-border-radius: 2px;
