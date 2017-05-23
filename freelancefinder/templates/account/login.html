@@ -6,10 +6,9 @@
 
 {% block 'title' %}{% trans "Sign In" %}{% endblock %}
 
-{% block 'content' %}
+{% block 'login-content' %}
 <!-- START: templates/account/login.html -->
 
-<div id="login-wrapper">
     <h1>Log in to your account</h1>
 
     {% get_providers as socialaccount_providers %}
@@ -40,7 +39,6 @@
     <button class="primaryAction btn btn-primary" type="submit">{% trans "Sign In" %}</button>
     </form>
     <a class="button secondaryAction btn btn-outline-warning" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
-</div>
 
 <!-- END: templates/account/login.html -->
 {% endblock %}

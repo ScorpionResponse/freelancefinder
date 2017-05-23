@@ -4,8 +4,8 @@
 
 {% block 'title' %}Signup{% endblock %}
 
-{% block 'content' %}
-<div id="login-wrapper">
+{% block 'login-content' %}
+
     <h1>Sign Up</h1>
 
     <p>Already have an account? Then please <a href="{{ login_url }}">sign in</a></p>
@@ -17,6 +17,5 @@
         {% endif %}
         <button class="btn btn-primary" type="submit">Sign Up &raquo;</button>
     </form>
-</div>
 
 {% endblock %}

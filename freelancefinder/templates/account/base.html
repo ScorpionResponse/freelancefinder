@@ -5,3 +5,10 @@
     <link rel="stylesheet" href="{% static 'css/bootstrap-social.css' %}">
     <link rel="stylesheet" href="{% static 'css/login.css' %}">
 {% endblock %}
+
+{% block 'content' %}
+<div id="login-wrapper">
+    {% block 'login-content' %}
+    {% endblock %}
+</div>
+{% endblock %}
