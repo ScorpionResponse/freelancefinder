@@ -2,15 +2,9 @@
 
 {% load crispy_forms_tags %}
 {% load i18n %}
-{% load static %}
 {% load account socialaccount %}
 
 {% block 'title' %}{% trans "Sign In" %}{% endblock %}
-
-{% block 'extrahead' %}
-    <link rel="stylesheet" href="{% static 'css/bootstrap-social.css' %}">
-    <link rel="stylesheet" href="{% static 'css/login.css' %}">
-{% endblock %}
 
 {% block 'content' %}
 <!-- START: templates/account/login.html -->
@@ -33,7 +27,6 @@
     </p>
 
     <div class="signup-or"><hr/></div>
-
 
     </div>
 
