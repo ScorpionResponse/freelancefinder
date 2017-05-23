@@ -41,6 +41,11 @@ body {
     float: right;
 }
 
+/* Content */
+#content {
+    margin-bottom: 100px;
+}
+
 /* Index */
 .jumbotron {
     position: relative;
