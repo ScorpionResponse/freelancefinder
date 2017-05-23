@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-10 18:59+0000\n"
+"POT-Creation-Date: 2017-05-23 09:44+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -134,31 +134,11 @@ msgstr ""
 msgid "Password Reset E-mail"
 msgstr ""
 
-#: templates/account/login.html:6 templates/account/login.html:44
+#: templates/account/login.html:7 templates/account/login.html:40
 msgid "Sign In"
 msgstr ""
 
-#: templates/account/login.html:16
-#, python-format
-msgid ""
-"Please sign in with one\n"
-"of your existing third party accounts. Or, <a href=\"%(signup_url)s\">sign "
-"up</a>\n"
-"for a %(site_name)s account and sign in below:"
-msgstr ""
-
-#: templates/account/login.html:26
-msgid "or"
-msgstr ""
-
-#: templates/account/login.html:33
-#, python-format
-msgid ""
-"If you have not created an account yet, then please\n"
-"<a href=\"%(signup_url)s\">sign up</a> first."
-msgstr ""
-
-#: templates/account/login.html:43
+#: templates/account/login.html:42
 msgid "Forgot Password?"
 msgstr ""
 
