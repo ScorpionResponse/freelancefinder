@@ -77,10 +77,8 @@ ACCOUNT_SESSION_REMEMBER = True
 SITE_ID = 1
 
 ACCOUNT_SIGNUP_FORM_CLASS = 'users.forms.CustomSignupForm'
-# SOCIALACCOUNT_FORMS = {'signup': 'users.forms.CustomSocialSignupForm'}
 
 SOCIALACCOUNT_QUERY_EMAIL = True
-SOCIALACCOUNT_AUTO_SIGNUP = True
 SOCIALACCOUNT_PROVIDERS = {
     'github': {
         'SCOPE': ['user:email'],
