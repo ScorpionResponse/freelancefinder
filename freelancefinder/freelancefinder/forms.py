@@ -1,5 +1,4 @@
 """Forms for the freelancefinder app."""
-
 from contact_form.forms import ContactForm
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
