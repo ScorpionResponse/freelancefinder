@@ -14,8 +14,6 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.utils.translation import ugettext as _
 
-from .utils import create_userjobs_for
-
 logger = logging.getLogger(__name__)
 
 
@@ -74,11 +72,3 @@ def create_or_update_user_account(sender, instance, created, **kwargs):
     if created:
         Account.objects.create(user=instance)
     instance.account.save()
-
-
-@receiver(post_save, sender=User)
-def first_time_setup(sender, instance, created, **kwargs):
-    """If a new user is created, perform some tasks."""
-    logger.debug('First Time Setup caught signal from sender: %s, instance: %s, created: %s, kwargs: %s', sender, instance, created, kwargs)
-    if created:
-        create_userjobs_for(instance)

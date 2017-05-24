@@ -12,6 +12,7 @@ from django import forms
 from django.urls.base import reverse
 
 from .models import Profile
+from .utils import create_userjobs_for
 
 logger = logging.getLogger(__name__)
 
@@ -78,3 +79,4 @@ class CustomSignupForm(forms.ModelForm):
         logger.info("User Signup: %s; request: %s; tags: %s", user, request, tags)
         user.profile.tags.add(*self.cleaned_data['tags'])
         user.profile.save()
+        create_userjobs_for(user)
