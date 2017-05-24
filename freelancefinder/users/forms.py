@@ -38,7 +38,7 @@ class ProfileForm(forms.ModelForm):
 
 
 class CustomSignupForm(forms.ModelForm):
-    """Force the user to input tags on signup."""
+    """Customize django-allauth SignupForm to include tags."""
 
     tags = TagField(required=True, widget=LabelWidget, help_text="Only jobs with these tags will be shown to you.")
 
@@ -73,8 +73,7 @@ class CustomSignupForm(forms.ModelForm):
         super(CustomSignupForm, self).__init__(*args, **kwargs)
 
     def signup(self, request, user):
-        """Provide custom signup method."""
+        """Provide custom signup step (saving tags)."""
         logger.info("User Signup: %s; request: %s", user, request)
         user.profile.tags = self.cleaned_data['tags']
         user.profile.save()
-        return super(CustomSignupForm, self).signup(request, user)
