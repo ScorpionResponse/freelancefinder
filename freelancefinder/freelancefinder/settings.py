@@ -75,6 +75,7 @@ ACCOUNT_LOGOUT_ON_GET = True
 SITE_ID = 1
 
 SOCIALACCOUNT_QUERY_EMAIL = True
+SOCIALACCOUNT_AUTO_SIGNUP = True
 SOCIALACCOUNT_PROVIDERS = {
     'github': {
         'SCOPE': ['user:email'],
@@ -84,7 +85,7 @@ SOCIALACCOUNT_PROVIDERS = {
     #     'AUTH_PARAMS': {'access_type': 'online'},
     # },
     'linkedin': {
-        'SCOPE': ['r_emailaddress', 'r_basicprofile'],
+        'SCOPE': ['r_emailaddress'],
         'PROFILE_FIELDS': ['id', 'first-name', 'last-name', 'email-address',
                            'picture-url', 'public-profile-url'],
     },
