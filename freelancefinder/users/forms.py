@@ -3,7 +3,7 @@
 import logging
 
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Submit, Layout, Fieldset, ButtonHolder
+from crispy_forms.layout import Submit, Layout, Fieldset, ButtonHolder, HTML
 from django_select2.forms import Select2Widget
 from taggit.forms import TagField
 from taggit_labels.widgets import LabelWidget
@@ -41,7 +41,7 @@ class ProfileForm(forms.ModelForm):
 class CustomSignupForm(forms.ModelForm):
     """Customize django-allauth SignupForm to include tags."""
 
-    tags = TagField(required=True, widget=LabelWidget, help_text="Only jobs with these tags will be shown to you.")
+    tags = TagField(required=True, widget=LabelWidget)
 
     class Meta:
         """CustomSignupForm config info."""
@@ -65,6 +65,9 @@ class CustomSignupForm(forms.ModelForm):
             ),
             Fieldset(
                 'My Profile',
+                HTML("""
+                    <p><small>Only jobs with these tags will be shown to you.  This can be changed later.</small></p>
+                """),
                 'tags'
             ),
             ButtonHolder(
