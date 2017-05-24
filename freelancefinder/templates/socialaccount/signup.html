@@ -13,6 +13,8 @@
 {% endwith %}
 </p>
 
+{% crispy form %}
+
 <form class="signup" id="signup_form" method="post" action="{% url 'socialaccount_signup' %}">
     {% csrf_token %}
     {{ form|crispy }}

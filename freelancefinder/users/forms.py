@@ -74,6 +74,7 @@ class CustomSignupForm(forms.ModelForm):
 
     def signup(self, request, user):
         """Provide custom signup step (saving tags)."""
-        logger.info("User Signup: %s; request: %s", user, request)
-        user.profile.tags = self.cleaned_data['tags']
+        tags = self.cleaned_data['tags']
+        logger.info("User Signup: %s; request: %s; tags: %s", user, request, tags)
+        user.profile.tags.add(*self.cleaned_data['tags'])
         user.profile.save()
