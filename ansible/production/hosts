@@ -1,0 +1,15 @@
+
+[dbservers]
+freelance_db1 ansible_host=45.33.44.199 ansible_user=deploy # machine: linode3162680
+
+[webservers]
+freelance_app1 ansible_host=45.33.44.199 ansible_user=deploy # machine: linode3162680
+
+[linode:children]
+dbservers
+webservers
+
+[linode:vars]
+vagrant = False
+DB_MACHINE_IP = '45.33.44.199'
+UI_MACHINE_IP = '45.33.44.199'

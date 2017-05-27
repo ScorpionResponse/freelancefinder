@@ -1,0 +1,5 @@
+---
+
+# django
+django_environment: development
+django_debug: True

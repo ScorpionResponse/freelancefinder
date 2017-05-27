@@ -1,0 +1,15 @@
+
+[dbservers]
+freelance_db1 ansible_host=192.168.2.4 ansible_user=deploy
+
+[webservers]
+freelance_app1 ansible_host=192.168.2.3 ansible_user=deploy
+
+[vagrant:children]
+dbservers
+webservers
+
+[vagrant:vars]
+vagrant = True
+DB_MACHINE_IP = '192.168.2.4'
+UI_MACHINE_IP = '192.168.2.3'
