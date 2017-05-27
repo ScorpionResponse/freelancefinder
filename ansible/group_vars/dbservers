@@ -15,13 +15,13 @@ postgresql_databases:
 
 postgresql_users:
   - name: postgres
-    pass: abc123-postgres
+    pass: "{{ _POSTGRES_USER_PASSWORD }}"
     encrypted: no
   - name: freelancefinder
-    pass: abc123-freelancefinder
+    pass: "{{ _FREELANCEFINDER_USER_PASSWORD }}"
     encrypted: no
 
-postgresql_pg_hba_passwd_hosts: ['192.168.2.3/32']
+postgresql_pg_hba_passwd_hosts: ['{{ UI_MACHINE_IP }}/32']
 
 # Logging
 postgresql_log_destination: csvlog

@@ -20,17 +20,20 @@ django_base_dir: /srv
 django_project_name: freelancefinder
 django_subdirectory: "freelancefinder/"
 django_git_repo: "https://github.com/ScorpionResponse/freelancefinder.git"
-django_environment: development
 
 django_settings_module: 'freelancefinder.settings'
-django_superuser_name: 'admin'
-django_superuser_email: 'admin@example.com'
-django_superuser_password: 'abc123abc'
+django_superuser_name: "{{ _DJANGO_SUPERUSER_NAME }}"
+django_superuser_email: "{{ _DJANGO_SUPERUSER_EMAIL }}"
+django_superuser_password: "{{ _DJANGO_SUPERUSER_PASSWORD }}"
+
+# Django per environment
+# django_environment: development
+# django_debug: False
 
 # Django settings
-django_debug: True
-django_secret_key: "abc123"
-django_db_url: "psql://freelancefinder:abc123-freelancefinder@192.168.2.4:5432/freelancefinder"
+django_secret_key: "{{ _DJANGO_SECRET_KEY }}"
+django_db_url: "{{ _DJANGO_DB_URL }}"
+django_email_url: "{{ _DJANGO_EMAIL_URL }}"
 django_settings:
   REDIS_CELERY_URL: 'redis://localhost:6379/0'
   GITHUB_CLIENT_ID: "{{ _GITHUB_CLIENT_ID }}"

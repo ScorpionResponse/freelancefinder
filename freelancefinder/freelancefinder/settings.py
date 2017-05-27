@@ -325,9 +325,8 @@ LANGUAGES = (
 LOCALE_PATHS = [str(root.path('locale/'))]
 
 # Email settings
-EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
-EMAIL_FILE_PATH = str(root.path('tmp-email-messages'))
-EMAIL_HOST = ''
+EMAIL_CONFIG = env.email_url('EMAIL_URL', default='dummymail://')
+vars().update(EMAIL_CONFIG)
 
 public_root = root.path('public/')
 
