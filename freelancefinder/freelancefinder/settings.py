@@ -19,7 +19,9 @@ SECRET_KEY = env('SECRET_KEY')
 DEBUG = env('DEBUG')
 
 # TODO: Set this appropriately
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['freelancefinder.work', 'www.freelancefinder.work']
+if DEBUG:
+    ALLOWED_HOSTS = ['*']
 
 PREREQ_APPS = [
     'django.contrib.admin',

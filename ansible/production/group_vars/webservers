@@ -6,3 +6,5 @@ django_debug: False
 
 # Nginx
 nginx_listen_port: 80
+nginx_letsencrypt_on: True
+nginx_letsencrypt_dir: "/etc/letsencrypt/live/freelancefinder.work"

@@ -11,7 +11,7 @@ gunicorn_user_name: "django"
 gunicorn_workers: 4
 
 # nginx
-nginx_server_name: freelancefinder.work
+nginx_server_name: "freelancefinder.work www.freelancefinder.work"
 nginx_application_dir: /srv/freelancefinder/freelancefinder/public
 nginx_hashed_static_files: True
 
