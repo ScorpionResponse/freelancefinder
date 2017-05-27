@@ -60,12 +60,12 @@
     </p>
     {% if user.is_authenticated %}
     <form id="stripe-payment-form" action="{% url 'accept-payment' %}" method="POST">
-    {% else %}
-    <form id="stripe-payment-form" action="{% url 'account_login' %}" method="POST">
-    {% endif %}
         {% csrf_token %}
         <input type="hidden" name="token" value="nojs">
         <input type="hidden" name="subscription" value="nojs">
+    {% else %}
+    <form id="stripe-payment-form" action="{% url 'account_login' %}" method="GET">
+    {% endif %}
         <div class="pricing-plan">
             <div class="row align-items-center">
                 <div class="col text-right">Yearly - $40 / Month:</div>
