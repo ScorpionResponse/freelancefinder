@@ -1,7 +1,8 @@
 ---
 
-# django
-django_environment: production
-
 # Django settings
+django_environment: production
 django_debug: False
+
+# Nginx
+nginx_listen_port: 80

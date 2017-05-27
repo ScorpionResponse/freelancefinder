@@ -1,5 +1,8 @@
 ---
 
-# django
+# Django
 django_environment: development
 django_debug: True
+
+# Nginx
+nginx_listen_port: 8181
