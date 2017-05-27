@@ -24,7 +24,8 @@ if DEBUG:
     ALLOWED_HOSTS = ['*']
 
 # Make https work
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
 
 PREREQ_APPS = [
     'django.contrib.admin',
