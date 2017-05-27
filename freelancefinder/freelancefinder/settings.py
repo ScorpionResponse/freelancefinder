@@ -23,6 +23,9 @@ ALLOWED_HOSTS = ['freelancefinder.work', 'www.freelancefinder.work']
 if DEBUG:
     ALLOWED_HOSTS = ['*']
 
+# Make https work
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
 PREREQ_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
