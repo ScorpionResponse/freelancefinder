@@ -58,7 +58,11 @@
     for those skills are still aggregated anyway, and hopefully the work I've
     done can benefit you.
     </p>
+    {% if user.is_authenticated %}
     <form id="stripe-payment-form" action="{% url 'accept-payment' %}" method="POST">
+    {% else %}
+    <form id="stripe-payment-form" action="{% url 'account_login' %}" method="POST">
+    {% endif %}
         {% csrf_token %}
         <input type="hidden" name="token" value="nojs">
         <input type="hidden" name="subscription" value="nojs">
@@ -84,6 +88,7 @@
 {% block 'scripts' %}
 <script>
 
+{% if user.is_authenticated %}
     function handleStripeToken(token, args) {
         var $payment_form = $('#stripe-payment-form');
         var token_input = $('input[name="token"]', $payment_form).first();
@@ -113,5 +118,6 @@
             e.preventDefault();
         });
     });
+{% endif %}
 </script>
 {% endblock %}
