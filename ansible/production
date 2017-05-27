@@ -1,15 +1,13 @@
 
-[db-servers]
-db1 ansible_host=139.166.185.215 ansible_user=deploy # machine: linode2322828
-db2 ansible_host=139.166.191.158 ansible_user=deploy # machine: linode2322830
+[dbservers]
+freelance_db1 ansible_host=45.33.44.199 ansible_user=deploy # machine: linode3162680
 
-[app-servers]
-app1 ansible_host=139.166.177.181 ansible_user=deploy # machine: linode2322823
-app2 ansible_host=139.166.183.37 ansible_user=deploy # machine: linode2322810
+[webservers]
+freelance_app1 ansible_host=45.33.44.199 ansible_user=deploy # machine: linode3162680
 
 [linode:children]
-db-servers
-app-servers
+dbservers
+webservers
 
 [linode:vars]
-vagrant=False
+vagrant = False
