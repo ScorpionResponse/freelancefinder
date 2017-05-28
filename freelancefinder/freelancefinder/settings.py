@@ -79,7 +79,10 @@ ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_LOGOUT_ON_GET = True
 ACCOUNT_SESSION_REMEMBER = True
-# ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'https'
+ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'https'
+if DEBUG:
+    ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'http'
+
 SITE_ID = 1
 
 ACCOUNT_SIGNUP_FORM_CLASS = 'users.forms.CustomSignupForm'
@@ -182,7 +185,7 @@ DATABASES = {
 LOG_LEVEL = 'DEBUG' if DEBUG else 'INFO'
 
 ADMINS = [('Paul', 'moss.paul@gmail.com'), ('Paul', 'paul@freelancefinder.work')]
-MANAGERS = [('Paul', 'moss.paul@gmail.com'), ('Paul', 'paul@freelancefinder.work')]
+MANAGERS = [('Paul', 'paul@freelancefinder.work')]
 DEFAULT_FROM_EMAIL = 'noreply@freelancefinder.work'
 
 LOGGING = {
