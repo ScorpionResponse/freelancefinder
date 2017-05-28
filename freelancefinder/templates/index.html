@@ -69,11 +69,11 @@
         <div class="pricing-plan">
             <div class="row align-items-center">
                 <div class="col text-right">Yearly - $40 / Month:</div>
-                <div class="col"><button type="submit" id="stripe-yearly" class="btn btn-primary">Sign up</button></div>
+                <div class="col"><button type="submit" id="stripe-yearly" class="btn btn-primary">{% if user.is_authenticated %}Subscribe{% else %}Sign up{% endif %}</button></div>
             </div>
             <div class="row align-items-center">
                 <div class="col text-right">Monthly - $50 / Month:</div>
-                <div class="col"><button type="submit" id="stripe-monthly" class="btn btn-primary">Sign up</button></div>
+                <div class="col"><button type="submit" id="stripe-monthly" class="btn btn-primary">{% if user.is_authenticated %}Subscribe{% else %}Sign up{% endif %}</button></div>
             </div>
         </div>
     </form>
