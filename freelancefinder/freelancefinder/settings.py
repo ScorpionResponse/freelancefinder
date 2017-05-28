@@ -24,8 +24,8 @@ if DEBUG:
     ALLOWED_HOSTS = ['*']
 
 # Make https work
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
+# SESSION_COOKIE_SECURE = True
+# CSRF_COOKIE_SECURE = True
 
 PREREQ_APPS = [
     'django.contrib.admin',
