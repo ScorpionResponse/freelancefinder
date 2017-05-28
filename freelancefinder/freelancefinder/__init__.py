@@ -6,5 +6,5 @@ from .celeryconfig import celery_app
 
 __all__ = ('celery_app',)
 
-__version__ = '0.0.3'
+__version__ = '1.0.0'
 VERSION = __version__
