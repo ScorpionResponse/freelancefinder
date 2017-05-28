@@ -19,7 +19,7 @@ SECRET_KEY = env('SECRET_KEY')
 DEBUG = env('DEBUG')
 
 # TODO: Set this appropriately
-ALLOWED_HOSTS = ['freelancefinder.work', 'www.freelancefinder.work']
+ALLOWED_HOSTS = ['freelancefinder.work', 'www.freelancefinder.work', '45.33.44.199']
 if DEBUG:
     ALLOWED_HOSTS = ['*']
 
@@ -77,6 +77,7 @@ LOGIN_REDIRECT_URL = "/"
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_CONFIRM_EMAIL_ON_GET = True
 ACCOUNT_LOGOUT_ON_GET = True
 ACCOUNT_SESSION_REMEMBER = True
 ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'https'
@@ -86,6 +87,7 @@ if DEBUG:
 SITE_ID = 1
 
 ACCOUNT_SIGNUP_FORM_CLASS = 'users.forms.CustomSignupForm'
+SOCIALACCOUNT_AUTO_SIGNUP = False
 
 SOCIALACCOUNT_QUERY_EMAIL = True
 SOCIALACCOUNT_PROVIDERS = {
@@ -187,6 +189,7 @@ LOG_LEVEL = 'DEBUG' if DEBUG else 'INFO'
 ADMINS = [('Paul', 'moss.paul@gmail.com'), ('Paul', 'paul@freelancefinder.work')]
 MANAGERS = [('Paul', 'paul@freelancefinder.work')]
 DEFAULT_FROM_EMAIL = 'noreply@freelancefinder.work'
+SERVER_EMAIL = DEFAULT_FROM_EMAIL
 
 LOGGING = {
     'version': 1,
