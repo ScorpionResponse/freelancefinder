@@ -8,9 +8,8 @@ from taggit.managers import TaggableManager
 from timezone_utils.fields import TimeZoneField
 from timezone_utils.choices import PRETTY_ALL_TIMEZONES_CHOICES as TIMEZONE_CHOICES
 
-from django.conf import settings
 from django.contrib.auth.models import User, Group
-from django.core.mail import send_mail
+from django.core.mail import mail_managers
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -79,7 +78,7 @@ def create_or_update_user_account(sender, instance, created, **kwargs):
 @receiver(post_save, sender=User)
 def first_time_user_flow(sender, instance, created, **kwargs):
     """If a new user is created, also create an account."""
-    logger.debug('Create Or Update User Account caught signal from sender: %s, instance: %s, created: %s, kwargs: %s', sender, instance, created, kwargs)
+    logger.debug('First Time User Flow caught signal from sender: %s, instance: %s, created: %s, kwargs: %s', sender, instance, created, kwargs)
     if created:
         logger.info("New User Created: %s", instance)
-        send_mail("New User: %s" % (instance,), "New User:\n\t%s\n\t%s\n" % (instance, instance.email), settings.DEFAULT_FROM_EMAIL, settings.MANAGERS)
+        mail_managers(subject="New User: %s" % (instance,), message="New User:\n\t%s\n\t%s\n" % (instance, instance.email), fail_silently=True)
