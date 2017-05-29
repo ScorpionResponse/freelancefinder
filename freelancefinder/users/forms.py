@@ -9,7 +9,6 @@ from taggit.forms import TagField
 from taggit_labels.widgets import LabelWidget
 
 from django import forms
-from django.urls.base import reverse
 
 from .models import Profile
 from .utils import create_userjobs_for
@@ -53,7 +52,6 @@ class CustomSignupForm(forms.ModelForm):
         """Create a pretty crispy form."""
         logger.debug("Args: %s; kwargs: %s", args, kwargs)
         self.helper = FormHelper()
-        # self.helper.form_action = reverse('account_signup')
         self.helper.form_id = 'signup_form'
         self.helper.form_class = 'signup'
         self.helper.layout = Layout(

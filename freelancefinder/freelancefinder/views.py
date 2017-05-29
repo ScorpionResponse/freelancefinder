@@ -30,7 +30,6 @@ class AcceptPaymentView(View):
 
     def post(self, request, *args, **kwargs):
         """Process POST info."""
-
         token = request.POST.get('token')
         subscription_type = request.POST.get('subscription')
 

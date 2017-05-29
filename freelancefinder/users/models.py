@@ -62,7 +62,7 @@ class Account(models.Model):
     def confirm_payment(self):
         """Confirm the payment of this account."""
         group = Group.objects.get(name='Paid')
-        self.user.groups.add(group)
+        self.user.groups.add(group)  # pylint: disable=no-member
         self.user.save()
 
 
