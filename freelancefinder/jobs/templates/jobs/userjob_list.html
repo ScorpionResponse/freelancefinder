@@ -69,7 +69,7 @@
             </form>
             <div class="d-flex w-100 flex-column">
                 {% if userjob.job.description %}
-                    <a href="#" data-toggle="collapse" data-target="#jobdesc-{{ userjob.id }}" class="list-group-item-action" title="Click To Show Description">
+                    <a href="#" data-toggle="collapse" data-target="#jobdesc-{{ userjob.id }}" aria-expanded="false" class="list-group-item-action" title="Click To Show Description" data-placement="bottom">
                 {% endif %}
                     <div class="d-flex flex-row w-100 justify-content-between flex-wrap">
                         <h5>{{ userjob.job.title }}
