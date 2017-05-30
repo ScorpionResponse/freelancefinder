@@ -21,7 +21,7 @@
 <div class="facets p-2">
     Sources:
     {% for facet in source_facets %}
-    <a href="?{% querystring request source=facet.job__posts__source__code %}" class="btn btn-outline-info {% if request.GET.source == facet.job__posts__source__code %}active{% endif %}">
+    <a href="?{% querystring request source=facet.job__posts__source__code %}" class="btn btn-outline-info {% if request.GET.source == facet.job__posts__source__code %}active{% endif %}" data-toggle="tooltip" title="Show only results from {{ facet.job__posts__source__name }}">
         {{ facet.job__posts__source__name }}
         <span class="badge badge-default" id="facet-{{ facet.job__posts__source__code }}-count">
             {{ facet.total }}
@@ -42,7 +42,7 @@
 <div class="facets p-2">
     Dates:
     {% for facet in date_facets %}
-    <a href="{% url 'userjob-list' date=facet.created_date|date:"Y-m-d" %}?{% querystring request %}" class="btn btn-outline-warning {% if curdate == facet.created_date|date:'Y-m-d' %}active{% endif %}">
+    <a href="{% url 'userjob-list' date=facet.created_date|date:"Y-m-d" %}?{% querystring request %}" class="btn btn-outline-warning {% if curdate == facet.created_date|date:'Y-m-d' %}active{% endif %}" data-toggle="tooltip" title="Show only results from {{ facet.created_date|date:"Y-m-d" }}">
         {{ facet.created_date|date:"Y-m-d" }}
         <span class="badge badge-default" id="facet-{{ facet.created_date|date:"Y-m-d" }}-count">
             {{ facet.total }}
@@ -64,15 +64,19 @@
                     {% csrf_token %}
                     <input type="hidden" name="userjob_id" value="{{ userjob.id }}">
                     <input type="hidden" name="next" value="{% url 'userjob-list' %}?{% querystring request %}" />
-                    <button type="submit" class="btn btn-danger btn-circle btn-lg row-dismiss" name="dismiss"><i class="fa fa-times"></i></button>
+                    <button type="submit" class="btn btn-danger btn-circle btn-lg row-dismiss" name="dismiss" data-toggle="tooltip" title="Delete this job from your list"><i class="fa fa-times"></i></button>
                 </div>
             </form>
             <div class="d-flex w-100 flex-column">
                 {% if userjob.job.description %}
-                    <a href="#" data-toggle="collapse" data-target="#jobdesc-{{ userjob.id }}" class="list-group-item-action">
+                    <a href="#" data-toggle="collapse" data-target="#jobdesc-{{ userjob.id }}" class="list-group-item-action" title="Click To Show Description">
                 {% endif %}
                     <div class="d-flex flex-row w-100 justify-content-between flex-wrap">
-                        <h5>{{ userjob.job.title }}</h5>
+                        <h5>{{ userjob.job.title }}
+                            {% if userjob.job.description %}
+                                [+]
+                            {% endif %}
+                        </h5>
                         <small>{{ userjob.job.created|localtime }}</small>
                     </div>
                 {% if userjob.job.description %}
@@ -80,11 +84,11 @@
                 {% endif %}
                 <div class="d-flex flex-row w-100 justify-content-start flex-wrap">
                     <span class="p-2">
-                        <a href="{% url 'job-detail' userjob.job.id %}">Detail</a>
+                        <a href="{% url 'job-detail' userjob.job.id %}" data-toggle="tooltip" title="View Full Job Detail">Detail</a>
                     </span>
                     <span class="source-info p-2">
                         {% for post in userjob.job.posts.all %}
-                            <a href="{{ post.url }}" target="_blank" class="sourcelink-{{ post.source.code }}">{{ post.source.name }} &gt; {{ post.subarea }}</a>
+                            <a href="{{ post.url }}" target="_blank" class="sourcelink-{{ post.source.code }}" data-toggle="tooltip" title="Go To Source Site To Apply">{{ post.source.name }} &gt; {{ post.subarea }}</a>
                         {% endfor %}
                     </span>
                     <span class="tag-list p-2 ml-auto">
@@ -141,6 +145,7 @@
             }
         }
         $(document).ready(function(){
+            $('.list-group-item-action').tooltip();
             $('#filters-button').click(function() {
                 var $text_label = $('#filters-text');
                 if ($text_label.data('state') === 'show') {
