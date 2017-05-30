@@ -64,7 +64,7 @@
                     {% csrf_token %}
                     <input type="hidden" name="userjob_id" value="{{ userjob.id }}">
                     <input type="hidden" name="next" value="{% url 'userjob-list' %}?{% querystring request %}" />
-                    <button type="submit" class="btn btn-danger btn-circle btn-lg row-dismiss" name="dismiss" data-toggle="tooltip" title="Delete this job from your list"><i class="fa fa-times"></i></button>
+                    <button type="submit" class="btn btn-danger btn-circle btn-lg row-dismiss" name="dismiss" data-toggle="tooltip" data-placement="right" title="Delete this job from your list"><i class="fa fa-times"></i></button>
                 </div>
             </form>
             <div class="d-flex w-100 flex-column">
