@@ -74,6 +74,16 @@ body {
     line-height: 1.5;
 }
 
+.picture-tutorial img {
+    margin: 10px;
+    padding: 10px;
+    border: 2px solid #FFFFFF;
+}
+
+.picture-tutorial .row {
+    margin-top: 20px;
+}
+
 /* Results List */
 .post h5,.post small,.job h5,.job small {
     color: #FFFFFF;
