@@ -65,7 +65,10 @@ class CustomSignupForm(forms.ModelForm):
             Fieldset(
                 'My Profile',
                 HTML("""
-                    <p><small>Only jobs with these tags will be shown to you.  This can be changed later.</small></p>
+                    <p><small>You must select at least one tag.  These tags
+                     control which job postings will be shown to you and which
+                     will not.  Only those jobs that match these tags will be
+                     visible to you.  This can be changed later.</small></p>
                 """),
                 'tags'
             ),
