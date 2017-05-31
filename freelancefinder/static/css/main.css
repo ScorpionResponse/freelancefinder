@@ -29,6 +29,12 @@ body {
     color: #606060;
 }
 
+.spacer { 
+    margin:0; 
+    padding:0; 
+    height:50px; 
+}
+
 /* Header */
 #header-logo {
     color: #658B38;

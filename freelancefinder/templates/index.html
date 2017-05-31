@@ -21,23 +21,23 @@
     consultant.  This site is my tool to find more work when my clients don't
     have anything to work on.  It can be your tool too.
     <p>
-    My problem is that there are tons of freelance/job sites on the internet.
+    I created this tool because there were tons of freelance/job sites on the
+    internet and none that did what I needed to help cut through the noise.
     Most of them are full of full time positions with a few freelance or
-    consultant roles mixed in.  Some of them are full of people looking to
-    build the next {% templatetag openvariable %} BIG_FAMOUS_SITE 
-    {% templatetag closevariable %} with a budget of $200.  Mixed in with all of
-    that are a few reasonable businesses looking to hire actual professionals.  I
-    sort through all of that to find the postings that seem worthwhile.
+    consultant roles mixed in.  Even if there are roles for contract work, much
+    of that is not in one of the technologies I specialize in.  I sort through
+    all of that to find just the listings that are for contract work in my area
+    and then I go through that (much, much smaller) list manually.
     </p>
     <p>
     <span class="logo">Freelance Finder</span> aggregates information from tons
     of sites on the internet and then deletes nearly all of it.  Full time
     jobs: deleted.  Junk posts: deleted.  Unreasonable budgets: deleted.  All
-    of the junk is deleted and only the seemingly quality listings remain.
-    Then a simple list of the things that seem like possibilities are presented
-    in an easy to delete way.  Critically, this process ends.  My goal is not
-    to look through everything, but only to look through some things and once
-    that is done then the work is done.
+    of the junk is deleted and only the quality listings remain.  Then a simple
+    list of the things that seem like possibilities are presented in an easy to
+    delete way.  Critically, there is an end to the job search process every
+    day when there are no more jobs to look through.  Then I can get to work or
+    just relax and move on to other things.
     </p>
     <p>
     Even with a network of clients, you still need to do a lot of legwork to
@@ -53,10 +53,9 @@
     freelance jobs available no matter where they are listed.
     </p>
     <p>
-    I'm making this site available to you because I can only do so many jobs
-    and I don't have skills in every subject on the planet, but posts looking
-    for those skills are still aggregated anyway, and hopefully the work I've
-    done can benefit you.
+    I invite you to come use my tool to sift through the noise and find the
+    freelance/contract work that is right for you.  It will save you time and
+    energy that could be better spent on paying gigs.
     </p>
     {% if user.is_authenticated %}
     <form id="stripe-payment-form" action="{% url 'accept-payment' %}" method="POST">
@@ -75,9 +74,25 @@
                 <div class="col text-right">Monthly - $50 / Month:</div>
                 <div class="col"><button type="submit" id="stripe-monthly" class="btn btn-primary">{% if user.is_authenticated %}Subscribe{% else %}Sign up{% endif %}</button></div>
             </div>
+            {% if not user.is_authenticated %}
+                <div class="row align-items-center">
+                    <div class="col text-right">Free for 5 days:</div>
+                    <div class="col"><button type="submit" class="btn btn-primary">Sign up</button></div>
+                </div>
+                <div class="row">
+                    <div class="col col-3">&nbsp;</div>
+                    <div class="col align-self-center col-6">
+                        <p><small class="text-muted">*Accounts are free for 5 days.  You must sign up before
+                            you purchase a subscription.  After signup the buttons
+                            above will permit you to buy a subscription.</small></p>
+                    </div>
+                    <div class="col col-3">&nbsp;</div>
+                </div>
+            {% endif %}
         </div>
     </form>
-    <p>
+    <div class="spacer"></div>
+    <p class="text-muted">
     If you're looking to hire a product management and 
     Python/Django development consultant, feel free to send me an email <a href="mailto:paul@freelancefinder.work">paul@freelancefinder.work</a> and we can talk.
     </p>
