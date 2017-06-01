@@ -3,8 +3,8 @@
 <!DOCTYPE html>
 <!--
     Design based on:
-	Solid State by HTML5 UP
-	html5up.net | @ajlkn
+    Solid State by HTML5 UP
+    html5up.net | @ajlkn
 -->
 <html lang="en">
     <head>
@@ -56,21 +56,21 @@
             </nav>
 
             {% block 'pagebanner' %}
-			<section id="messages">
-				<div class="inner">
-					{% for message in messages %}
-						{% if message.level_tag == "error" %}
-							{# Include alert-error in the response (so the tests will find this
-							and confirm we executed the correct code block) but the actual class to
-							use for this is alert-danger #}
-							<!-- alert-error -->
-							<div class="alert alert-danger" role="alert">{{ message }}</div>
-						{% else %}
-							<div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}" role="alert">{{ message }}</div>
-						{% endif %}
-					{% endfor %}
-				</div>
-			</section>
+            <section id="messages">
+                <div class="inner">
+                    {% for message in messages %}
+                        {% if message.level_tag == "error" %}
+                            {# Include alert-error in the response (so the tests will find this
+                            and confirm we executed the correct code block) but the actual class to
+                            use for this is alert-danger #}
+                            <!-- alert-error -->
+                            <div class="alert alert-danger" role="alert">{{ message }}</div>
+                        {% else %}
+                            <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}" role="alert">{{ message }}</div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </section>
             {% endblock %}
 
             <section id="wrapper">
@@ -82,8 +82,8 @@
 
             <section id="footer">
                 <div class="inner">
-					<h2 class="major">Get in touch</h2>
-					<p>I'm always interested to hear from folks who would like to know more or who might have some comment about the site to share.  Follow me on twitter or send an email.</p>
+                    <h2 class="major">Get in touch</h2>
+                    <p>I'm always interested to hear from folks who would like to know more or who might have some comment about the site to share.  Follow me on twitter or send an email.</p>
                     <ul class="contact">
                         <li class="fa-envelope"><a href="mailto:paul@freelancefinder.work">paul@freelancefinder.work</a></li>
                         <li class="fa-twitter"><a href="https://twitter.com/scorpionrespons">twitter.com/scorpionrespons</a></li>

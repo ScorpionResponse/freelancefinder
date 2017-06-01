@@ -4,11 +4,24 @@
 
 {% block 'title' %}Freelance Finder - Profile for {{ user }}{% endblock %}
 
+{% block 'pagebanner' %}
+<section id="banner">
+    <div class="inner">
+        <h2>Profile for {{ user }}</h2>
+        <p>Estimated next run time: {{ my_next_run|localtime }}</p>
+    </div>
+</section>
+{{ block.super }}
+{% endblock %}
+
 {% block 'content' %}
 
-<h1>Profile for {{ user }}</h1>
-<small>Estimated next run time: {{ my_next_run|localtime }}</small>
-
-{% crispy form %}
+<section id="one" class="wrapper">
+    <div class="inner">
+        <div class="content">
+            {% crispy form %}
+        </div>
+    </div>
+</section>
 
 {% endblock %}
