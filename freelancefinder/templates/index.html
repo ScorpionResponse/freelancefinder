@@ -2,150 +2,164 @@
 {% load static %}
 
 {% block 'title' %}Freelance Finder - Welcome{% endblock %}
-{% block 'extrahead' %}
-<script src="//checkout.stripe.com/checkout.js"></script>
+
+{% block 'pagebanner' %}
+<section id="banner">
+    <div class="inner">
+        <h2>Freelance Finder</h2>
+        <p>Filtering the freelance web so you don't have to</p>
+    </div>
+</section>
 {% endblock %}
 
 {% block 'content' %}
 
+<section id="one" class="wrapper spotlight style1">
+    <div class="inner">
+        <a href="{% url 'account_login' %}" class="image">
+            <img src="{% static 'images/select_tags.png' %}" alt="Select">
+        </a>
+        <div class="content">
+            <h2 class="major">Select</h2>
+            <p>
+            Select the keywords matching your skills.  You will only see available freelance jobs which match these keywords.
+            </p>
+        </div>
+    </div>
+</section>
 
-<div class="jumbotron">
-    <h1>Welcome to Freelance Finder!</h1>
-    <h5>Filtering the freelance web, so you don't have to.</h5> 
-</div>
+<section id="two" class="wrapper alt spotlight style2">
+    <div class="inner">
+        <a href="{% url 'account_login' %}" class="image">
+            <img src="{% static 'images/evaluate_contracts.png' %}" alt="Evaluate">
+        </a>
+        <div class="content">
+            <h2 class="major">Evaluate</h2>
+            <p>
+            Evaluate each freelance job posting, apply or not, and click the dismiss button to make it go away.
+            </p>
+        </div>
+    </div>
+</section>
 
-<div class="spacer"></div>
-<div class="container">
-<h1 class="text-center">What <span class="logo">Freelance Finder</span> does</h1>
-<div class="picture-tutorial">
-    <div class="row align-items-center">
-        <div class="col col-md-7">
-            <img class="rounded" src="{% static 'images/select_tags.png' %}" alt="Select Tags">
-        </div>
-        <div class="col col-md-5">
-            <p class="h3 align-middle">
-            You select tags for the posts you would like to see
+<section id="three" class="wrapper spotlight style3">
+    <div class="inner">
+        <a href="{% url 'account_login' %}" class="image">
+            <img src="{% static 'images/done.png' %}" alt="Done">
+        </a>
+        <div class="content">
+            <h2 class="major">Done</h2>
+            <p>
+            Come back tomorrow for new freelance job postings.  We work continuously to gather new posts.  Once per day, at a scheduled time, they are added to your account, saving you the trouble of checking back constantly.<br />
+            <small>* For now, get back to work</small>
             </p>
         </div>
     </div>
-    <div class="row align-items-center">
-        <div class="col col-md-4">
-            <p class="h3 align-middle">
-            <span class="logo">Freelance Finder</span> shows only what you want.  Evaluate each one, apply or not, and click the <button class="btn btn-danger btn-circle btn-sm"><i class="fa fa-times"></i></button> to make it go away.
-            </p>
-        </div>
-        <div class="col col-md-8">
-            <img class="rounded" src="{% static 'images/evaluate_contracts.png' %}" alt="Evaluate Contracts">
-        </div>
-    </div>
-    <div class="row align-items-center">
-        <div class="col col-md-6">
-            <img class="rounded" src="{% static 'images/done.png' %}" alt="Done">
-        </div>
-        <div class="col col-md-6">
-            <p class="h3 align-middle">
-            Come back tomorrow for new posts
-            </p>
-            <p class="align-middle">
-            <small>* For now, get back to work.</small>
-            </p>
-        </div>
-    </div>
-    <div class="row align-items-center">
-        <div class="col col-md-6 text-right">Sign up now for a free 5 day trial.<br><small>* No credit card required.</small></div>
-        <div class="col col-md-6"><a href="{% url 'account_login' %}" type="submit" class="btn btn-primary">Sign up</a></div>
-    </div>
-</div>
+</section>
 
-<div class="spacer"></div>
-<div class="spacer"></div>
-<h1 class="text-center">My Rationale</h1>
-<div class="index-copy">
-    <p>
-    Hi.  I'm Paul Moss.  I'm a product management and web development
-    consultant.  This site is my tool to find more work when my clients don't
-    have anything to work on.  It can be your tool too.
-    <p>
-    I created this tool because there were tons of freelance/job sites on the
-    internet and none that did what I needed to help cut through the noise.
-    Most of them are full of full time positions with a few freelance or
-    consultant roles mixed in.  Even if there are roles for contract work, much
-    of that is not in one of the technologies I specialize in.  I sort through
-    all of that to find just the listings that are for contract work in my area
-    and then I go through that (much, much smaller) list manually.
-    </p>
-    <p>
-    <span class="logo">Freelance Finder</span> aggregates information from tons
-    of sites on the internet and then deletes nearly all of it.  Full time
-    jobs: deleted.  Junk posts: deleted.  Unreasonable budgets: deleted.  All
-    of the junk is deleted and only the quality listings remain.  Then a simple
-    list of the things that seem like possibilities are presented in an easy to
-    delete way.  Critically, there is an end to the job search process every
-    day when there are no more jobs to look through.  Then I can get to work or
-    just relax and move on to other things.
-    </p>
-    <p>
-    Even with a network of clients, you still need to do a lot of legwork to
-    keep the pipeline of new jobs filled.  If you're busy with clients or a
-    digital nomad busy traveling, you don't have to spend time searching for
-    your next lead.  Instead of sifting through stale or low quality postings
-    to find your next client, save time job hunting every day and simply use
-    <span class="logo">Freelance Finder</span>.
-    </p>
-    <p>
-    I aggregate from as many job sites as I can find, but also from twitter,
-    google results, emails I get, everything.  My goal is to find the best
-    freelance jobs available no matter where they are listed.
-    </p>
-    <p>
-    I invite you to come use my tool to sift through the noise and find the
-    freelance/contract work that is right for you.  It will save you time and
-    energy that could be better spent on paying gigs.
-    </p>
-    {% if user.is_authenticated %}
-    <form id="stripe-payment-form" action="{% url 'accept-payment' %}" method="POST">
-        {% csrf_token %}
-        <input type="hidden" name="token" value="nojs">
-        <input type="hidden" name="subscription" value="nojs">
-    {% else %}
-    <form id="stripe-payment-form" action="{% url 'account_login' %}" method="GET">
-    {% endif %}
-        <div class="pricing-plan">
-            <div class="row align-items-center">
-                <div class="col text-right">Yearly - $40 / Month:</div>
-                <div class="col"><button type="submit" id="stripe-yearly" class="btn btn-primary">{% if user.is_authenticated %}Subscribe{% else %}Sign up{% endif %}</button></div>
-            </div>
-            <div class="row align-items-center">
-                <div class="col text-right">Monthly - $50 / Month:</div>
-                <div class="col"><button type="submit" id="stripe-monthly" class="btn btn-primary">{% if user.is_authenticated %}Subscribe{% else %}Sign up{% endif %}</button></div>
-            </div>
-            {% if not user.is_authenticated %}
-                <div class="row align-items-center">
-                    <div class="col text-right">Free for 5 days:</div>
-                    <div class="col"><button type="submit" class="btn btn-primary">Sign up</button></div>
-                </div>
-                <div class="row">
-                    <div class="col col-3">&nbsp;</div>
-                    <div class="col align-self-center col-6">
-                        <p><small class="text-muted">*Accounts are free for 5 days.  You must sign up before
-                            you purchase a subscription.  After signup the buttons
-                            above will permit you to buy a subscription.</small></p>
-                    </div>
-                    <div class="col col-3">&nbsp;</div>
-                </div>
+<section id="four" class="wrapper alt spotlight style1">
+    <div class="inner">
+        <div class="content">
+            <h2 class="major">Sign Up</h2>
+            <p>
+            Sign up for a 5 day trial, no credit card required
+            </p>
+            <a href="{% url 'account_login' %}" class="special">Sign Up</a>
+        </div>
+    </div>
+</section>
+
+<section id="five" class="wrapper">
+    <div class="inner">
+        <div class="content">
+            <h2 class="major">My Rationale</h2>
+            <p>
+            Hi.  I'm Paul Moss.  I'm a product management and web development
+            consultant.  This site is my tool to find more work when my clients don't
+            have anything to work on.  It can be your tool too.
+            <p>
+            I created this tool because there were tons of freelance/job sites on the
+            internet and none that did what I needed to help cut through the noise.
+            Most of them are full of full time positions with a few freelance or
+            consultant roles mixed in.  Even if there are roles for contract work, much
+            of that is not in one of the technologies I specialize in.  This
+            site sorts through all of that to find just the listings that are
+            for contract work, shows me just the ones I have the skills to do,
+            and then I go through that (much, much smaller) list manually.
+            </p>
+            <p>
+            <span class="logo">Freelance Finder</span> aggregates information from tons
+            of sites on the internet and then deletes nearly all of it.  Full time
+            jobs: deleted.  Junk posts: deleted.  Unreasonable budgets: deleted.  All
+            of the junk is deleted and only the quality listings remain.  Then a simple
+            list of the things that seem like possibilities are presented in an easy to
+            delete way.  Critically, there is an end to the job search process every
+            day when there are no more jobs to look through.  Then you can get to work or
+            just relax and move on to other things.
+            </p>
+            <p>
+            Even with a network of clients, you still need to do a lot of legwork to
+            keep the pipeline of new jobs filled.  If you're busy with clients or a
+            digital nomad busy traveling, you don't have to spend time searching for
+            your next lead.  Instead of sifting through stale or low quality postings
+            to find your next client, save time job hunting every day and simply use
+            <span class="logo">Freelance Finder</span>.
+            </p>
+            <p>
+            I aggregate from as many job sites as I can find, but also from twitter,
+            google results, emails I get, everything.  My goal is to find the best
+            freelance jobs available no matter where they are listed.
+            </p>
+            <p>
+            I invite you to come use my tool to sift through the noise and find the
+            freelance/contract work that is right for you.  It will save you time and
+            energy that could be better spent on paying gigs.
+            </p>
+            {% if user.is_authenticated %}
+            <form id="stripe-payment-form" action="{% url 'accept-payment' %}" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="token" value="nojs">
+                <input type="hidden" name="subscription" value="nojs">
+            {% else %}
+            <form id="stripe-payment-form" action="{% url 'account_login' %}" method="GET">
             {% endif %}
+                <div class="pricing-plan box">
+                    <div class="row uniform">
+                        <div class="6u 12u$(medium) align-right">Yearly - $40 / Month:</div>
+                        <div class="6u$ 12u$(medium)"><button type="submit" id="stripe-yearly" class="special small">{% if user.is_authenticated %}Subscribe{% else %}Sign up{% endif %}</button></div>
+                    </div>
+                    <div class="row">
+                        <div class="6u 12u$(medium) align-right">Monthly - $50 / Month:</div>
+                        <div class="6u$ 12u$(medium)"><button type="submit" id="stripe-monthly" class="special small">{% if user.is_authenticated %}Subscribe{% else %}Sign up{% endif %}</button></div>
+                    </div>
+                    {% if not user.is_authenticated %}
+                        <div class="row">
+                            <div class="6u 12u$(medium) align-right">Free for 5 days:</div>
+                            <div class="6u$ 12u$(medium)"><button type="submit" class="special small">Sign up</button></div>
+                        </div>
+                        <div class="row">
+                            <div class="3u only-large">&nbsp;</div>
+                            <div class="6u 12u$(medium)">
+                                <p><small class="text-muted">*Accounts are free for 5 days.  You must sign up before
+                                    you purchase a subscription.  After signup the buttons
+                                    above will permit you to buy a subscription.</small></p>
+                            </div>
+                            <div class="3u$ only-large">&nbsp;</div>
+                        </div>
+                    {% endif %}
+                </div>
+            </form>
+            <p class="text-muted">
+            If you're looking to hire a product management and 
+            Python/Django development consultant, feel free to send me an email <a href="mailto:paul@freelancefinder.work">paul@freelancefinder.work</a> and we can talk.
+            </p>
         </div>
-    </form>
-    <div class="spacer"></div>
-    <p class="text-muted">
-    If you're looking to hire a product management and 
-    Python/Django development consultant, feel free to send me an email <a href="mailto:paul@freelancefinder.work">paul@freelancefinder.work</a> and we can talk.
-    </p>
-</div>
-</div>
+    </div>
+</section>
 
 {% endblock %}
-{% block 'scripts' %}
+{% block 'extrascripts' %}
+<script src="//checkout.stripe.com/checkout.js"></script>
 <script>
 
 {% if user.is_authenticated %}
