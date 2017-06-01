@@ -3,6 +3,7 @@
 # Django
 django_environment: development
 django_debug: True
+django_git_branch: develop
 
 # Nginx
 nginx_listen_port: 8181

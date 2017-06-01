@@ -3,6 +3,7 @@
 # Django settings
 django_environment: production
 django_debug: False
+django_git_branch: master
 
 # Nginx
 nginx_listen_port: 80
