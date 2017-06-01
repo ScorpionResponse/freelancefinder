@@ -10,6 +10,7 @@
         <p>Filtering the freelance web so you don't have to</p>
     </div>
 </section>
+{{ block.super }}
 {% endblock %}
 
 {% block 'content' %}
@@ -128,16 +129,16 @@
                         <div class="6u 12u$(medium) align-right">Yearly - $40 / Month:</div>
                         <div class="6u$ 12u$(medium)"><button type="submit" id="stripe-yearly" class="special small">{% if user.is_authenticated %}Subscribe{% else %}Sign up{% endif %}</button></div>
                     </div>
-                    <div class="row">
+                    <div class="row uniform">
                         <div class="6u 12u$(medium) align-right">Monthly - $50 / Month:</div>
                         <div class="6u$ 12u$(medium)"><button type="submit" id="stripe-monthly" class="special small">{% if user.is_authenticated %}Subscribe{% else %}Sign up{% endif %}</button></div>
                     </div>
                     {% if not user.is_authenticated %}
-                        <div class="row">
+                        <div class="row uniform">
                             <div class="6u 12u$(medium) align-right">Free for 5 days:</div>
                             <div class="6u$ 12u$(medium)"><button type="submit" class="special small">Sign up</button></div>
                         </div>
-                        <div class="row">
+                        <div class="row uniform">
                             <div class="3u only-large">&nbsp;</div>
                             <div class="6u 12u$(medium)">
                                 <p><small class="text-muted">*Accounts are free for 5 days.  You must sign up before
