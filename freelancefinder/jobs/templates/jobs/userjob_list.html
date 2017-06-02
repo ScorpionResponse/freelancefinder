@@ -89,25 +89,27 @@
                                 {% else %}
                                 <div class="row">
                                 {% endif %}
-                                    <h5 class="major 6u">{{ userjob.job.title }}
+                                    <h5 class="major 6u 9u$(medium)">{{ userjob.job.title }}
                                         {% if userjob.job.description %}
                                             [+]
                                         {% endif %}
                                     </h5>
-                                    <div class="align-right 6u$"><small>{{ userjob.job.created|localtime }}</small></div>
+                                    <div class="align-right 6u$ 12u$(medium)"><small>{{ userjob.job.created|localtime }}</small></div>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
-                            <span class="4u align-left tag-list">
+                            <span class="4u 12u$(medium) align-left tag-list">
                                 {% for tag in userjob.job.tags.all %}
                                     {% if tag.name != 'job' %}
                                         <span class="tag encircle">{{ tag.name }}</span>
                                     {% endif %}
                                 {% endfor %}
                             </span>
-                            <button class="button 4u description-toggle" data-target="#jobdesc-{{ userjob.id }}">Show Description [+]</button>
-                            <span class="4u$ align-right">
+                            <span class="4u 6u(medium) 12u$(small)">
+                                <button class="button description-toggle" data-target="#jobdesc-{{ userjob.id }}">Show Description [+]</button>
+                            </span>
+                            <span class="4u$ 6u$(medium) 12u$(small) align-right">
                                 {% for post in userjob.job.posts.all %}
                                     <a href="{{ post.url }}" target="_blank" class="button special sourcelink-{{ post.source.code }}" data-toggle="tooltip" title="Go To Source Site To Apply">Apply on {{ post.source.name }}</a>
                                 {% endfor %}
