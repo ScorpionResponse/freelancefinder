@@ -72,7 +72,7 @@
             <li id="job-{{ userjob.id }}" class="job 12u">
                 <article>
                     <div class="box fit">
-                        <div class="row">
+                        <div class="row first-row">
                             <div class="3u 12u$(small)">
                                 <form class="row-dismiss-form" action="{% url 'userjob-action' %}" method="POST">
                                     {% csrf_token %}
@@ -96,31 +96,29 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <span class="4u 12u$(medium) align-left tag-list">
+                        <div class="row second-row">
+                            <div class="4u 12u$(medium) align-left tag-list">
                                 {% for tag in userjob.job.tags.all %}
                                     {% if tag.name != 'job' %}
                                         <span class="tag encircle">{{ tag.name }}</span>
                                     {% endif %}
                                 {% endfor %}
-                            </span>
-                            <span class="4u 6u(medium) 12u$(small)">
+                            </div>
+                            <div class="4u 6u(medium) 12u$(small)">
                                 <button class="button description-toggle" data-target="#jobdesc-{{ userjob.id }}">Show Description [+]</button>
-                            </span>
-                            <span class="4u$ 6u$(medium) 12u$(small) align-right">
+                            </div>
+                            <div class="4u$ 6u$(medium) 12u$(small)">
                                 {% for post in userjob.job.posts.all %}
                                     <a href="{{ post.url }}" target="_blank" class="button special sourcelink-{{ post.source.code }}" data-toggle="tooltip" title="Go To Source Site To Apply">Apply on {{ post.source.name }}</a>
                                 {% endfor %}
-                            </span>
+                            </div>
                         </div>
                         {% if userjob.job.description %}
                         <div class="row">
-                            <div class="d-flex flex-row w-100">
-                                <div class="jobdesc rounded p-2" id="jobdesc-{{ userjob.id }}" style="display: none;">
-                                    <blockquote>
-                                    {{ userjob.job.description|markdown }}
-                                    </blockquote>
-                                </div>
+                            <div class="jobdesc rounded p-2" id="jobdesc-{{ userjob.id }}" style="display: none;">
+                                <blockquote>
+                                {{ userjob.job.description|markdown }}
+                                </blockquote>
                             </div>
                         </div>
                         {% endif %}

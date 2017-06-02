@@ -3900,3 +3900,7 @@
 .description-toggle {
     cursor:pointer;
 }
+
+.second-row div {
+    padding-bottom: 10px;
+}
