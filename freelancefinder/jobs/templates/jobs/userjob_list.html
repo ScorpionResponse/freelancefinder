@@ -73,7 +73,7 @@
                 <article>
                     <div class="box fit">
                         <div class="row">
-                            <div class="3u">
+                            <div class="3u 12u$(small)">
                                 <form class="row-dismiss-form" action="{% url 'userjob-action' %}" method="POST">
                                     <div class="d-flex align-items-center pr-2 control-button">
                                         {% csrf_token %}
@@ -83,7 +83,7 @@
                                     </div>
                                 </form>
                             </div>
-                            <div class="9u$">
+                            <div class="9u$ 12u$(small)">
                                 {% if userjob.job.description %}
                                 <div class="row description-toggle" data-target="#jobdesc-{{ userjob.id }}">
                                 {% else %}
