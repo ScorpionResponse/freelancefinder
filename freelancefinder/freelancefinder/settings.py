@@ -73,7 +73,7 @@ AUTHENTICATION_BACKENDS = [
 REDDIT_USER_AGENT = 'django:work.freelancefinder:{} (by /u/phile19_81)'.format(VERSION)
 
 # Configure allauth, no username
-LOGIN_REDIRECT_URL = "/"
+LOGIN_REDIRECT_URL = "userjob-list"
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_UNIQUE_EMAIL = True
