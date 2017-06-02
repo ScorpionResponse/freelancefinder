@@ -27,7 +27,7 @@
                 <li>
                     <a href="?{% querystring request source=facet.job__posts__source__code %}" class="button small {% if request.GET.source == facet.job__posts__source__code %}special{% endif %}" data-toggle="tooltip" title="Show only results from {{ facet.job__posts__source__name }}">
                         {{ facet.job__posts__source__name }}
-                        <span class="badge badge-default" id="facet-{{ facet.job__posts__source__code }}-count">
+                        <span class="badge alt" id="facet-{{ facet.job__posts__source__code }}-count">
                             {{ facet.total }}
                         </span>
                     </a>
@@ -36,7 +36,7 @@
                 <li>
                     <a href="?{% querystring request source='' %}" class="button small">
                         Full Results
-                        <span class="badge badge-default">
+                        <span class="badge alt">
                             <i class="fa fa-times"></i>
                         </span>
                     </a>
@@ -54,7 +54,7 @@
                 <li>
                     <a href="{% url 'userjob-list' date=facet.created_date|date:"Y-m-d" %}?{% querystring request %}" class="button small {% if curdate == facet.created_date|date:'Y-m-d' %}special{% endif %}" data-toggle="tooltip" title="Show only results from {{ facet.created_date|date:"Y-m-d" }}">
                         {{ facet.created_date|date:"Y-m-d" }}
-                        <span class="badge badge-default" id="facet-{{ facet.created_date|date:"Y-m-d" }}-count">
+                        <span class="badge alt" id="facet-{{ facet.created_date|date:"Y-m-d" }}-count">
                             {{ facet.total }}
                         </span>
                     </a>
@@ -75,12 +75,10 @@
                         <div class="row">
                             <div class="3u 12u$(small)">
                                 <form class="row-dismiss-form" action="{% url 'userjob-action' %}" method="POST">
-                                    <div class="d-flex align-items-center pr-2 control-button">
-                                        {% csrf_token %}
-                                        <input type="hidden" name="userjob_id" value="{{ userjob.id }}">
-                                        <input type="hidden" name="next" value="{% url 'userjob-list' %}?{% querystring request %}" />
-                                        <button type="submit" class="button special row-dismiss" name="dismiss" data-toggle="tooltip" data-placement="right" title="Delete this job from your list"><i class="fa fa-times">Dismiss</i></button>
-                                    </div>
+                                    {% csrf_token %}
+                                    <input type="hidden" name="userjob_id" value="{{ userjob.id }}">
+                                    <input type="hidden" name="next" value="{% url 'userjob-list' %}?{% querystring request %}" />
+                                    <button type="submit" class="button special row-dismiss" name="dismiss" data-toggle="tooltip" data-placement="right" title="Delete this job from your list"><i class="fa fa-times">Dismiss</i></button>
                                 </form>
                             </div>
                             <div class="9u$ 12u$(small)">

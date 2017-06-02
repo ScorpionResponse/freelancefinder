@@ -3876,8 +3876,7 @@
 .tag {
     background-color:#45558d;
     display:inline-block;
-    padding-left:8px;
-    padding-right:8px;
+    padding:8px;
     text-align:center
 }
 
@@ -3887,8 +3886,13 @@
 
 .badge {
     background-color:#2e3141;
-    padding-left:2px;
-    padding-right:2px;
+    padding: 2px;
+    text-align:center
+    border-radius: 50%;
+}
+.badge.alt {
+    background-color:#45558d;
+    padding: 2px;
     text-align:center
     border-radius: 50%;
 }
