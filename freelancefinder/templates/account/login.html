@@ -21,8 +21,8 @@
 
     <div class="login-or"><hr/></div>
 
-    <p class="new-users text-center">
-        New Users: <a class="btn btn-info m-2" href="{{ signup_url }}">Sign Up</a>
+    <p class="new-users align-center">
+        New Users: <a class="button special small" href="{{ signup_url }}">Sign Up</a>
     </p>
 
     <div class="signup-or"><hr/></div>
@@ -37,8 +37,8 @@
         {% if redirect_field_value %}
             <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
         {% endif %}
-        <button class="primaryAction btn btn-primary" type="submit">{% trans "Sign In" %}</button>
-        <a class="button secondaryAction btn btn-outline-warning" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
+        <button class="primaryAction button special" type="submit">{% trans "Sign In" %}</button>
+        <a class="button secondaryAction" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
     </form>
 
 <!-- END: templates/account/login.html -->
