@@ -3,10 +3,24 @@
 
 {% block 'title' %}Freelance Finder - Contact Us{% endblock %}
 
+{% block 'pagebanner' %}
+<section id="banner">
+    <div class="inner">
+        <h2>Let us know what you think!</h2>
+        <p>If we're missing jobs from a site you use or if you just want to say hi, we'd love to hear from you.</p>
+    </div>
+</section>
+{{ block.super }}
+{% endblock %}
+
 {% block 'content' %}
 
-<h1>Let us know what you think!</h1>
-
-{% crispy form %}
+<section id="one" class="wrapper">
+    <div class="inner">
+        <div class="content">
+            {% crispy form %}
+        </div>
+    </div>
+</section>
 
 {% endblock %}
