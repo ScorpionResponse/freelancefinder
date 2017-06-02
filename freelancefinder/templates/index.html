@@ -126,17 +126,17 @@
             {% endif %}
                 <div class="pricing-plan box">
                     <div class="row uniform">
-                        <div class="6u 12u$(small) align-right">Yearly - $40 / Month:</div>
-                        <div class="6u$ 12u$(small)"><button type="submit" id="stripe-yearly" class="special small">{% if user.is_authenticated %}Subscribe{% else %}Sign up{% endif %}</button></div>
+                        <div class="6u align-right">Yearly - $40 / Month:</div>
+                        <div class="6u$"><button type="submit" id="stripe-yearly" class="special small">{% if user.is_authenticated %}Subscribe{% else %}Sign up{% endif %}</button></div>
                     </div>
                     <div class="row uniform">
-                        <div class="6u 12u$(small) align-right">Monthly - $50 / Month:</div>
-                        <div class="6u$ 12u$(small)"><button type="submit" id="stripe-monthly" class="special small">{% if user.is_authenticated %}Subscribe{% else %}Sign up{% endif %}</button></div>
+                        <div class="6u align-right">Monthly - $50 / Month:</div>
+                        <div class="6u$"><button type="submit" id="stripe-monthly" class="special small">{% if user.is_authenticated %}Subscribe{% else %}Sign up{% endif %}</button></div>
                     </div>
                     {% if not user.is_authenticated %}
                         <div class="row uniform">
-                            <div class="6u 12u$(small) align-right">Free for 5 days:</div>
-                            <div class="6u$ 12u$(small)"><button type="submit" class="special small">Sign up</button></div>
+                            <div class="6u align-right">Free for 5 days:</div>
+                            <div class="6u$"><button type="submit" class="special small">Sign up</button></div>
                         </div>
                         <div class="row uniform">
                             <div class="3u only-large">&nbsp;</div>
