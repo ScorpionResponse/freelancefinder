@@ -8,121 +8,141 @@
 
 {% block 'content' %}
 
-<h1 class="text-center"><span id="opportunity-count">{{ userjob_list|length }}</span> Opportunit{% if userjob_list|length == 1 %}y{% else %}ies{% endif %} - {{ curdate }}</h1>
-<div class="container-fluid">
-    <button id="filters-button" type="button" class="btn btn-primary" data-toggle="collapse" data-target="#searchform">
-        <span class="fa fa-cogs"></span> <span id="filters-text" data-state="show">Show Filters</span>
-    </button>
-    <div class='collapse searchform' id="searchform">
-        {% crispy form %}
-    </div>
-</div>
-{% if source_facets %}
-<div class="facets p-2">
-    Sources:
-    {% for facet in source_facets %}
-    <a href="?{% querystring request source=facet.job__posts__source__code %}" class="btn btn-outline-info {% if request.GET.source == facet.job__posts__source__code %}active{% endif %}" data-toggle="tooltip" title="Show only results from {{ facet.job__posts__source__name }}">
-        {{ facet.job__posts__source__name }}
-        <span class="badge badge-default" id="facet-{{ facet.job__posts__source__code }}-count">
-            {{ facet.total }}
-        </span>
-    </a>
-    {% if request.GET.source == facet.job__posts__source__code %}
-        <a href="?{% querystring request source='' %}" class="btn btn-outline-danger">
-            Full Results
-            <span class="badge badge-default">
-                <i class="fa fa-times"></i>
-            </span>
-        </a>
-    {% endif %}
-    {% endfor %}
-</div>
-{% endif %}
-{% if date_facets %}
-<div class="facets p-2">
-    Dates:
-    {% for facet in date_facets %}
-    <a href="{% url 'userjob-list' date=facet.created_date|date:"Y-m-d" %}?{% querystring request %}" class="btn btn-outline-warning {% if curdate == facet.created_date|date:'Y-m-d' %}active{% endif %}" data-toggle="tooltip" title="Show only results from {{ facet.created_date|date:"Y-m-d" }}">
-        {{ facet.created_date|date:"Y-m-d" }}
-        <span class="badge badge-default" id="facet-{{ facet.created_date|date:"Y-m-d" }}-count">
-            {{ facet.total }}
-        </span>
-    </a>
-    {% endfor %}
-</div>
-{% endif %}
-
-{% include 'helpers/pagination.html' %}
-
-{% if userjob_list %}
-    <ul class="list-group">
-    {% for userjob in userjob_list %}
-    <li id="job-{{ userjob.id }}" class="d-flex list-group-item flex-column align-items-start job">
-        <div class="d-flex flex-row w-100 justify-content-start">
-            <form class="row-dismiss-form" action="{% url 'userjob-action' %}" method="POST">
-                <div class="d-flex align-items-center pr-2 control-button">
-                    {% csrf_token %}
-                    <input type="hidden" name="userjob_id" value="{{ userjob.id }}">
-                    <input type="hidden" name="next" value="{% url 'userjob-list' %}?{% querystring request %}" />
-                    <button type="submit" class="btn btn-danger btn-circle btn-lg row-dismiss" name="dismiss" data-toggle="tooltip" data-placement="right" title="Delete this job from your list"><i class="fa fa-times"></i></button>
-                </div>
-            </form>
-            <div class="d-flex w-100 flex-column">
-                {% if userjob.job.description %}
-                    <a href="#" data-toggle="collapse" data-target="#jobdesc-{{ userjob.id }}" aria-expanded="false" class="list-group-item-action" title="Click To Show Description" data-placement="bottom">
-                {% endif %}
-                    <div class="d-flex flex-row w-100 justify-content-between flex-wrap">
-                        <h5>{{ userjob.job.title }}
-                            {% if userjob.job.description %}
-                                [+]
-                            {% endif %}
-                        </h5>
-                        <small>{{ userjob.job.created|localtime }}</small>
-                    </div>
-                {% if userjob.job.description %}
-                    </a>
-                {% endif %}
-                <div class="d-flex flex-row w-100 justify-content-start flex-wrap">
-                    <span class="p-2">
-                        <a href="{% url 'job-detail' userjob.job.id %}" data-toggle="tooltip" title="View Full Job Detail">Detail</a>
-                    </span>
-                    <span class="source-info p-2">
-                        {% for post in userjob.job.posts.all %}
-                            <a href="{{ post.url }}" target="_blank" class="sourcelink-{{ post.source.code }}" data-toggle="tooltip" title="Go To Source Site To Apply">{{ post.source.name }} &gt; {{ post.subarea }}</a>
-                        {% endfor %}
-                    </span>
-                    <span class="tag-list p-2 ml-auto">
-                        {% for tag in userjob.job.tags.all %}
-                            {% if tag.name != 'job' %}
-                                <span class="tag badge badge-default">{{ tag.name }}</span>
-                            {% endif %}
-                        {% endfor %}
-                    </span>
-                </div>
+<section id="main" class="wrapper">
+    <div class="inner">
+        <h1 class="major"><span id="opportunity-count">{{ userjob_list|length }}</span> Opportunit{% if userjob_list|length == 1 %}y{% else %}ies{% endif %} - {{ curdate }}</h1>
+        <div class="minor">
+            <button id="filters-button" type="button" class="small" data-toggle="collapse" data-target="#searchform">
+                <span class="fa fa-cogs"></span> <span id="filters-text" data-state="show">Show Filters</span>
+            </button>
+            <div class='searchform' id="searchform" style="display: none;">
+                {% crispy form %}
             </div>
         </div>
-        {% if userjob.job.description %}
-        <div class="d-flex flex-row w-100">
-            <div class="collapse jobdesc rounded p-2" id="jobdesc-{{ userjob.id }}">
-                {{ userjob.job.description|markdown }}
-            </div>
+        {% if source_facets %}
+        <div class="facets">
+            Sources:
+            <ul class="actions">
+                {% for facet in source_facets %}
+                <li>
+                    <a href="?{% querystring request source=facet.job__posts__source__code %}" class="button small {% if request.GET.source == facet.job__posts__source__code %}special{% endif %}" data-toggle="tooltip" title="Show only results from {{ facet.job__posts__source__name }}">
+                        {{ facet.job__posts__source__name }}
+                        <span class="badge badge-default" id="facet-{{ facet.job__posts__source__code }}-count">
+                            {{ facet.total }}
+                        </span>
+                    </a>
+                </li>
+                {% if request.GET.source == facet.job__posts__source__code %}
+                <li>
+                    <a href="?{% querystring request source='' %}" class="button small">
+                        Full Results
+                        <span class="badge badge-default">
+                            <i class="fa fa-times"></i>
+                        </span>
+                    </a>
+                </li>
+                {% endif %}
+                {% endfor %}
+            </ul>
         </div>
         {% endif %}
-    </li>
-    {% endfor %}
-    </ul>
-{% else %}
-<div class="text-center">
-    <h3>Congratulations!  You're done!</h3>
-    <small>Next refresh at {{ my_next_run|localtime }}</small>
-</div>
-{% endif %}
+        {% if date_facets %}
+        <div class="facets">
+            Dates:
+            <ul class="actions">
+                {% for facet in date_facets %}
+                <li>
+                    <a href="{% url 'userjob-list' date=facet.created_date|date:"Y-m-d" %}?{% querystring request %}" class="button small {% if curdate == facet.created_date|date:'Y-m-d' %}special{% endif %}" data-toggle="tooltip" title="Show only results from {{ facet.created_date|date:"Y-m-d" }}">
+                        {{ facet.created_date|date:"Y-m-d" }}
+                        <span class="badge badge-default" id="facet-{{ facet.created_date|date:"Y-m-d" }}-count">
+                            {{ facet.total }}
+                        </span>
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
 
-{% include 'helpers/pagination.html' %}
+        {% include 'helpers/pagination.html' %}
 
+        {% if userjob_list %}
+            <ul class="alt features">
+            {% for userjob in userjob_list %}
+            <li id="job-{{ userjob.id }}" class="job 12u">
+                <article>
+                    <div class="box fit">
+                        <div class="row">
+                            <div class="3u">
+                                <form class="row-dismiss-form" action="{% url 'userjob-action' %}" method="POST">
+                                    <div class="d-flex align-items-center pr-2 control-button">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="userjob_id" value="{{ userjob.id }}">
+                                        <input type="hidden" name="next" value="{% url 'userjob-list' %}?{% querystring request %}" />
+                                        <button type="submit" class="button special row-dismiss" name="dismiss" data-toggle="tooltip" data-placement="right" title="Delete this job from your list"><i class="fa fa-times">Dismiss</i></button>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="9u$">
+                                {% if userjob.job.description %}
+                                <div class="row description-toggle" data-target="#jobdesc-{{ userjob.id }}">
+                                {% else %}
+                                <div class="row">
+                                {% endif %}
+                                    <h5 class="major 6u">{{ userjob.job.title }}
+                                        {% if userjob.job.description %}
+                                            [+]
+                                        {% endif %}
+                                    </h5>
+                                    <div class="align-right 6u$"><small>{{ userjob.job.created|localtime }}</small></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <span class="4u align-left tag-list">
+                                {% for tag in userjob.job.tags.all %}
+                                    {% if tag.name != 'job' %}
+                                        <span class="tag encircle">{{ tag.name }}</span>
+                                    {% endif %}
+                                {% endfor %}
+                            </span>
+                            <button class="button 4u description-toggle" data-target="#jobdesc-{{ userjob.id }}">Show Description [+]</button>
+                            <span class="4u$ align-right">
+                                {% for post in userjob.job.posts.all %}
+                                    <a href="{{ post.url }}" target="_blank" class="button special sourcelink-{{ post.source.code }}" data-toggle="tooltip" title="Go To Source Site To Apply">Apply on {{ post.source.name }}</a>
+                                {% endfor %}
+                            </span>
+                        </div>
+                        {% if userjob.job.description %}
+                        <div class="row">
+                            <div class="d-flex flex-row w-100">
+                                <div class="jobdesc rounded p-2" id="jobdesc-{{ userjob.id }}" style="display: none;">
+                                    <blockquote>
+                                    {{ userjob.job.description|markdown }}
+                                    </blockquote>
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                </article>
+            </li>
+            {% endfor %}
+            </ul>
+        {% else %}
+        <div class="align-center">
+            <h3>Congratulations!  You're done!</h3>
+            <small>Next refresh at {{ my_next_run|localtime }}</small>
+        </div>
+        {% endif %}
+
+        {% include 'helpers/pagination.html' %}
+
+    </div>
+</section>
 {% endblock %}
 
-{% block 'scripts' %}
+{% block 'extrascripts' %}
     <script>
         function row_removed(source_code, date) {
             // TODO(Paul): Technically there may be many calls to this, one per
@@ -141,20 +161,27 @@
 
             // If we've got no more, display congratulations.
             if (parseInt(title_count.text()) === 0) {
-                $("ul.list-group").replaceWith("<div class='text-center'><h3>Congratulations!  You're done!</h3><small>Next refresh at {{ my_next_run|localtime }}</small></div>");
+                $("ul.list-group").replaceWith("<div class='align-center'><h3>Congratulations!  You're done!</h3><small>Next refresh at {{ my_next_run|localtime }}</small></div>");
             }
         }
         $(document).ready(function(){
-            $('.list-group-item-action').tooltip();
             $('#filters-button').click(function() {
                 var $text_label = $('#filters-text');
+                var $collapse_section = $('#searchform');
                 if ($text_label.data('state') === 'show') {
                     $text_label.text('Hide Filters');
                     $text_label.data('state', 'hide');
+                    $collapse_section.show("blind");
                 } else {
                     $text_label.text('Show Filters');
                     $text_label.data('state', 'show');
+                    $collapse_section.hide("blind");
                 }
+            });
+            $('.description-toggle').click(function() {
+                var $this = $(this);
+                var $collapse_section = $($this.data('target'));
+                $collapse_section.toggle('blind');
             });
             $('.row-dismiss-form').on('submit', function(e) {
                 e.preventDefault();

@@ -2727,7 +2727,7 @@
 			background-color: #353849;
 			border-radius: 5px;
 			margin: 1.5em 3em 1.5em 0;
-			width: calc(50% - 1.5em);
+			width: calc(100% - 1.5em);
 		}
 
 			.features article:nth-child(2n) {
@@ -2753,7 +2753,7 @@
 
 			.features article {
 				margin: 1em 2em 1em 0;
-				width: calc(50% - 1em);
+				width: calc(100% - 1em);
 			}
 
 		}
@@ -2763,7 +2763,7 @@
 			.features article {
 				padding: 1.5em 1.5em 0.1em 1.5em ;
 				margin: 0.875em 1.75em 0.875em 0;
-				width: calc(50% - 0.875em - 1px);
+				width: calc(100% - 0.875em - 1px);
 			}
 
 				.features article .image {
@@ -3865,3 +3865,22 @@
 		}
 
 	}
+
+
+/* Custom */
+.tag-list {
+	font-size: 0.75em;
+	line-height: 1;
+}
+
+.tag{
+    background-color:#45558d;
+    display:inline-block;
+    padding-left:8px;
+    padding-right:8px;
+    text-align:center
+}
+
+.tag{
+    border-radius: 75%;
+}
