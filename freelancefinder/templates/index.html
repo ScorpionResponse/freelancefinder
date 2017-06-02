@@ -63,7 +63,7 @@
         <div class="content">
             <h2 class="major">Sign Up</h2>
             <p>
-            Sign up for a 5 day trial, no credit card required
+            Sign up for a one month trial, no credit card required
             </p>
             <a href="{% url 'account_login' %}" class="special">Sign Up</a>
         </div>
@@ -135,13 +135,13 @@
                     </div>
                     {% if not user.is_authenticated %}
                         <div class="row uniform">
-                            <div class="6u align-right">Free for 5 days:</div>
+                            <div class="6u align-right">Free for one month:</div>
                             <div class="6u$"><button type="submit" class="special small">Sign up</button></div>
                         </div>
                         <div class="row uniform">
                             <div class="3u only-large">&nbsp;</div>
                             <div class="6u 12u$(medium)">
-                                <p><small class="text-muted">*Accounts are free for 5 days.  You must sign up before
+                                <p><small class="text-muted">*Accounts are free for one month.  You must sign up before
                                     you purchase a subscription.  After signup the buttons
                                     above will permit you to buy a subscription.</small></p>
                             </div>
