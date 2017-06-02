@@ -3885,6 +3885,14 @@
     border-radius: 75%;
 }
 
+.badge {
+    background-color:#2e3141;
+    padding-left:2px;
+    padding-right:2px;
+    text-align:center
+    border-radius: 50%;
+}
+
 .description-toggle {
     cursor:pointer;
 }
