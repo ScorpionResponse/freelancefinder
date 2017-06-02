@@ -3873,7 +3873,7 @@
 	line-height: 1;
 }
 
-.tag{
+.tag {
     background-color:#45558d;
     display:inline-block;
     padding-left:8px;
@@ -3881,6 +3881,10 @@
     text-align:center
 }
 
-.tag{
+.tag {
     border-radius: 75%;
+}
+
+.description-toggle {
+    cursor:pointer;
 }
