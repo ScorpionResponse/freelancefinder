@@ -9,3 +9,4 @@
 	Doctype: HTML5
 	IDE: Vim
     Software: Django, gunicorn, nginx, Postgresql
+    Template: HTML5 Up - Solid State
