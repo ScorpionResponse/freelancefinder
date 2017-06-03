@@ -75,7 +75,7 @@
                             </div>
                             <div class="row second-row">
                                 <div class="6u 12u$(medium)">
-                                    <a target="_blank" href="{{ post.url }}" class="button special sourcelink-{{ post.source.code }}">{{ post.source.name }} > {{ post.subarea }}</a> - {{ post.unique }}
+                                    <a target="_blank" href="{{ post.url }}" class="sourcelink-{{ post.source.code }}">View on {{ post.source.name }} > {{ post.subarea }}</a> - {{ post.unique }}
                                 </div>
                                 <div class="6u 12u$(medium)">
                                     {% for tag in post.tags.all %}
@@ -155,7 +155,7 @@
                     var source_code = cname.split('-')[1];
                     row_removed(source_code, "2017-05-01");
                 });
-                $whole_row.hide();
+                $whole_row.hide("slide");
                 $.ajax({
                     url: $form.attr("action"),
                     type: "POST",
