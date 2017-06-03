@@ -194,7 +194,7 @@
                     var source_code = cname.split('-')[1];
                     row_removed(source_code, "{{ curdate }}");
                 });
-                $whole_row.hide();
+                $whole_row.hide("slide");
                 $.ajax({
                     url: $form.attr("action"),
                     type: "POST",
