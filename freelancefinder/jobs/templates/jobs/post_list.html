@@ -130,6 +130,11 @@
         }
 
         $(document).ready(function(){
+            $('.description-toggle').click(function() {
+                var $this = $(this);
+                var $collapse_section = $($this.data('target'));
+                $collapse_section.toggle('blind');
+            });
             $(".row-dismiss-form button[type=submit]").on("click", function() {
                 // Set the 'break' field to 'accept' or 'dismiss' based on
                 // which button was clicked.
