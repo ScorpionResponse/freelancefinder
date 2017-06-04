@@ -6,7 +6,10 @@ import time
 from slackclient import SlackClient
 import delegator
 
-# pip install slackclient delegator.py
+from dotenv import load_dotenv, find_dotenv
+load_dotenv(find_dotenv())
+
+# pip install slackclient delegator.py python-dotenv
 
 # [{
 #    'channel': 'C5LALU1JS',
@@ -33,11 +36,13 @@ import delegator
 
 
 def deploy_develop():
+    """Deploy the development version of the software."""
     result = delegator.run('cd ~/freelancefinder/ansible; make webservers', block=True)
     return result
 
 
 def parse_build_message(build_message):
+    """Get info out of the travis build message."""
     build_num = 'unknown'
     build_id = 'unknown'
     branch = 'unknown'
