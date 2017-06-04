@@ -105,11 +105,11 @@
                                 {% endfor %}
                             </div>
                             <div class="4u 6u(medium) 12u$(small)">
-                                <button class="button description-toggle" data-target="#jobdesc-{{ userjob.id }}">Show Description [+]</button>
+                                <button class="button small description-toggle" data-target="#jobdesc-{{ userjob.id }}">Show Description [+]</button>
                             </div>
                             <div class="4u$ 6u$(medium) 12u$(small)">
                                 {% for post in userjob.job.posts.all %}
-                                    <a href="{{ post.url }}" target="_blank" class="sourcelink-{{ post.source.code }} button special" data-toggle="tooltip" title="Go To Source Site To Apply">Apply on {{ post.source.name }}</a>
+                                    <a href="{{ post.url }}" target="_blank" class="sourcelink-{{ post.source.code }} button small special" data-toggle="tooltip" title="Go To Source Site To Apply">Apply on {{ post.source.name }}</a>
                                 {% endfor %}
                             </div>
                         </div>
