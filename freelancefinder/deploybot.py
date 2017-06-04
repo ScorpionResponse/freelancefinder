@@ -89,16 +89,24 @@ def main():
     slack_token = os.environ["SLACK_API_TOKEN"]
     slack_client = SlackClient(slack_token)
 
+    seen_error = False
     if slack_client.rtm_connect():
         while True:
-            current_messages = slack_client.rtm_read()
-            for mess in current_messages:
-                if 'bot_id' in mess and mess['bot_id'] == 'B5JS3UKA4':
-                    build_message = mess['attachments'][0]['text']
-                    print("Got Build Message: {build_message}".format(build_message=build_message))
-                    branch, status, build_num, build_id = parse_build_message(build_message)
-                    respond_to_build(slack_client, branch, status, build_num, build_id)
-            time.sleep(30)
+            try:
+                current_messages = slack_client.rtm_read()
+                for mess in current_messages:
+                    if 'bot_id' in mess and mess['bot_id'] == 'B5JS3UKA4':
+                        build_message = mess['attachments'][0]['text']
+                        print("Got Build Message: {build_message}".format(build_message=build_message))
+                        branch, status, build_num, build_id = parse_build_message(build_message)
+                        respond_to_build(slack_client, branch, status, build_num, build_id)
+                time.sleep(30)
+            except BrokenPipeError:
+                if seen_error:
+                    raise
+                seen_error = True
+                time.sleep(30)
+                slack_client.rtm_connect()
     else:
         print("Connection Failed, invalid token?")
 
