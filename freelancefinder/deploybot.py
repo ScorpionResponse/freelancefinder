@@ -12,9 +12,9 @@ from dotenv import load_dotenv, find_dotenv
 load_dotenv(find_dotenv())
 
 try:
-    SillyError = BrokenPipeError
+    SillyError = BrokenPipeError  # pylint: disable=invalid-name
 except NameError:
-    SillyError = socket.error
+    SillyError = socket.error  # pylint: disable=invalid-name
 
 # pip install slackclient delegator.py python-dotenv
 
