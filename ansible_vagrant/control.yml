@@ -21,6 +21,7 @@
         REDIS_CELERY_URL: 'redis://localhost:6379/0'
         REDDIT_CLIENT_ID: 'steve'
         REDDIT_CLIENT_SECRET: 'steve4'
+        #SLACK_API_TOKEN: {{ _SLACK_API_TOKEN }}
   tasks:
     - name: apt-get install packages
       apt: pkg={{ item }} state=installed update_cache=true

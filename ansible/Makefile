@@ -3,7 +3,7 @@
 
 # Generic Commands #
 get_password:
-	cat /vagrant/vault-password.file > ~/vault-password.file
+	cat /vagrant/vault-password.file > ~/vault-password.file; cat /vagrant/slack_api_token.file >> ~/freelancefinder/freelancefinder/.env
 
 requirements:
 	ansible-galaxy install -r requirements.yml
