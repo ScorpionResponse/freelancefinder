@@ -62,6 +62,28 @@ def parse_build_message(build_message):
     return branch, status, build_num, build_id
 
 
+def respond_to_build(slack_client, branch, status, build_num, build_id):
+    """Take action on build results."""
+    if branch == 'develop' and status == 'passed':
+        result = deploy_develop()
+        if result.return_code == 0:
+            message = "Build {} - {}/{} successfully deployed".format(build_num, branch, build_id)
+            slack_client.api_call(
+                "chat.postMessage",
+                channel="#builds",
+                text=message
+            )
+        else:
+            message = "FAILED: Build {} - {}/{} failed to deploy.".format(build_num, branch, build_id)
+            slack_client.api_call(
+                "chat.postMessage",
+                channel="#builds",
+                text=message
+            )
+            print(result.out)
+            print(result.err)
+
+
 def main():
     """Run client."""
     slack_token = os.environ["SLACK_API_TOKEN"]
@@ -75,24 +97,7 @@ def main():
                     build_message = mess['attachments'][0]['text']
                     print("Got Build Message: {build_message}".format(build_message=build_message))
                     branch, status, build_num, build_id = parse_build_message(build_message)
-                    if branch == 'develop' and status == 'passed':
-                        result = deploy_develop()
-                        if result.return_code == 0:
-                            message = "Build {} - {}/{} successfully deployed".format(build_num, branch, build_id)
-                            slack_client.api_call(
-                                "chat.postMessage",
-                                channel="#builds",
-                                text=message
-                            )
-                        else:
-                            message = "FAILED: Build {} - {}/{} failed to deploy.".format(build_num, branch, build_id)
-                            slack_client.api_call(
-                                "chat.postMessage",
-                                channel="#builds",
-                                text=message
-                            )
-                            print(result.out)
-                            print(result.err)
+                    respond_to_build(slack_client, branch, status, build_num, build_id)
             time.sleep(30)
     else:
         print("Connection Failed, invalid token?")
