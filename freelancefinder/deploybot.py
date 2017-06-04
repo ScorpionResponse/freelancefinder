@@ -2,6 +2,7 @@
 from __future__ import print_function
 
 import os
+import socket
 import time
 
 from slackclient import SlackClient
@@ -9,6 +10,11 @@ import delegator
 
 from dotenv import load_dotenv, find_dotenv
 load_dotenv(find_dotenv())
+
+try:
+    SillyError = BrokenPipeError
+except NameError:
+    SillyError = socket.error
 
 # pip install slackclient delegator.py python-dotenv
 
@@ -102,7 +108,7 @@ def main():
                         branch, status, build_num, build_id = parse_build_message(build_message)
                         respond_to_build(slack_client, branch, status, build_num, build_id)
                 time.sleep(30)
-            except BrokenPipeError:
+            except SillyError:
                 if seen_error:
                     raise
                 seen_error = True
