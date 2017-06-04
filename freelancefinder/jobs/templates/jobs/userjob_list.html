@@ -109,7 +109,7 @@
                             </div>
                             <div class="4u$ 6u$(medium) 12u$(small)">
                                 {% for post in userjob.job.posts.all %}
-                                    <a href="{{ post.url }}" target="_blank" class="button special sourcelink-{{ post.source.code }}" data-toggle="tooltip" title="Go To Source Site To Apply">Apply on {{ post.source.name }}</a>
+                                    <a href="{{ post.url }}" target="_blank" class="sourcelink-{{ post.source.code }} button special" data-toggle="tooltip" title="Go To Source Site To Apply">Apply on {{ post.source.name }}</a>
                                 {% endfor %}
                             </div>
                         </div>
@@ -191,7 +191,7 @@
                 var $whole_row = $("#job-" + $userjob_id);
                 $("a[class^='sourcelink-']", $whole_row).each(function(elm) {
                     var cname = $(this).attr('class');
-                    var source_code = cname.split('-')[1];
+                    var source_code = cname.split(' ')[0].split('-')[1];
                     row_removed(source_code, "{{ curdate }}");
                 });
                 $whole_row.hide("slide");
