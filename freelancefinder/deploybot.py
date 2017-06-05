@@ -75,37 +75,36 @@ def parse_build_message(build_message):
     return branch, status, build_num, build_id
 
 
-def post_to_channel(slack_client, message, ts):
+def post_to_channel(slack_client, message, thread_ts):
     """Post a message to the slack channel."""
     print("Sending message: {}".format(message))
     slack_client.api_call(
         "chat.postMessage",
         channel="#builds",
         text=message,
-        thread_ts=ts,
+        thread_ts=thread_ts,
         reply_broadcast=True
     )
 
 
-def respond_to_build(slack_client, branch, status, build_num, build_id, ts):
-    """Take action on build results."""
-    if status == 'passed':
-        if branch == 'develop':
-            result = deploy_develop()
-        elif branch == 'master':
-            message = "Build {} - {}/{} production deployment started".format(build_num, branch, build_id)
-            post_to_channel(slack_client, message, ts)
-            result = deploy_production()
-        else:
-            # Do nothing
-            return None
-        if result.return_code == 0:
-            message = "Build {} - {}/{} successfully deployed".format(build_num, branch, build_id)
-            post_to_channel(slack_client, message, ts)
-        else:
-            message = "FAILED: Build {} - {}/{} failed to deploy.".format(build_num, branch, build_id)
-            post_to_channel(slack_client, message, ts)
-            print(result.err)
+def respond_to_build(slack_client, branch, build_num, build_id, thread_ts):
+    """Take action on successful build results."""
+    if branch == 'develop':
+        result = deploy_develop()
+    elif branch == 'master':
+        message = "Build {} - {}/{} production deployment started".format(build_num, branch, build_id)
+        post_to_channel(slack_client, message, thread_ts)
+        result = deploy_production()
+    else:
+        # Do nothing
+        return None
+    if result.return_code == 0:
+        message = "Build {} - {}/{} successfully deployed".format(build_num, branch, build_id)
+        post_to_channel(slack_client, message, thread_ts)
+    else:
+        message = "FAILED: Build {} - {}/{} failed to deploy.".format(build_num, branch, build_id)
+        post_to_channel(slack_client, message, thread_ts)
+        print(result.err)
 
 
 def main():
@@ -123,7 +122,8 @@ def main():
                         build_message = mess['attachments'][0]['text']
                         print("Got Build Message: {build_message}".format(build_message=build_message))
                         branch, status, build_num, build_id = parse_build_message(build_message)
-                        respond_to_build(slack_client, branch, status, build_num, build_id, mess['ts'])
+                        if status == 'passed':
+                            respond_to_build(slack_client, branch, build_num, build_id, mess['ts'])
                 time.sleep(30)
             except SillyError:
                 print("Got BrokenPipeError.")
