@@ -1,6 +1,7 @@
 """Slack Monitor to Ansible Build Command Bridge."""
 from __future__ import print_function
 
+import logging
 import os
 import sys
 import time
@@ -10,6 +11,11 @@ import delegator
 
 from dotenv import load_dotenv, find_dotenv
 load_dotenv(find_dotenv())
+
+logging.basicConfig(filename='build.log', level=logging.DEBUG)
+
+THIS_BOT_ID = "U5MR114V7"
+TRAVIS_BOT_ID = "B5JS3UKA4"
 
 # pip install slackclient delegator.py python-dotenv
 
@@ -72,7 +78,7 @@ def parse_build_message(build_message):
 
 def post_to_channel(slack_client, message, thread_ts, announce=True):
     """Post a message to the slack channel."""
-    print("Sending message: {}".format(message))
+    logging.info("Sending message: %s", message)
     slack_client.api_call(
         "chat.postMessage",
         channel="#builds",
@@ -84,6 +90,7 @@ def post_to_channel(slack_client, message, thread_ts, announce=True):
 
 def respond_to_build(slack_client, branch, build_num, build_id, thread_ts):
     """Take action on successful build results."""
+    logging.debug("Responding to build: Branch-%s; BuildNum-%s; BuildID-%s; ThreadID-%s", branch, build_num, build_id, thread_ts)
     is_production = False
     if branch == 'develop':
         message = "Build {} - {}/{} development deployment started".format(build_num, branch, build_id)
@@ -103,11 +110,13 @@ def respond_to_build(slack_client, branch, build_num, build_id, thread_ts):
     else:
         message = "FAILED: Build {} - {}/{} failed to deploy.".format(build_num, branch, build_id)
         post_to_channel(slack_client, message, thread_ts)
-        print(result.err)
+        logging.debug("Failed build stdout: %s", result.out)
+        logging.debug("Failed build stderr: %s", result.err)
 
 
 def respond_to_command(slack_client, branch, thread_ts):
     """Take action on command."""
+    logging.debug("Responding to command: Deploy Branch-%s", branch)
     is_production = False
     if branch == 'develop':
         message = "Development deployment started"
@@ -127,7 +136,8 @@ def respond_to_command(slack_client, branch, thread_ts):
     else:
         message = "FAILED: Branch {} failed to deploy.".format(branch)
         post_to_channel(slack_client, message, thread_ts)
-        print(result.err)
+        logging.debug("Failed build stdout: %s", result.out)
+        logging.debug("Failed build stderr: %s", result.err)
 
 
 def main():
@@ -136,26 +146,27 @@ def main():
     slack_client = SlackClient(slack_token)
 
     if not slack_client.rtm_connect():
-        print("Connection Failed, invalid token?")
+        logging.error("Connection Failed, invalid token?")
 
     seen_error = False
     while True:
         try:
             current_messages = slack_client.rtm_read()
             for mess in current_messages:
-                if mess['type'] == 'message' and 'bot_id' in mess and mess['bot_id'] == 'B5JS3UKA4':
+                logging.debug("Got Message: %s", mess)
+                if mess['type'] == 'message' and 'bot_id' in mess and mess['bot_id'] == TRAVIS_BOT_ID:
                     build_message = mess['attachments'][0]['text']
-                    print("Got Build Message: {build_message}".format(build_message=build_message))
+                    logging.info("Got Build Message: %s", build_message)
                     branch, status, build_num, build_id = parse_build_message(build_message)
                     if status == 'passed':
                         respond_to_build(slack_client, branch, build_num, build_id, mess['ts'])
-                elif mess['type'] == 'message' and mess['text'].startswith('@build_bot'):
+                elif mess['type'] == 'message' and mess['text'].startswith('<@{}>'.format(THIS_BOT_ID)):
                     words = mess['text'].split(' ')
                     if words[1] == 'deploy' and words[2] in ('develop', 'master'):
                         respond_to_command(slack_client, words[2], mess['ts'])
-            time.sleep(30)
+            time.sleep(1)
         except Exception as exp:  # pylint: disable=broad-except
-            print("Got some other error: {}".format(exp))
+            logging.error("Got an error: %s", exp)
             if seen_error:
                 raise
             seen_error = True
