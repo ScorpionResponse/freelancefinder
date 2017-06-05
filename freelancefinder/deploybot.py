@@ -160,7 +160,7 @@ def main():
                     branch, status, build_num, build_id = parse_build_message(build_message)
                     if status == 'passed':
                         respond_to_build(slack_client, branch, build_num, build_id, mess['ts'])
-                elif mess['type'] == 'message' and mess['text'].startswith('<@{}>'.format(THIS_BOT_ID)):
+                elif mess['type'] == 'message' and 'text' in mess and mess['text'].startswith('<@{}>'.format(THIS_BOT_ID)):
                     words = mess['text'].split(' ')
                     if words[1] == 'deploy' and words[2] in ('develop', 'master'):
                         respond_to_command(slack_client, words[2], mess['ts'])
