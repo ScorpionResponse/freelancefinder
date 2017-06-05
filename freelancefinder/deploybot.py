@@ -83,7 +83,7 @@ def post_to_channel(slack_client, message, ts):
         channel="#builds",
         text=message,
         thread_ts=ts,
-        #reply_broadcast=True
+        reply_broadcast=True
     )
 
 
