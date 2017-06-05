@@ -3,6 +3,7 @@ from __future__ import print_function
 
 import os
 import socket
+import sys
 import time
 
 from slackclient import SlackClient
@@ -75,7 +76,7 @@ def parse_build_message(build_message):
     return branch, status, build_num, build_id
 
 
-def post_to_channel(slack_client, message, thread_ts):
+def post_to_channel(slack_client, message, thread_ts, announce=True):
     """Post a message to the slack channel."""
     print("Sending message: {}".format(message))
     slack_client.api_call(
@@ -83,24 +84,28 @@ def post_to_channel(slack_client, message, thread_ts):
         channel="#builds",
         text=message,
         thread_ts=thread_ts,
-        reply_broadcast=True
+        reply_broadcast=announce
     )
 
 
 def respond_to_build(slack_client, branch, build_num, build_id, thread_ts):
     """Take action on successful build results."""
+    is_production = False
     if branch == 'develop':
+        message = "Build {} - {}/{} development deployment started".format(build_num, branch, build_id)
+        post_to_channel(slack_client, message, thread_ts, announce=is_production)
         result = deploy_develop()
     elif branch == 'master':
+        is_production = True
         message = "Build {} - {}/{} production deployment started".format(build_num, branch, build_id)
-        post_to_channel(slack_client, message, thread_ts)
+        post_to_channel(slack_client, message, thread_ts, announce=is_production)
         result = deploy_production()
     else:
         # Do nothing
         return None
     if result.return_code == 0:
         message = "Build {} - {}/{} successfully deployed".format(build_num, branch, build_id)
-        post_to_channel(slack_client, message, thread_ts)
+        post_to_channel(slack_client, message, thread_ts, announce=is_production)
     else:
         message = "FAILED: Build {} - {}/{} failed to deploy.".format(build_num, branch, build_id)
         post_to_channel(slack_client, message, thread_ts)
@@ -141,6 +146,7 @@ def main():
             seen_error = True
             time.sleep(30)
             slack_client.rtm_connect()
+        sys.stdout.flush()
 
 
 if __name__ == '__main__':
