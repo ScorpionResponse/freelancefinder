@@ -2,7 +2,6 @@
 from __future__ import print_function
 
 import os
-import socket
 import sys
 import time
 
@@ -11,11 +10,6 @@ import delegator
 
 from dotenv import load_dotenv, find_dotenv
 load_dotenv(find_dotenv())
-
-try:
-    SillyError = BrokenPipeError  # pylint: disable=invalid-name
-except NameError:
-    SillyError = socket.error  # pylint: disable=invalid-name
 
 # pip install slackclient delegator.py python-dotenv
 
@@ -112,6 +106,30 @@ def respond_to_build(slack_client, branch, build_num, build_id, thread_ts):
         print(result.err)
 
 
+def respond_to_command(slack_client, branch, thread_ts):
+    """Take action on command."""
+    is_production = False
+    if branch == 'develop':
+        message = "Development deployment started"
+        post_to_channel(slack_client, message, thread_ts, announce=is_production)
+        result = deploy_develop()
+    elif branch == 'master':
+        is_production = True
+        message = "Production deployment started"
+        post_to_channel(slack_client, message, thread_ts, announce=is_production)
+        result = deploy_production()
+    else:
+        # Do nothing
+        return None
+    if result.return_code == 0:
+        message = "Branch {} deployed successfully.".format(branch)
+        post_to_channel(slack_client, message, thread_ts, announce=is_production)
+    else:
+        message = "FAILED: Branch {} failed to deploy.".format(branch)
+        post_to_channel(slack_client, message, thread_ts)
+        print(result.err)
+
+
 def main():
     """Run client."""
     slack_token = os.environ["SLACK_API_TOKEN"]
@@ -125,20 +143,17 @@ def main():
         try:
             current_messages = slack_client.rtm_read()
             for mess in current_messages:
-                if 'bot_id' in mess and mess['bot_id'] == 'B5JS3UKA4':
+                if mess['type'] == 'message' and 'bot_id' in mess and mess['bot_id'] == 'B5JS3UKA4':
                     build_message = mess['attachments'][0]['text']
                     print("Got Build Message: {build_message}".format(build_message=build_message))
                     branch, status, build_num, build_id = parse_build_message(build_message)
                     if status == 'passed':
                         respond_to_build(slack_client, branch, build_num, build_id, mess['ts'])
+                elif mess['type'] == 'message' and mess['text'].startswith('@build_bot'):
+                    words = mess['text'].split(' ')
+                    if words[1] == 'deploy' and words[2] in ('develop', 'master'):
+                        respond_to_command(slack_client, words[2], mess['ts'])
             time.sleep(30)
-        except SillyError:
-            print("Got BrokenPipeError.")
-            if seen_error:
-                raise
-            seen_error = True
-            time.sleep(30)
-            slack_client.rtm_connect()
         except Exception as exp:  # pylint: disable=broad-except
             print("Got some other error: {}".format(exp))
             if seen_error:
