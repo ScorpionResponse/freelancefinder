@@ -112,28 +112,35 @@ def main():
     slack_token = os.environ["SLACK_API_TOKEN"]
     slack_client = SlackClient(slack_token)
 
-    seen_error = False
-    if slack_client.rtm_connect():
-        while True:
-            try:
-                current_messages = slack_client.rtm_read()
-                for mess in current_messages:
-                    if 'bot_id' in mess and mess['bot_id'] == 'B5JS3UKA4':
-                        build_message = mess['attachments'][0]['text']
-                        print("Got Build Message: {build_message}".format(build_message=build_message))
-                        branch, status, build_num, build_id = parse_build_message(build_message)
-                        if status == 'passed':
-                            respond_to_build(slack_client, branch, build_num, build_id, mess['ts'])
-                time.sleep(30)
-            except SillyError:
-                print("Got BrokenPipeError.")
-                if seen_error:
-                    raise
-                seen_error = True
-                time.sleep(30)
-                slack_client.rtm_connect()
-    else:
+    if not slack_client.rtm_connect():
         print("Connection Failed, invalid token?")
+
+    seen_error = False
+    while True:
+        try:
+            current_messages = slack_client.rtm_read()
+            for mess in current_messages:
+                if 'bot_id' in mess and mess['bot_id'] == 'B5JS3UKA4':
+                    build_message = mess['attachments'][0]['text']
+                    print("Got Build Message: {build_message}".format(build_message=build_message))
+                    branch, status, build_num, build_id = parse_build_message(build_message)
+                    if status == 'passed':
+                        respond_to_build(slack_client, branch, build_num, build_id, mess['ts'])
+            time.sleep(30)
+        except SillyError:
+            print("Got BrokenPipeError.")
+            if seen_error:
+                raise
+            seen_error = True
+            time.sleep(30)
+            slack_client.rtm_connect()
+        except Exception as exp:  # pylint: disable=broad-except
+            print("Got some other error: {}".format(exp))
+            if seen_error:
+                raise
+            seen_error = True
+            time.sleep(30)
+            slack_client.rtm_connect()
 
 
 if __name__ == '__main__':
