@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block 'title' %}Freelance Finder - Welcome{% endblock %}
+
+{% block 'pagebanner' %}
+<section id="banner">
+    <div class="inner">
+        <h2 class="major">{{ flatpage.title }}</h2>
+    </div>
+</section>
+{{ block.super }}
+{% endblock %}
+
+{% block 'content' %}
+
+<section id="one" class="wrapper">
+    <div class="inner">
+        {{ flatpage.content }}
+    </div>
+</section>
+
+{% endblock %}

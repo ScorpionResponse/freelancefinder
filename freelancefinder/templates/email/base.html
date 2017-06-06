@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta content="telephone=no" name="format-detection">
+    <title>{% block 'title' %}{{ flatpage.title }}{% endblock %}</title>
+    <style type="text/css">
+        .ReadMsgBody {width: 100%; background-color: #ffffff;}
+        .ExternalClass {width: 100%; background-color: #ffffff;}
+        body {
+            width: 100%;
+            background-color: #ffffff;
+            margin:0;
+            padding:0;
+            -webkit-font-smoothing: antialiased;
+            font-family: arial, sans-serif;
+        }
+        table {border-collapse: collapse;}
+    </style>
+</head>
+
+{% with text_style="color: rgb(0, 0, 0); font-family: Verdana, Arial, sans-serif; font-size: 13px; padding: 0px; margin: 0px 0px 13px; line-height: 1.6;" %}
+{% with footer_text_style="font-family: Helvetica, Arial, sans-serif; padding: 0px; margin: 13px 0px 0px; line-height: 1.6; color: rgb(153, 153, 153); font-size: 11px;" %}
+{% with base_url=flatpage.sites.first.domain %}
+
+<body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" yahoo="fix" style="{{ text_style }}" bgcolor="#ffffff">
+
+    <!-- Wrapper -->
+    <div style="max-width: 600px; background: rgb(255, 255, 255);">
+        <table width="100%" border="0" cellpadding="0" cellspacing="0" align="center" bgcolor="#ffffff">
+            <tbody>
+            <tr>
+                <!-- Wrapper -->
+                <td width="5%">&nbsp;</td>
+                <td width="90%" valign="top" style="padding-top:0px;margin:0;border:0;vertical-align: top;">
+                    <h1 style="text-decoration: underline; color: rgb(76, 92, 150);"><a href="https://{{ base_url }}/">Freelance Finder</a></h1>
+                    <div class="content" style="{{ text_style }}">
+                        {% block 'content' %}
+                            {{ flatpage.content }}
+                        {% endblock %}
+                    </div>
+                    <table class="footer">
+                        <tr>
+                            <td>
+                                <hr align="center" style="width: 75%; border-color: rgb(221, 221, 221); background-color: rgb(221, 221, 221); color: rgb(221, 221, 221); border-width: 1px 0px 0px; height: 1px;" />
+                                <div style="margin-left: auto; margin-right: auto;">
+                                    <p style="{{ footer_text_style }}">
+                                    <a href="https://{{ base_url }}/users/"><font style="color: #808080;">Update Your Email Preferences</font></a> 
+                                    </p>
+                                    <p style="{{ footer_text_style }}">
+                                        &copy; 2017 FreelanceFinder.work 
+                                    </p>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td width="5%">&nbsp;</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+{% endwith %}
+{% endwith %}
+{% endwith %}
