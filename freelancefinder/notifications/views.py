@@ -14,6 +14,7 @@ class NotificationView(LoginRequiredMixin, TemplateView):
     template_name = 'notifications/base.html'
 
     def get_context_data(self, **kwargs):
+        """Add the same context as when rendering emails."""
         context = super(NotificationView, self).get_context_data(**kwargs)
         message = get_object_or_404(Message, url=kwargs['url'])
 

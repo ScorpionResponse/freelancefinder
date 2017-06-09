@@ -28,6 +28,7 @@ class Message(models.Model):
     slack_body = models.TextField(blank=True)
 
     def __str__(self):
+        """Representation for a Message."""
         return u"<Message ID:{}; URL:{}; Subject:{}>".format(self.pk, self.url, self.subject)
 
 
@@ -42,9 +43,11 @@ class Notification(models.Model):
     user = models.ForeignKey(User, related_name="notifications")
 
     def __str__(self):
+        """Representation for a Notification."""
         return u"<Notification ID:{}; Type:{}; User: {}; Email:{}; Slack:{}>".format(self.pk, self.notification_type, self.user, self.email_message, self.slack_message)
 
     def get_email_message(self):
+        """Render the templates to create the message."""
         subject_template = Template(self.message.subject)
         subject_context = Context({'user': self.user, 'message': self.message})
         subject = subject_template.render(subject_context)
@@ -75,6 +78,7 @@ class NotificationHistory(TimeStampedModel):
     sent_at = MonitorField(monitor='sent', when=[True])
 
     def __str__(self):
+        """Representation for a NotificationHistory."""
         return u"<NotificationHistory ID:{}; User:{}; Notification:{}; Sent:{}>".format(self.pk, self.user, self.notification, self.sent)
 
     def send(self):
