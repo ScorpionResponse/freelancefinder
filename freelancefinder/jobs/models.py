@@ -42,6 +42,9 @@ class Post(TimeStampedModel):
     postition was found.
     """
 
+    # Added by TimeStampedModel
+    # created = models.DateTimeField(auto_now_add=True)
+    # modified = models.DateTimeField(auto_now=True)
     job = models.ForeignKey('Job', on_delete=models.SET_NULL, related_name="posts", blank=True, null=True)
     url = models.URLField()
     source = models.ForeignKey('remotes.Source', on_delete=models.SET_NULL, blank=True, null=True, related_name="posts")
@@ -86,6 +89,9 @@ class Post(TimeStampedModel):
 class Job(TimeStampedModel):
     """A Job is the actual opportunity.  There may be many Posts about the same Job."""
 
+    # Added by TimeStampedModel
+    # created = models.DateTimeField(auto_now_add=True)
+    # modified = models.DateTimeField(auto_now=True)
     title = models.CharField(max_length=255)
     description = models.TextField()
     fingerprint = models.CharField(max_length=255)
@@ -131,6 +137,11 @@ class UserJobsManager(SoftDeletableManager):
 class UserJob(TimeStampedModel, SoftDeletableModel):
     """Combo table matching jobs to users."""
 
+    # Added by TimeStampedModel
+    # created = models.DateTimeField(auto_now_add=True)
+    # modified = models.DateTimeField(auto_now=True)
+    # Added by SoftDeletableModel
+    # is_removed = models.BooleanField(default=False)
     job = models.ForeignKey(Job, on_delete=models.CASCADE, related_name="userjobs")
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="userjobs")
     objects = UserJobsManager()
