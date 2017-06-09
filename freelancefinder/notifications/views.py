@@ -18,7 +18,7 @@ class NotificationView(LoginRequiredMixin, TemplateView):
         message = get_object_or_404(Message, url=kwargs['url'])
 
         email_template = Template(message.email_body)
-        email_context = Context({'request': self.request, 'message': message})
+        email_context = Context({'user': self.request.user, 'message': message})
         email_message = email_template.render(email_context)
 
         context['message'] = message

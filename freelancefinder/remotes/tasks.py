@@ -47,6 +47,8 @@ def setup_periodic_tasks(sender, **kwargs):
     logger.debug("IntervalSchedule: %s; Created: %s", schedule_4_minutes, created)
     schedule_10_minutes, created = IntervalSchedule.objects.get_or_create(every=10, period=IntervalSchedule.MINUTES)
     logger.debug("IntervalSchedule: %s; Created: %s", schedule_10_minutes, created)
+    schedule_hourly, created = IntervalSchedule.objects.get_or_create(every=1, period=IntervalSchedule.HOURS)
+    logger.debug("IntervalSchedule: %s; Created: %s", schedule_hourly, created)
 
     # UserJob Frequencies use crontab so we can control exactly when they run
     schedule_daily, created = CrontabSchedule.objects.get_or_create(minute='15', hour='4', day_of_week='*', day_of_month='*', month_of_year='*')
@@ -55,6 +57,9 @@ def setup_periodic_tasks(sender, **kwargs):
     logger.debug("CrontabSchedule: %s; Created: %s", schedule_twice_daily, created)
     schedule_hourly, created = CrontabSchedule.objects.get_or_create(minute='59', hour='*', day_of_week='*', day_of_month='*', month_of_year='*')
     logger.debug("CrontabSchedule: %s; Created: %s", schedule_hourly, created)
+
+    pertask, created = PeriodicTask.objects.get_or_create(interval=schedule_hourly, name="Send Email", task='notifications.tasks.send_notifications')
+    logger.debug("PeriodicTask: %s; Created: %s", pertask, created)
 
     pertask, created = PeriodicTask.objects.get_or_create(interval=schedule_4_minutes, name="Process New Posts", task='jobs.tasks.process_new_posts')
     logger.debug("PeriodicTask: %s; Created: %s", pertask, created)

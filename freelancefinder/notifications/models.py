@@ -1,11 +1,21 @@
 """Define the notification type and track sent notifications."""
 
+import logging
+from smtplib import SMTPException
+
 from future.utils import python_2_unicode_compatible
 from model_utils import Choices
 from model_utils.fields import MonitorField
 from model_utils.models import TimeStampedModel
 
+from django.conf import settings
+from django.contrib.auth.models import User
+from django.core.mail import send_mail
 from django.db import models
+from django.template import Context, Template
+from django.utils.html import strip_tags
+
+logger = logging.getLogger(__name__)
 
 
 @python_2_unicode_compatible
@@ -23,15 +33,33 @@ class Message(models.Model):
 
 @python_2_unicode_compatible
 class Notification(models.Model):
-    """Define an available notification."""
+    """Define a pending notification."""
 
     TYPES = Choices('signup', 'welcome_package', 'one_time', 'expiration')
 
     notification_type = models.CharField(choices=TYPES, default=TYPES.one_time, max_length=50)
     message = models.ForeignKey(Message, on_delete=models.SET_NULL, null=True, related_name="notifications")
+    user = models.ForeignKey(User, related_name="notifications")
 
     def __str__(self):
-        return u"<Notification ID:{}; Type:{}; Email:{}; Slack:{}>".format(self.pk, self.notification_type, self.email_message, self.slack_message)
+        return u"<Notification ID:{}; Type:{}; User: {}; Email:{}; Slack:{}>".format(self.pk, self.notification_type, self.user, self.email_message, self.slack_message)
+
+    def get_email_message(self):
+        subject_template = Template(self.message.subject)
+        subject_context = Context({'user': self.user, 'message': self.message})
+        subject = subject_template.render(subject_context)
+
+        email_template = Template(self.message.email_body)
+        email_context = Context({'user': self.user, 'message': self.message})
+        email_message = email_template.render(email_context)
+
+        html_template = Template('notifications/base.html')
+        html_context = {'message': self.message, 'email_message': email_message}
+        html_message = html_template.render(html_context)
+
+        txt_message = strip_tags(html_message)
+
+        return (subject, html_message, txt_message)
 
 
 @python_2_unicode_compatible
@@ -41,13 +69,29 @@ class NotificationHistory(TimeStampedModel):
     # Added by TimeStampedModel
     # created = models.DateTimeField(auto_now_add=True)
     # modified = models.DateTimeField(auto_now=True)
-    user = models.ForeignKey('auth.User', on_delete=models.CASCADE)
-    notification = models.ForeignKey(Notification, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="notification_history")
+    notification = models.ForeignKey(Notification, on_delete=models.CASCADE, related_name="history")
     sent = models.BooleanField(default=False)
     sent_at = MonitorField(monitor='sent', when=[True])
 
     def __str__(self):
         return u"<NotificationHistory ID:{}; User:{}; Notification:{}; Sent:{}>".format(self.pk, self.user, self.notification, self.sent)
+
+    def send(self):
+        """Send a notification."""
+        (subject, html_message, txt_message) = self.notification.get_email_message()
+        try:
+            send_mail(
+                subject=subject,
+                message=txt_message,
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                recipient_list=[self.user.email],
+                html_message=html_message
+            )
+            self.sent = True
+            self.save()
+        except SMTPException as smtpe:
+            logger.exception("Error sending notification: %s; Error: %s", self, smtpe)
 
     class Meta:
         """Meta info for history."""
