@@ -40,11 +40,11 @@ class Notification(models.Model):
 
     notification_type = models.CharField(choices=TYPES, default=TYPES.one_time, max_length=50)
     message = models.ForeignKey(Message, on_delete=models.SET_NULL, null=True, related_name="notifications")
-    user = models.ForeignKey(User, related_name="notifications")
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True, related_name="notifications")
 
     def __str__(self):
         """Representation for a Notification."""
-        return u"<Notification ID:{}; Type:{}; User: {}; Email:{}; Slack:{}>".format(self.pk, self.notification_type, self.user, self.email_message, self.slack_message)
+        return u"<Notification ID:{}; Type:{}; User: {}; Message:{}>".format(self.pk, self.notification_type, self.user, self.message)
 
     def get_email_message(self):
         """Render the templates to create the message."""
@@ -57,12 +57,20 @@ class Notification(models.Model):
         email_message = email_template.render(email_context)
 
         html_template = Template('notifications/base.html')
-        html_context = {'message': self.message, 'email_message': email_message}
+        html_context = Context({'message': self.message, 'email_message': email_message})
         html_message = html_template.render(html_context)
 
         txt_message = strip_tags(html_message)
 
         return (subject, html_message, txt_message)
+
+    def schedule_for_all_users(self):
+        """Send this notification to all users."""
+        if self.user:
+            self.history.create(user=self.user)
+        else:
+            for user in User.objects.filter(groups__name="Paid"):
+                self.history.create(user=user)
 
 
 @python_2_unicode_compatible
