@@ -1,6 +1,8 @@
 Freelance Finder
 ================
 
+Site URL: [Freelance Finder](https://freelancefinder.work/)
+
 Basic site to gather and track different places where jobs I might want to
 apply for are posted.  This exists mostly because I'm lazy but somehow that
 means I'm willing to spend a lot of time and effort making a site to save
