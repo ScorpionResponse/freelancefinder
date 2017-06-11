@@ -21,10 +21,10 @@ logger = logging.getLogger(__name__)
 class Message(models.Model):
     """Define a message to the user."""
 
-    url = models.CharField(max_length=100, db_index=True, unique=True)
-    subject = models.CharField(max_length=300)
-    email_body = models.TextField(blank=True)
-    slack_body = models.TextField(blank=True)
+    url = models.CharField(max_length=100, db_index=True, unique=True, help_text="URL path starts with 'notifications/ and should have a trailing slash /.  Eg. 'welcome/'")
+    subject = models.CharField(max_length=300, help_text="Can contain django template variables 'user' and 'message'")
+    email_body = models.TextField(blank=True, help_text="Can contain django template variables 'user' and 'message'")
+    slack_body = models.TextField(blank=True, help_text="Can contain django template variables 'user' and 'message'")
 
     def __str__(self):
         """Representation for a Message."""
@@ -114,3 +114,4 @@ class NotificationHistory(TimeStampedModel):
         """Meta info for history."""
 
         unique_together = ('user', 'notification')
+        verbose_name_plural = 'notifications history'
