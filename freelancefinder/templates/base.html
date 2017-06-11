@@ -1,3 +1,4 @@
+{% load flatpages %}
 {% load in_group %}
 {% load static %}
 <!DOCTYPE html>
@@ -82,13 +83,24 @@
 
             <section id="footer">
                 <div class="inner">
-                    <h2 class="major">Get in touch</h2>
-                    <p>I'm always interested to hear from folks who would like to know more or who might have some comment about the site to share.  Follow me on twitter or send an email.</p>
-                    <ul class="contact">
-                        <li class="fa-envelope"><a href="mailto:paul@freelancefinder.work">paul@freelancefinder.work</a></li>
-                        <li class="fa-twitter"><a href="https://twitter.com/scorpionrespons">twitter.com/scorpionrespons</a></li>
-                    </ul>
-                    <ul class="copyright">
+                    <div class="6u 12u$(medium) pages">
+                        <h4 class="major">Those pages that go at the bottom</h2>
+                        {% get_flatpages '/about/' as flatpages %}
+                        <ul>
+                            {% for page in flatpages %}
+                                <li><a href="{{ page.url }}">{{ page.title }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="6u$ 12u$(medium) contact">
+                        <h4 class="major">Get in touch</h2>
+                        <p>I'm always interested to hear from folks who would like to know more or who might have some comment about the site to share.  Follow me on twitter or send an email.</p>
+                        <ul class="contact">
+                            <li class="fa-envelope"><a href="mailto:paul@freelancefinder.work">paul@freelancefinder.work</a></li>
+                            <li class="fa-twitter"><a href="https://twitter.com/scorpionrespons">twitter.com/scorpionrespons</a></li>
+                        </ul>
+                    </div>
+                    <ul class="12u$ copyright">
                         <li>&copy; {% now "Y" %} FreelanceFinder.work. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
                     </ul>
                 </div>
