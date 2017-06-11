@@ -18,10 +18,18 @@ class NotificationView(LoginRequiredMixin, TemplateView):
         context = super(NotificationView, self).get_context_data(**kwargs)
         message = get_object_or_404(Message, url=kwargs['url'])
 
+        subject_template = Template(message.subject)
+        subject_context = Context({'user': self.request.user, 'message': message})
+        subject = subject_template.render(subject_context)
+
         email_template = Template(message.email_body)
         email_context = Context({'user': self.request.user, 'message': message})
         email_message = email_template.render(email_context)
 
+        # These must match the fields present in
+        # notifications.models.Notification.get_email_message
+        context['user'] = self.request.user
         context['message'] = message
+        context['subject'] = subject
         context['email_message'] = email_message
         return context

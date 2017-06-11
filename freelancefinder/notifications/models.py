@@ -59,12 +59,14 @@ class Notification(models.Model):
         email_context = Context({'user': user, 'message': self.message})
         email_message = email_template.render(email_context)
 
+        # The html template context must be the same as in
+        # notifications.views.NotificationView.get_context_data
         html_template = loader.get_template('notifications/base.html')
-        html_context = {'message': self.message, 'email_message': email_message}
+        html_context = {'user': user, 'message': self.message, 'subject': subject, 'email_message': email_message}
         html_message = html_template.render(html_context)
 
         txt_template = loader.get_template('notifications/base.txt')
-        txt_context = {'message': self.message, 'email_message': email_message}
+        txt_context = {'user': user, 'message': self.message, 'subject': subject, 'email_message': email_message}
         txt_message = txt_template.render(txt_context)
 
         return (subject, html_message, txt_message)
