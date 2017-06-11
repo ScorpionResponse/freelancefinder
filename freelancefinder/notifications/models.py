@@ -12,8 +12,7 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
 from django.db import models
-from django.template import Context, Template
-from django.utils.html import strip_tags
+from django.template import Context, Template, loader
 
 logger = logging.getLogger(__name__)
 
@@ -46,21 +45,27 @@ class Notification(models.Model):
         """Representation for a Notification."""
         return u"<Notification ID:{}; Type:{}; User: {}; Message:{}>".format(self.pk, self.notification_type, self.user, self.message)
 
-    def get_email_message(self):
+    def get_email_message(self, user=None):
         """Render the templates to create the message."""
+        if user is None:
+            if self.user is None:
+                raise RuntimeError('No user defined for this message.')
+            user = self.user
         subject_template = Template(self.message.subject)
-        subject_context = Context({'user': self.user, 'message': self.message})
+        subject_context = Context({'user': user, 'message': self.message})
         subject = subject_template.render(subject_context)
 
         email_template = Template(self.message.email_body)
-        email_context = Context({'user': self.user, 'message': self.message})
+        email_context = Context({'user': user, 'message': self.message})
         email_message = email_template.render(email_context)
 
-        html_template = Template('notifications/base.html')
-        html_context = Context({'message': self.message, 'email_message': email_message})
+        html_template = loader.get_template('notifications/base.html')
+        html_context = {'message': self.message, 'email_message': email_message}
         html_message = html_template.render(html_context)
 
-        txt_message = strip_tags(html_message)
+        txt_template = loader.get_template('notifications/base.txt')
+        txt_context = {'message': self.message, 'email_message': email_message}
+        txt_message = txt_template.render(txt_context)
 
         return (subject, html_message, txt_message)
 
@@ -91,7 +96,7 @@ class NotificationHistory(TimeStampedModel):
 
     def send(self):
         """Send a notification."""
-        (subject, html_message, txt_message) = self.notification.get_email_message()
+        (subject, html_message, txt_message) = self.notification.get_email_message(self.user)
         try:
             send_mail(
                 subject=subject,
