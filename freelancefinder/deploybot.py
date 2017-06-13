@@ -17,6 +17,8 @@ logging.basicConfig(filename='build.log', level=logging.DEBUG)
 THIS_BOT_ID = "U5MR114V7"
 TRAVIS_BOT_ID = "B5JS3UKA4"
 
+ERROR_THRESHOLD = 10
+
 # pip install slackclient delegator.py python-dotenv
 
 # [{
@@ -148,7 +150,7 @@ def main():
     if not slack_client.rtm_connect():
         logging.error("Connection Failed, invalid token?")
 
-    seen_error = False
+    seen_error = 0
     while True:
         try:
             current_messages = slack_client.rtm_read()
@@ -166,10 +168,10 @@ def main():
                         respond_to_command(slack_client, words[2], mess['ts'])
             time.sleep(1)
         except Exception as exp:  # pylint: disable=broad-except
-            logging.error("Got an error: %s", exp)
-            if seen_error:
+            seen_error += 1
+            logging.error("Error count: %s - Error: %s", seen_error, exp)
+            if seen_error > ERROR_THRESHOLD:
                 raise
-            seen_error = True
             time.sleep(30)
             slack_client.rtm_connect()
         sys.stdout.flush()

@@ -1,0 +1,12 @@
+{% with base_url="freelancefinder.work" %}
+
+Hello from Freelance Finder https://{{ base_url }}/
+
+{{ email_message }}
+
+--------
+View this message on Freelance Finder: https://{{ base_url }}/notifications/{{ message.url }}
+Update your email preferences: https://{{ base_url }}/users/
+
+2017 FreelanceFinder.work 
+{% endwith %}

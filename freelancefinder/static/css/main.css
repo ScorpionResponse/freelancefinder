@@ -3751,6 +3751,15 @@
 			width: calc(50% - 1.5em);
 		}
 
+		#footer .inner .pages {
+			width: calc(50% - 1.5em);
+		}
+
+		#footer .inner .pages ul {
+			width: calc(50% - 1.5em);
+			list-style: none;
+		}
+
 		#footer .inner .copyright {
 			border-top: solid 2px rgba(255, 255, 255, 0.125);
 			list-style: none;
@@ -3903,4 +3912,11 @@
 
 .second-row div {
     padding-bottom: 10px;
+}
+
+#faq h3 {
+    background-color: rgba(255, 255, 255, 0.025);
+    border: solid 1px rgba(255, 255, 255, 0.125);
+    border-left: 0;
+    border-right: 0;
 }

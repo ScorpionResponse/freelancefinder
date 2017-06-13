@@ -7,6 +7,7 @@ from django_factory_boy.auth import UserFactory
 from django.contrib.auth.models import Group
 
 from jobs.tests.factories import JobFactory, PostFactory, SourceFactory, TagFactory, UserJobFactory
+from notifications.tests.factories import MessageFactory, NotificationFactory, NotificationHistoryFactory
 
 # pylint: disable=redefined-outer-name,unused-variable
 
@@ -82,3 +83,6 @@ register(PostFactory)
 register(SourceFactory)
 register(UserJobFactory)
 register(UserFactory)
+register(MessageFactory)
+register(NotificationFactory)
+register(NotificationHistoryFactory)
