@@ -7,7 +7,7 @@ from celery.utils.log import get_task_logger
 celery_app = Celery()
 logger = get_task_logger(__name__)
 
-FAIL_TAGS = ['Full Time', 'Equity', 'For Hire', 'Permanent', 'Dental']
+FAIL_TAGS = ['Full Time', 'Equity', 'For Hire', 'Permanent', 'Dental', 'Intern']
 PASS_TAGS = ['Hiring', 'Contract', 'Part Time', 'Freelance']
 
 

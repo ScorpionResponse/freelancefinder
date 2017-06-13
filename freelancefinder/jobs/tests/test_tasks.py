@@ -1,7 +1,9 @@
 """Tests for the jobs.tasks."""
 
+import pytest
+
 from ..models import Post, Job, UserJob
-from ..tasks import process_new_posts, create_jobs, tag_jobs, create_userjobs
+from ..tasks import process_new_posts, create_jobs, tag_jobs, create_userjobs, tag_posts
 
 
 def test_post_processing(post_factory):
@@ -27,6 +29,25 @@ def test_post_processing_full_time(post_factory):
 
     assert pre_unprocessed_posts != post_unprocessed_posts
     assert post_unprocessed_posts == 0
+    assert this_post.garbage
+
+
+@pytest.mark.parametrize("known_bad", ['Internship', 'Intern', 'Unpaid'])
+def test_post_processing_garbage(post_factory, known_bad):
+    """Verify that specific words are garbaged."""
+    this_post = post_factory.create(title='[{}] some job posting'.format(known_bad), processed=False, create_tags=None)
+    this_post.tags.clear()
+    this_post.save()
+    pre_unprocessed_posts = Post.objects.filter(processed=False).count()
+    tag_posts()
+    process_new_posts()
+    post_unprocessed_posts = Post.objects.filter(processed=False).count()
+    this_post = Post.all_objects.get(pk=this_post.id)
+
+    assert pre_unprocessed_posts != post_unprocessed_posts
+    assert post_unprocessed_posts == 0
+    print(this_post)
+    print(this_post.tags.names())
     assert this_post.garbage
 
 
@@ -72,6 +93,20 @@ def test_jobs_detect_dupes(post_factory):
 
     assert post_jobs != 0
     assert pre_jobs == post_jobs
+
+
+def test_tag_posts(post_factory, tag_factory):
+    """Verify that tags are added."""
+    post = post_factory(title="Bears")
+    post.tags.clear()
+    post.save()
+    tag_factory(name="bears")
+    tag_posts()
+
+    changed_post = Post.objects.get(pk=post.id)
+    new_tags = list(changed_post.tags.all().values_list('name', flat=True))
+    assert len(new_tags) > 0
+    assert 'bears' in new_tags
 
 
 def test_tag_jobs(job_factory, tag_factory):
