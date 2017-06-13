@@ -41,7 +41,7 @@ class NotificationHistoryFactory(factory.django.DjangoModelFactory):
     user = factory.SubFactory(UserFactory)
     notification = factory.SubFactory(NotificationFactory)
     sent = factory.Faker('pybool')
-    sent_at = factory.Faker('datetime')
+    sent_at = factory.Faker('date_time')
 
     class Meta(object):
         """Config for NotificationHistoryFactory."""
