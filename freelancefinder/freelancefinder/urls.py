@@ -26,6 +26,7 @@ urlpatterns = [
     url(r'^contact/sent/$', TemplateView.as_view(template_name='contact_form/contact_form_sent.html'), name='contact_form_sent'),
     url(r'^accept-payment/$', AcceptPaymentView.as_view(), name='accept-payment'),
     url(r'^select2/', include('django_select2.urls')),
+    url(r'^about/', include('django.contrib.flatpages.urls')),
     url(r'^freelance_admin/', admin.site.urls),
     url(r'^robots\.txt$', TemplateView.as_view(template_name='robots.txt', content_type='text/plain'), name='robots.txt'),
     url(r'^humans\.txt$', TemplateView.as_view(template_name='humans.txt', content_type='text/plain'), name='humans.txt'),
